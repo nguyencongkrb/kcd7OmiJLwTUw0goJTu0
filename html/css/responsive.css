@@ -1,0 +1,59 @@
+
+/***** col-xs- | <768px ************/
+@media only screen and (max-width: 768px) {
+	#logo{
+		text-align: center;
+	}
+	.support{
+		margin-top: 0;
+		margin-bottom: 10px;
+		width: 100%;
+	}
+	.support a{
+		text-align: left;
+	}
+	nav ul>li{
+		display:block !important;
+		text-align: left;
+	}
+	nav ul>li>a, nav ul>li>a:hover{
+		border-right: none;
+	}
+
+	ul.categories>li{
+		display:block !important;
+		text-align: left;
+	}
+	ul.categories>li{
+		width: 100%;
+	}
+	ul.categories>li a{
+		padding-left: 30px;
+	}
+	body.loginpage h3{
+		text-align: center;
+	}
+	body.loginpage form input.verifycode{
+		margin-top: 5px;
+		margin-left: 0;
+	}
+	body.loginpage .form-link{
+	margin-bottom: 60px;
+}
+	body.loginpage {
+		background: url('../images/bg_login.jpg') no-repeat center center fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		/* Margin bottom by footer height */
+		margin-bottom: 0;
+	}
+	body.loginpage footer{
+		margin-top: 0;
+		position: relative;
+		bottom: 0;
+		width: 100%;
+		height: auto;
+	}
+}

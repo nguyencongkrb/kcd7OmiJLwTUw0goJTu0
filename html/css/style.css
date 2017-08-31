@@ -1,0 +1,316 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+body{
+	background: #fafbfb;
+	font-size: 14px;
+	font-family: Arial, sans-serif;
+}
+a:hover {
+	text-decoration: none;
+}
+header{
+	border-bottom: solid 5px #febe10;
+}
+header a, header a:hover{
+	color: #febe10;
+}
+#topbar{
+	background: #cad4d7;
+	height: 48px;
+	color: #075263;
+}
+#topbar ul{
+	margin-bottom: 0px;
+}
+#topbar ul li:first-child{
+	border-right: solid 1px #fff;
+}
+#topbar a{
+	color: #075263;
+}
+.support{
+	height: 50px;
+	float: left;
+	vertical-align: middle;
+	margin: 25px 0 0 25px;
+	padding-top: 5px;
+}
+.support a{
+	padding-left: 60px;
+	display: block;
+	text-align: center;
+}
+.customer_service{
+	background: url('../images/icon_cskh.png') left center no-repeat;
+	
+}
+.chat_online{
+	background: url('../images/icon_chatonline.png') left center no-repeat;
+}
+.question_answer{
+	background: url('../images/icon_qa.png') left center no-repeat;
+	line-height: 45px;
+}
+
+nav ul{
+	margin: 0;
+	background:#075263;
+	margin-left: 0 !important;
+}
+nav ul>li{
+	padding: 0 !important;
+	margin: 0;
+}
+nav ul>li>a, nav ul>li>a:hover{
+	text-transform: uppercase;
+	border-right: solid 1px #fff;
+	color: #fff;
+	line-height: 39px;
+	padding: 0 30px;
+}
+nav ul>li>a.last{
+	border-right: none;
+}
+/************ MAIN SECTION *****************/
+.categories-link img{
+	padding-top: 30px;
+	width: 100%;
+}
+ul.categories{
+	margin: 0;
+	margin-left: 0 !important;
+	width: 100%;
+	display: table;
+}
+ul.categories>li{
+	padding: 0 !important;
+	margin: 0;
+	width: 20%;
+	display: table-cell;
+}
+ul.categories>li>a{
+	text-transform: uppercase;
+	color: #58595b;
+	line-height: 39px;
+	display: block;
+	position: relative;
+}
+ul.categories>li>a:before{
+	content:"|";
+	color:#f2cc4b;
+	position: absolute;
+	left: -1px;
+	top: -1px;
+}
+ul.categories>li.active, ul.categories>li:hover{
+	background: #f2cc4b;
+}
+ul.categories>li.active a, ul.categories>li:hover a{
+	color: #075263;
+}
+.products-item{
+	margin-top: 30px;
+}
+.products-item-thumbnail img{
+	width: 100%;
+}
+.products-item-price{
+	font-size: 24px;
+	font-weight: bold;
+	color: #58595b;
+	padding: 12px 10px 0 10px;;
+}
+.products-item-price small{
+	font-size: 12px;
+	font-weight: normal;
+}
+.products-item-name a{
+	color: #808285;
+	padding: 0 10px;
+}
+
+h1.product-title{
+	color: #075263;
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 27px;
+	margin-bottom: 23px;
+}
+.product-thumbnail{
+	margin-bottom: 17px;
+}
+.product-thumbnail img{
+	width: 100%;
+}
+.product-price{
+	color:#075263;
+	font-size: 24px;
+	font-weight: bold;
+	margin: 20px 0;
+}
+.product-price small{
+	color:#075263;
+	font-size: 18px;
+	font-weight: normal;
+}
+.product-promotion{
+	margin-bottom: 42px;
+}
+.product-promotion a{
+	color: #075263;
+}
+.product-promotion span, .product-action span{
+	font-size: 12px;
+	color: #075263;
+}
+.product-action button{
+	border: none;
+	border-radius: 0;
+	padding: 0 35px;
+	text-transform: uppercase;
+	font-size: 18px;
+	color: #075263;
+	background: #eeb800;
+	line-height: 39px;
+}
+.product-action button.goshoppingcart{
+	background: #075263;
+}
+.product-action button span{
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	border: solid 1px #eeb800;
+	border-radius: 50%;
+	color: #fff;
+	background: #eeb800;
+	line-height: 30px;
+	margin-top: 5px;
+}
+.product-description .nav-tabs{
+	border-bottom: none;
+	border-top: solid 1px #eeb800;
+}
+.product-description .nav-tabs>li>a{
+	background: #bdbdbd;
+	border: none;
+	border-radius: 0;
+	color: #58595b;
+	font-size: 18px;
+	margin-right: 0;
+}
+.product-description .nav-tabs>li.active>a, .product-description .nav-tabs>li.active>a:focus, .product-description .nav-tabs>li.active>a:hover{
+	background: #eeb800;
+	color: #075263;
+	border: none;
+}
+.product-description .tab-pane{
+	padding-top: 45px;
+	padding-bottom: 58px;
+	border-bottom: solid 1px #eeb800;
+}
+.product-description p{
+	padding-left: 35px;
+	padding-right: 35px;
+}
+.product-review{
+	padding: 23px 55px;
+}
+.product-review-summary{
+	color: #737373;
+}
+
+form input, form textarea{
+	border-radius: 0 !important;
+	color: #c5c5c5 !important;
+	border-color: #ccc !important;
+	padding: 10px !important;
+}
+form label{
+	color: #404040;
+	font-weight: normal;
+}
+form button{
+	border: none !important;
+	border-radius: 0 !important;
+	padding: 0 35px !important;
+	font-size: 18px !important;
+	color: #075263 !important;
+	background: #eeb800 !important;
+	line-height: 39px !important;
+}
+body.loginpage h1, body.loginpage h3{
+	font-weight: bold;
+	color: #e9ab00;
+	text-align: center;
+}
+body.loginpage h3{
+	color:#013946;
+	font-size: 18px;
+	text-align: right;
+	font-weight: bold;
+}
+body.loginpage form{
+	margin-top: 50px;
+}
+body.loginpage form input{
+	border-radius: 0 !important;
+	color: #003b46 !important;
+	border-color: #eaaa00 !important;
+	padding: 10px !important;
+	background: #fcfcfc !important;
+}
+body.loginpage form input.verifycode{
+	background: #e2e7ea !important;
+	text-align: center;
+	border-color: #e2e7ea !important;
+	margin-left: 5px;
+}
+body.loginpage a{
+	color:#003945;
+}
+body.loginpage .form-group{
+	margin-bottom: 5px;
+}
+body.loginpage .form-link{
+	margin-top: 60px;
+}
+body.loginpage {
+	/*background: url('../images/bg_login.jpg') no-repeat 150% 100% fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;*/
+	background: url('../images/bg_login.jpg') no-repeat;
+	background-position: left center;
+	background-size: 70%;
+	/* Margin bottom by footer height */
+	margin-bottom: 163px;
+}
+body.loginpage header{
+	background: #fff;
+}
+body.loginpage footer{
+	margin-top: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 163px;
+}
+/************ FOOTER *****************/
+footer{
+	border-top: solid 5px #febe10;
+	background:#e7eeef;
+	font-size: 12px;
+	color: #004958;
+	padding: 0 0 25px;
+	margin-top: 25px;
+}
+footer a{
+	color: #004958;
+}

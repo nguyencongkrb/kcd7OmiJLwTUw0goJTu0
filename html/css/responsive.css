@@ -61,3 +61,10 @@
 		display: block;
 	}
 }
+@media (min-width: 768px) {
+	table.shoppingcart input.quantity{
+	width: 100px;
+	margin: 0 auto;
+    float: none;
+}
+}

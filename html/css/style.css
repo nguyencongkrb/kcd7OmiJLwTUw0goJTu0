@@ -376,6 +376,9 @@ ul.checkout-step>li.active>span{
 table.shoppingcart{
 	margin-bottom: 10px;
 }
+table.shoppingcart>tbody>tr>td{
+	vertical-align: middle;
+}
 table.shoppingcart td.head{
 	background: #d9e8e5;
 	color: #075263;
@@ -427,6 +430,9 @@ table.shoppingcart .delivery-method.active{
 }
 span.glyphicon-lg{
 	font-size: 350%;
+}
+span.glyphicon-20{
+	font-size: 20px;
 }
 .row-eq-height {
 	display: -webkit-box;

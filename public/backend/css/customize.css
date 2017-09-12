@@ -1,0 +1,10 @@
+.modal .modal-header{
+	background-color: #ecf0f5;
+	border-bottom-color: #00a65a;
+}
+.modal .modal-footer{
+	background-color: #f9f9f9;
+}
+#modalEntry .modal-dialog{
+	width: 80%;
+}

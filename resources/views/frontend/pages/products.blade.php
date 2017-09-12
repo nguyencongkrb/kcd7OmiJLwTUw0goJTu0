@@ -1,4 +1,8 @@
 @extends('frontend.layouts.master')
+@inject('productCategory', 'App\ProductCategory')
+@php
+$productCategories = $productCategory::where('parent_id', 0)->where('published', 1)->orderBy('priority')->get();
+@endphp
 
 @section('plugins.css')
 @endsection
@@ -7,31 +11,29 @@
 @endsection
 
 @section('body')
-<!-- Breadcrumb Start-->
-<ul class="breadcrumb">
-	<li><a href="/"><i class="fa fa-home"></i></a></li>
-	@if(Route::is('allproducts'))
-	<li><a href="{{ route('allproducts') }}">Tất cả sản phẩm</a></li>
-	@elseif(Route::is('producer'))
-	<li><a href="{{ $producer->getLink() }}">{{ $producer->name }}</a></li>
-	@elseif(Route::is('search'))
-	<li><a href="{{ route('search') }}">Tìm kiếm</a></li>
-	@elseif(Route::is('products.byCategoryAndProducer'))
-	<li><a href="{{ $category->getLink() }}">{{ $category->name }}</a></li>
-	<li><a href="{{ route('products.byCategoryAndProducer', ['categorykey' => $category->key, 'producerkey' => $producer->key]) }}">{{ $producer->name }}</a></li>
-	@else
-	<li><a href="{{ $category->getLink() }}">{{ $category->name }}</a></li>
-	@endif
-</ul>
-<!-- Breadcrumb End-->
 <div class="row">
-	<!--Left Part Start -->
-	@include('frontend.partials.productsidebar')
-	<!--Left Part End -->
-	<!--Middle Part Start-->
-	@include('frontend.partials.products')
-	<!--Middle Part End -->
+	<div class="col-xs-12 col-sm-12 col-md-12">
+	<a href="#"><img src="{{ $category->getAttachmentByPriority(1, 'custom', 1140, 0) }}" alt="allcategories" class="img-responsive"></a>
+	</div>
 </div>
+<div class="row">
+	<div class="container text-center">
+		<ul class="list-inline categories">
+			@foreach($productCategories as $item)
+			<li class="{{ Request::is('san-pham/'. $item->key) ? 'active' : null }}"><a href="{{ $item->getLink() }}">{{ $item->name }}</a></li>
+			@endforeach
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	@include('frontend.partials.products')
+</div>
+<div class="row">
+		<div class="col-sm-12 text-center">
+			{{ $products->links() }}
+		</div>
+	</div>
 @endsection
 
 @section('plugins.js')

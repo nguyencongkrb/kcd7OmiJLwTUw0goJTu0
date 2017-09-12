@@ -42,7 +42,7 @@ class BannersTableSeeder extends Seeder
 				]));
 
 				$entry->attachments()->save( new Attachment ([
-					'path' => $category->key.'.jpg',
+					'path' => $category->key.'.png',
 					'priority' => 0,
 					'published' => 1
 				]));

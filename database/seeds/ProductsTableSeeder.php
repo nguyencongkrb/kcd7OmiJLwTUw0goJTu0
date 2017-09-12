@@ -24,7 +24,7 @@ class ProductsTableSeeder extends Seeder
 		$generator = \Faker\Factory::create('vi_VN');
 
 		for ($i=0; $i < 30; $i++) {
-			$name = $generator->sentence($nbWords = 6);
+			$name = $generator->sentence($nbWords = 3);
 			$producer = Producer::pluck('id')->toArray();
 			$categories = ProductCategory::pluck('id')->toArray();
 			$tags = Tag::pluck('id')->toArray();
@@ -61,7 +61,22 @@ class ProductsTableSeeder extends Seeder
 			]));
 
 			$entry->attachments()->save( new Attachment ([
-				'path' => 'product.png',
+				'path' => 'product1.png',
+				'priority' => 0,
+				'published' => 1
+			]));
+			$entry->attachments()->save( new Attachment ([
+				'path' => 'product2.png',
+				'priority' => 0,
+				'published' => 1
+			]));
+			$entry->attachments()->save( new Attachment ([
+				'path' => 'product3.png',
+				'priority' => 0,
+				'published' => 1
+			]));
+			$entry->attachments()->save( new Attachment ([
+				'path' => 'product4.png',
 				'priority' => 0,
 				'published' => 1
 			]));

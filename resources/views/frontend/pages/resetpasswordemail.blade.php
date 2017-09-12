@@ -7,44 +7,32 @@
 @endsection
 
 @section('body')
-<section id="user">
-	<div class="container">
-		<div class="user-tools">
-			<h1 class="text-uppercase">Khôi phục mật mã</h1>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<form role="form" method="POST" action="{{ url('/password/email') }}">
-					{{ csrf_field() }}
-					@if (session('status'))
-						<div class="alert alert-success alert-dismissible" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							{{ session('status') }}
-						</div>
-					@else
-					<p>Nhập email của bạn!</p>
-					@endif
 
-					<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-						<label for="email">Email</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-						@if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
-					</div>
-
-					<button type="submit" class="btn btn-default btn-block text-uppercase">Yêu cầu khôi phục mật mã</button>
-				</form>
-			</div>
-			<div class="col-md-offset-2 col-md-4">
-				<h2 class="text-uppercase">Đăng nhập</h2><br>
-				<a href="{{ route('user.login') }}" class="btn btn-default btn-block text-uppercase" role="button">Đăng nhập</a>
-			</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
+		<h1 class="article-title">Khôi phục mật mã</h1>
+		@if (session('status'))
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ session('status') }}
 		</div>
+		@endif
+		<form role="form" method="POST" action="{{ url('/password/email') }}">
+			{{ csrf_field() }}
+			<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+				<input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn!" required>
+				@if ($errors->has('email'))
+				<span class="help-block">
+					<strong>{{ $errors->first('email') }}</strong>
+				</span>
+				@endif
+			</div>
+			<button type="submit" class="btn btn-default btn-block">Yêu cầu khôi phục mật mã</button>
+			<a href="{{ route('user.login') }}" class="btn btn-default btn-block" role="button">Đăng nhập</a>
+			<br><br>
+		</form>
 	</div>
-</section>
+</div>
 @endsection
 @section('plugins.js')
 @endsection

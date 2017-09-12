@@ -45,22 +45,22 @@ class ConfigsTableSeeder extends Seeder
 		Config::create([
 			'key' => 'headquarter_address_street',
 			'text' => 'Tên đường',
-			'value' => '347 Hòa Hảo'
+			'value' => '60/21 Quốc Lộ 13'
 		]);
 		Config::create([
 			'key' => 'headquarter_address_ward',
 			'text' => 'Phường',
-			'value' => 'P. 5'
+			'value' => 'Phường 26'
 		]);
 		Config::create([
 			'key' => 'headquarter_address_district',
 			'text' => 'Quận/Huyện',
-			'value' => 'Quận 10'
+			'value' => 'Quận Bình Thạnh'
 		]);
 		Config::create([
 			'key' => 'headquarter_address_locality',
 			'text' => 'Miền',
-			'value' => 'Hồ Chí Minh'
+			'value' => 'Tp. HCM'
 		]);
 		Config::create([
 			'key' => 'headquarter_address_region',
@@ -72,11 +72,10 @@ class ConfigsTableSeeder extends Seeder
 			'text' => 'Google Map',
 			'value' => ''
 		]);
-		
 		Config::create([
 			'key' => 'headquarter_phone_number',
 			'text' => 'Số điện thoại trụ sở chính',
-			'value' => '090 685 56 54'
+			'value' => ''
 		]);
 		Config::create([
 			'key' => 'headquarter_phone_number_2',
@@ -91,12 +90,7 @@ class ConfigsTableSeeder extends Seeder
 		Config::create([
 			'key' => 'hot_line',
 			'text' => 'Hotline',
-			'value' => '090 685 56 54'
-		]);
-		Config::create([
-			'key' => 'hot_line_2',
-			'text' => 'Hotline 2',
-			'value' => ''
+			'value' => '1900 2295'
 		]);
 		Config::create([
 			'key' => 'opening_hours',
@@ -116,7 +110,7 @@ class ConfigsTableSeeder extends Seeder
 		Config::create([
 			'key' => 'address_sender_mail',
 			'text' => 'Địa chỉ gửi email',
-			'value' => 'info@sunlife.vn'
+			'value' => 'sunmart@asgroup.com.vn'
 		]);
 		Config::create([
 			'key' => 'display_name_send_mail',
@@ -126,7 +120,7 @@ class ConfigsTableSeeder extends Seeder
 		Config::create([
 			'key' => 'address_received_mail',
 			'text' => 'Địa chỉ nhận email liên hệ',
-			'value' => 'info@sunlife.vn'
+			'value' => 'sunmart@asgroup.com.vn'
 		]);
 		Config::create([
 			'key' => 'rows_per_page_article',

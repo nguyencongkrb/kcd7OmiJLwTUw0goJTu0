@@ -3,91 +3,54 @@
 
 
 @section('plugins.css')
+<link href="/frontend/vendor/OwlCarousel2/dist/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="/frontend/vendor/OwlCarousel2/dist/assets/owl.theme.default.min.css" rel="stylesheet">
 @endsection
 
 @section('customize.css')
 @endsection
 
 @section('body')
+
+@include('frontend.partials.slider')
 <div class="row">
-	<!--Middle Part Start-->
-	<div id="content" class="col-xs-12">
-		@include('frontend.partials.slider')
-
-		<!-- Bestsellers Product Start-->
-		<h3 class="subtitle">Sản phẩm nổi bật</h3>
-		<div class="owl-carousel product_carousel">
-			@foreach($bestSellers as $product)
-			<div class="product-thumb clearfix">
-				<div class="image">
-					<a href="{{ $product->getLink() }}">
-						<img src="{{ $product->getFirstAttachment('custom', 350, 350) }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="img-responsive" />
-					</a>
-				</div>
-				<div class="caption">
-					<h4><a href="{{ $product->getLink() }}">{{ $product->name }}</a></h4>
-					<p class="price">
-						@if($product->price == 0)
-						Liên hệ
-						@elseif($product->getSaleRatio() > 0)
-						<span class="price-new">{{ number_format($product->getLatestPrice()) }}</span> 
-						<span class="price-old">{{ number_format($product->price) }}</span> 
-						<span class="saving">-{{ $product->getSaleRatio() }}%</span>
-						@else
-						{{ number_format($product->price) }}
-						@endif
-					</p>
-				</div>
-			</div>
-			@endforeach
-		</div>
-		<!-- Featured Product End-->
-
-		@foreach($productCategories as $productCategory)
-		<h3 class="subtitle">{{ $productCategory->name }} - <a class="viewall" href="{{ $productCategory->getLink() }}">xem tất cả</a></h3>
-		<div class="owl-carousel product_carousel">
-			@foreach($productCategory->products()->where('published', 1)->orderBy('id', 'desc')->take(10)->get() as $product)
-			<div class="product-thumb clearfix">
-				<div class="image">
-					<a href="{{ $product->getLink() }}">
-						<img src="{{ $product->getFirstAttachment('custom', 350, 350) }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="img-responsive" />
-					</a>
-				</div>
-				<div class="caption">
-					<h4><a href="{{ $product->getLink() }}">{{ $product->name }}</a></h4>
-					<p class="price">
-						@if($product->price == 0)
-						Liên hệ
-						@elseif($product->getSaleRatio() > 0)
-						<span class="price-new">{{ number_format($product->getLatestPrice()) }}</span> 
-						<span class="price-old">{{ number_format($product->price) }}</span> 
-						<span class="saving">-{{ $product->getSaleRatio() }}%</span>
-						@else
-						{{ number_format($product->price) }}
-						@endif
-					</p>
-				</div>
-			</div>
-			@endforeach
-		</div>
-		@endforeach
-
-		<!-- Banner Start -->
-		@if(!is_null($slidersBottom))
-		<div class="marketshop-banner">
-			<div class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <a href="{{ $slidersBottom->link }}"><img title="{{ $slidersBottom->name }}" alt="{{ $slidersBottom->name }}" src="{{ $slidersBottom->getFirstAttachment('custom', 1140, 75) }}"></a></div>
-			</div>
-		</div>
-		@endif
-		<!-- Banner End -->
+	@foreach($productCategories as $category)
+	@if($loop->iteration % 5 == 1)
+	<div class="col-xs-12 col-sm-6 col-md-6 categories-link">
+		@elseif($loop->iteration % 5 == 3)
 	</div>
-	<!--Middle Part End-->
+	<div class="col-xs-12 col-sm-6 col-md-6 categories-link">
+		@elseif($loop->iteration % 5 == 0)
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-12 categories-link">
+		@endif
+		@if($loop->iteration % 5 == 0)
+		<a href="{{ $category->getLink() }}"><img src="{{ $category->getFirstAttachment('custom', 1140, 0) }}" alt="{{ $category->name }}" class="img-responsive"></a>
+		@else
+		<a href="{{ $category->getLink() }}"><img src="{{ $category->getFirstAttachment('custom', 555, 0) }}" alt="{{ $category->name }}" class="img-responsive"></a>
+		@endif
+
+		@if($loop->last)
+	</div>
+	@endif
+	@endforeach
 </div>
 @endsection
 
 @section('plugins.js')
+<script src="/frontend/vendor/jquery/jquery.min.js"></script>
+<script src="/frontend/vendor/OwlCarousel2/dist/owl.carousel.min.js"></script>
 @endsection
 
 @section('customize.js')
+<script type="text/javascript">
+	$(document).ready(function(argument) {
+		$('.owl-carousel').owlCarousel({
+			items: 1,
+			loop:true,
+			lazyLoad: true,
+			autoplay: true
+		});
+	});
+</script>
 @endsection

@@ -1,79 +1,141 @@
-<div id="content" class="col-sm-9">
-	<div itemscope itemtype="http://schema.org/Product">
-		<h1 class="title" itemprop="name">{{ $product->name }}</h1>
-		<div class="row product-info">
-			<div class="col-sm-6">
-				<div class="image">
-					<img class="img-responsive" itemprop="image" id="zoom_01" src="{{ $product->getFirstAttachment('custom', 350, 350) }}" title="{{ $product->name }}" alt="{{ $product->name }}" data-zoom-image="{{ $product->getFirstAttachment('custom', 500, 500) }}" />
-				</div>
-				<div class="center-block text-center"><span class="zoom-gallery"><i class="fa fa-search"></i> Click image for Gallery</span></div>
-				<div class="image-additional" id="gallery_01"> 
-					@foreach($product->getVisibleAttachments() as $attachment)
-					<a class="thumbnail" href="#" data-zoom-image="{{ $attachment->getLink('custom', 350, 350) }}" data-image="{{ $attachment->getLink('custom', 350, 350) }}" title="{{ $product->name }}"> 
-						<img src="{{ $attachment->getLink('custom', 66, 66) }}" title="{{ $product->name }}" alt = "{{ $product->name }}"/>
-					</a>
-					@endforeach
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<ul class="list-unstyled description">
-					<li><b>Nhà sản xuất:</b> <a href="{{ $product->producer->getLink() }}"><span itemprop="brand">{{ $product->producer->name }}</span></a></li>
-					<li><b>Mã sản phẩm:</b> <span itemprop="mpn">{{ $product->code }}</span></li>
-					<li><b>Bảo hành:</b> {{ $product->warranty }}</li>
-					<li><b>Tình trạng:</b> <span class="instock">{{ $product->getAvailability() }}</span></li>
-				</ul>
-				<ul class="price-box">
-					<li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-						@if($product->price == 0)
-						Liên hệ
-						@elseif($product->getSaleRatio() > 0)
-						<span class="price-old">{{ number_format($product->price) }} đ</span> <span itemprop="price">{{ number_format($product->getLatestPrice()) }} đ<span itemprop="availability" content="In Stock"></span></span></li>
-						@else
-						{{ number_format($product->price) }} đ
-						@endif
-				</ul>
-				<div id="product">
-					<h3 class="subtitle hide">Available Options</h3>
-					<div class="form-group required  hide">
-						<label class="control-label">Màu sắc</label>
-						<select id="input-color" class="form-control">
-							@foreach($product->getVisibleColors() as $color)
-							<option value="{{ $color->id }}">{{ $color->name }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="cart">
-						<div>
-							<div class="qty">
-								<label class="control-label" for="input-quantity">Số lượng</label>
-								<input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control" />
-								<a class="qtyBtn plus" href="javascript:void(0);">+</a><br />
-								<a class="qtyBtn mines" href="javascript:void(0);">-</a>
-								<div class="clear"></div>
-							</div>
-							<button type="button" id="button-cart" class="btn btn-primary btn-lg add-to-cart" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">Mua hàng ngay</button>
-						</div>
-						<!-- <div>
-							<button type="button" class="wishlist" onClick=""><i class="fa fa-heart"></i> Add to Wish List</button>
-							<br />
-							<button type="button" class="wishlist" onClick=""><i class="fa fa-exchange"></i> Compare this Product</button>
-						</div> -->
-					</div>
-				</div>
-			</div>
-		</div>
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-description" data-toggle="tab">Mô tả sản phẩm</a></li>
-			<li><a href="#tab-specification" data-toggle="tab">Thông tin thêm</a></li>
+<div class="col-xs-12 col-sm-12 col-md-12">
+	<h1 class="product-title">{{ $product->name }}</h1>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6 pb-10">
+	<div class="product-thumbnail">
+		<ul class="bxslider">
+			@foreach($product->getVisibleAttachments() as $item)
+			<li><img src="{{ $product->getFirstAttachment('custom', 555, 0) }}" alt="{ $product->name }}"></li>
+			@endforeach
 		</ul>
-		<div class="tab-content">
-			<div itemprop="description" id="tab-description" class="tab-pane active">
-				{!! $product->description !!}
+	</div>
+	<div id="bx-pager" class="product-thumbnail-list">
+		@foreach($product->getVisibleAttachments() as $item)
+		<a data-slide-index="{{ $loop->index }}" href=""><img src="{{ $product->getFirstAttachment('custom', 84, 0) }}" /></a>
+		@endforeach
+	</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+	<div class="product-price">
+		{{ number_format($product->getLatestPrice()) }} <small>VNĐ</small>
+	</div>
+	<div class="product-promotion">
+		<a href="#">Chương trình khuyến mãi</a><br>
+		<span>(Click để xem chi tiết)</span>
+	</div>
+	<div class="product-action">
+		<div class="row">
+			<div class="col-xs-6 col-sm-12 col-md-4">
+				<button class="btn btn-default btn-block" type="button">Mua ngay</button>
+				<a href="#"><span>(Xem phương thức mua hàng)</span></a>
 			</div>
-			<div id="tab-specification" class="tab-pane">
-				{!! $product->additional_information !!}
+			<div class="col-xs-6 col-sm-12 col-md-4 text-center">
+				<button class="btn btn-default goshoppingcart btn-block" type="button">
+					<span>2</span>
+					<img src="/frontend/images/icon_shoppingcart2.png" alt="">
+				</button>
+				<a href="#"><span>(Thêm vào giỏ hàng<br>&amp; tiếp tục mua sắm)</span></a>
 			</div>
 		</div>
-		@include('frontend.partials.relatedproducts')
+	</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 product-description">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Thông tin sản phẩm</a></li>
+		<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quy cách sản phẩm</a></li>
+	</ul>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane fade in active" id="home">
+			{!! $product->description !!}
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="profile">
+			{!! $product->additional_information !!}
+		</div>
+	</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-8 product-review">
+	<strong>Xin vui lòng chia sẻ đánh giá của bạn về sản phẩm này</strong><br>
+	<br>
+	<form>
+		<span>Nhận xét về sản phẩm này</span><br><br>
+		<img src="/frontend/images/start.png" alt=""><br><br>
+		<div class="form-group">
+			<label>Tiêu đề đánh giá (tuỳ chọn)</label>
+			<input type="text" class="form-control" placeholder="Nhập tiêu đề đánh giá tại đây">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail1">Mô tả đánh giá</label>
+			<textarea class="form-control" placeholder="Nhập mô tả tại đây"></textarea>
+			<span class="help-block text-right">Nhận xét của <strong>{{ Auth::user()->getFullname() }}</strong></span>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 text-right">
+					<button type="submit" class="btn btn-default">Gửi nhận xét</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="product-review-summary">
+		<span>Điểm đánh giá trung bình của sản phẩm</span><br><br>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-12 col-md-4">
+			<div class="row">
+				<img src="/frontend/images/start2.png" alt=""><br><br>
+				<strong style="font-size: 24px;">4.1</strong> trên 5<br>
+				10 đánh giá 9 nhận xét
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-8">
+			<div class="row">
+				<div class="clearfix">
+					<span class="pull-left">5 sao</span>
+					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
+						<div style="width: 30%; height: 100%; background: #faca51">
+
+						</div>
+					</div>
+					<span class="pull-">14</span>
+				</div>
+				<div class="clearfix">
+					<span class="pull-left">4 sao</span>
+					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
+						<div style="width: 30%; height: 100%; background: #faca51">
+
+						</div>
+					</div>
+					<span class="pull-">9</span>
+				</div>
+				<div class="clearfix">
+					<span class="pull-left">3 sao</span>
+					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
+						<div style="width: 40%; height: 100%; background: #faca51">
+
+						</div>
+					</div>
+					<span class="pull-">6</span>
+				</div>
+				<div class="clearfix">
+					<span class="pull-left">2 sao</span>
+					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
+						<div style="width: 67%; height: 100%; background: #faca51">
+
+						</div>
+					</div>
+					<span class="pull-">3</span>
+				</div>
+				<div class="clearfix">
+					<span class="pull-left">1 sao</span>
+					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
+						<div style="width: 15%; height: 100%; background: #faca51">
+
+						</div>
+					</div>
+					<span class="pull-">5</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

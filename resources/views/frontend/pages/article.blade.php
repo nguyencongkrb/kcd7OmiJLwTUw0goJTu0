@@ -11,16 +11,10 @@
 @endsection
 
 @section('body')
-<ul class="breadcrumb">
-	<li><a href="/"><i class="fa fa-home"></i></a></li>
-	<li><a href="{{ $category->getLink() }}">{{ $category->name }}</a></li>
-	<li><a href="{{ $article->getLink() }}">{{ $article->name }}</a></li>
-</ul>
 <div class="row">
-	<div id="content" class="col-sm-9">
+	<div class="col-md-10 col-md-offset-1">
 		@include('frontend.partials.article')
 	</div>
-	@include('frontend.partials.productsidebar')
 </div>
 @endsection
 

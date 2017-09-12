@@ -1,35 +1,41 @@
-@inject('config', '\App\Config')
-@inject('article', '\App\Article')
-<?php $footer = $article::findByKey('footer')->first(); ?>
-<footer id="footer">
-	<div class="fpart-first">
-		<div class="container">
-			<div class="row">
-				{!! $footer->content !!}
+@inject('config', 'App\Config')
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<a href="#"><img src="/frontend/images/logo_asgroup.png" alt="logo ASGroup"></a><br>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6">
+				Địa chỉ: {{ $config->getValueByKey('headquarter_address_street') }}, {{ $config->getValueByKey('headquarter_address_ward') }}<br>
+				{{ $config->getValueByKey('headquarter_address_district') }}, {{ $config->getValueByKey('headquarter_address_locality') }}<br>
+				Hotline: <a href="tel:{{ $config->getValueByKey('hot_line') }}">{{ $config->getValueByKey('hot_line') }}</a><br>
+				Email: <a href="mailto:{{ $config->getValueByKey('address_received_mail') }}">{{ $config->getValueByKey('address_received_mail') }}</a>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4">
+						<ul class="list-unstyled">
+							<li><a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'gioi-thieu']) }}">Giới thiệu</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'cac-cau-hoi-thuong-gap']) }}">Các câu hỏi thường gặp</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'dieu-khoan-su-dung']) }}">Điều khoản sử dụng</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-4">
+						<ul class="list-unstyled">
+							<li><a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-dat-hang']) }}">Phương thức đặt hàng</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-thanh-toan']) }}">Phương thức thanh toán</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-giao-hang']) }}">Phương thức giao hàng</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-4">
+						<ul class="list-unstyled">
+							<li><a href="{{ route('article', ['categorykey' => 'chinh-sach', 'key' => 'chinh-sach-bao-mat']) }}">Chính sách bảo mật</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 'chinh-sach', 'key' => 'chinh-sach-doi-tra']) }}">Chính sách đổi trả</a></li>
+							<li><a href="{{ route('article', ['categorykey' => 'chinh-sach', 'key' => 'chinh-sach-bao-hanh']) }}">Chính sách bảo hành</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="fpart-second">
-		<div class="container">
-			<div id="powered" class="clearfix">
-				<div class="powered_text pull-left flip">
-					<p>{{ $config->getValueByKey('site_name') }} &copy; 2016 | Designed By <a href="http://ketnoimoi.com" target="_blank">Kết Nối Mới</a></p>
-				</div>
-				<div class="social pull-right flip"> 
-					<a href="{{ $config->getValueByKey('facebook_page') }}" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/socialicons/facebook.png" alt="Facebook" title="Facebook"></a> 
-					<a href="{{ $config->getValueByKey('twitter_page') }}" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/socialicons/twitter.png" alt="Twitter" title="Twitter"> </a> 
-					<a href="{{ $config->getValueByKey('plus_google') }}" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/socialicons/google_plus.png" alt="Google+" title="Google+"> </a> 
-					<a href="{{ $config->getValueByKey('pinterest_page') }}" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/socialicons/pinterest.png" alt="Pinterest" title="Pinterest"> </a> 
-					<a href="{{ $config->getValueByKey('rss') }}" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/socialicons/rss.png" alt="RSS" title="RSS"> </a> 
-				</div>
-			</div>
-			<!-- <div class="bottom-row">
-				<div class="custom-text text-center"> <img alt="" src="/frontend/image/logo-small.png">
-					<p>This is a CMS block. You can insert any content (HTML, Text, Images) Here. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-				</div>
-				<div class="payments_types"> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_paypal.png" alt="paypal" title="PayPal"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_american.png" alt="american-express" title="American Express"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_2checkout.png" alt="2checkout" title="2checkout"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_maestro.png" alt="maestro" title="Maestro"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_discover.png" alt="discover" title="Discover"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="/frontend/image/payment/payment_mastercard.png" alt="mastercard" title="MasterCard"></a> </div>
-			</div> -->
-		</div>
-	</div>
-	<div id="back-top"><a data-toggle="tooltip" title="Back to Top" href="javascript:void(0)" class="backtotop"><i class="fa fa-chevron-up"></i></a></div>
 </footer>

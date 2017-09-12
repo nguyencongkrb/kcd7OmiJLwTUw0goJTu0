@@ -17,7 +17,7 @@ class ProductCategoriesTableSeeder extends Seeder
 	{
 		$generator = \Faker\Factory::create('vi_VN');
 
-		$categories = ['Quà tặng nữ', 'Quà tặng nam', 'Quà tặng trẻ em', 'Quà tặng theo mùa', 'Tất cả quà tặng'];
+		$categories = ['Quà tặng nữ', 'Quà tặng nam', 'Quà tặng trẻ em', 'Tất cả quà tặng', 'Quà tặng theo mùa'];
 
 		foreach ($categories as $key => $category) {
 			$entry = ProductCategory::create([
@@ -38,8 +38,13 @@ class ProductCategoriesTableSeeder extends Seeder
 				'meta_keywords' => $category
 			]));
 			$entry->attachments()->save( new Attachment ([
-				'path' => Common::createKeyURL($category) . '.jpg',
+				'path' => Common::createKeyURL($category) . '.png',
 				'priority' => 0,
+				'published' => 1
+			]));
+			$entry->attachments()->save( new Attachment ([
+				'path' => Common::createKeyURL($category) . '-1.png',
+				'priority' => 1,
 				'published' => 1
 			]));
 

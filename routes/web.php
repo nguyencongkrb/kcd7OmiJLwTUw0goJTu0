@@ -91,11 +91,18 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 });
 
 
-Route::group(['namespace' => 'Frontend'], function()
-{
-	// for multi language site
-	Route::get('/locate/{locate}.html', 'PageController@locate')->name('locate');
+// for multi language site
+Route::get('/locate/{locate}.html', '\App\Http\Controllers\Frontend\PageController@locate')->name('locate');
 
+Route::get('dang-ky.html', '\App\Http\Controllers\Frontend\PageController@register')->name('user.register');
+Route::post('dang-ky.html', '\App\Http\Controllers\Frontend\PageController@createUser')->name('user.create');
+Route::get('xac-nhan-dang-ky/{confirmationcode}', '\App\Http\Controllers\Frontend\PageController@createVerify')->name('create.verify');
+Route::get('dang-nhap.html', '\App\Http\Controllers\Frontend\PageController@login')->name('user.login');
+Route::get('khoi-phuc-mat-ma.html', '\App\Http\Controllers\Frontend\PageController@resetPassword')->name('user.resetpassword');
+Route::get('tao-mat-mat-moi/{token}', '\App\Http\Controllers\Frontend\PageController@resetPasswordForm')->name('user.resetpasswordform');
+
+Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
+{
 	Route::get('/', 'PageController@index')->name('home');
 
 	Route::get('lien-he.html', 'PageController@contact')->name('contact');
@@ -106,17 +113,10 @@ Route::group(['namespace' => 'Frontend'], function()
 	Route::post('thong-tin-thanh-toan.html', 'PageController@purchase')->name('purchase');
 	Route::get('mua-hang-thanh-cong.html', 'PageController@purchaseSuccess')->name('purchase.success');
 	
-	Route::get('dang-ky.html', 'PageController@register')->name('user.register');
-	Route::post('dang-ky.html', 'PageController@createUser')->name('user.create');
-	Route::get('xac-nhan-dang-ky/{confirmationcode}', 'PageController@createVerify')->name('create.verify');
-	Route::get('dang-nhap.html', 'PageController@login')->name('user.login');
 	Route::get('thong-tin-thanh-vien.html', 'PageController@profile')->name('user.profile');
 	Route::post('thong-tin-thanh-vien.html', 'PageController@updateProfile')->name('user.updateprofile');
 	Route::get('thay-doi-mat-ma.html', 'PageController@changePassword')->name('user.changepassword');
 	Route::post('thay-doi-mat-ma.html', 'PageController@updatePassword')->name('user.updatepassword');
-
-	Route::get('khoi-phuc-mat-ma.html', 'PageController@resetPassword')->name('user.resetpassword');
-	Route::get('tao-mat-mat-moi/{token}', 'PageController@resetPasswordForm')->name('user.resetpasswordform');
 	
 	Route::get('lich-su-mua-hang.html', 'PageController@orderHistory')->name('order.history');
 	Route::get('chi-tiet-don-hang/{key}.html', 'PageController@memberProfile')->name('order.detail');

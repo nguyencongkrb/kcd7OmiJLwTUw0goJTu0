@@ -41,6 +41,12 @@ use App\Notifications\ContactRequest;
 
 class PageController extends Controller
 {
+	public function __construct()
+    {
+        //$this->middleware('auth')->except(['locate', 'user.register', 'user.create', 'create.verify', 'user.login', 'user.resetpassword', 'user.resetpasswordform']);
+        //$this->middleware('auth');
+    }
+
 	// for multi language site
 	public function locate($locate)
 	{
@@ -53,119 +59,52 @@ class PageController extends Controller
 		$this->setMetadata();
 
 		$sliders = BannerCategory::findByKey('banner-trang-chu')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->take(5)->get();
-		$slidersRight = BannerCategory::findByKey('banner-trang-chu-phai')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->take(2)->get();
-		$slidersBottom = BannerCategory::findByKey('banner-trang-chu-bottom')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->first();
 		$productCategories = ProductCategory::where('parent_id', 0)->where('published', 1)->orderBy('priority')->get();
-		$bestSellers = ProductType::findByKey('san-pham-noi-bat')->first()->products()->where('published', 1)->orderBy('id', 'desc')->take(10)->get();
 
-		return view('frontend.pages.index', compact('sliders', 'slidersRight', 'slidersBottom', 'productCategories', 'bestSellers'));
+		return view('frontend.pages.index', compact('sliders', 'productCategories'));
 	}
 
 	public function products($key = '')
 	{
+		$category = ProductCategory::findByKey($key)->where('published', 1)->first();
+		if($category == null){
+			abort(404);
+		}
+
+		$site_title = $category->name;
+		$site_name = Config::getValueByKey('site_name');
+		$facebook_page = Config::getValueByKey('facebook_page');
+		SEOMeta::setTitle($site_title);
+		SEOMeta::setDescription($category->meta_description);
+		SEOMeta::setKeywords([$category->meta_keywords]);
+		SEOMeta::addMeta('copyright', $site_name);
+		SEOMeta::addMeta('author', $site_name);
+		SEOMeta::addMeta('robots', 'all');
+		SEOMeta::addMeta('revisit-after', '1 days');
+		SEOMeta::addMeta('article:author', $facebook_page);
+		SEOMeta::addMeta('article:publisher', $facebook_page);
+		SEOMeta::addMeta('fb:pages', Config::getValueByKey('facebook_fanpage_id'), 'property');
+		SEOMeta::addMeta('fb:app_id', Config::getValueByKey('facebook_app_id'), 'property');
+		SEOMeta::addAlternateLanguage('vi-vn', $category->getLink());
+		SEOMeta::addAlternateLanguage('en-us', $category->getLink());
+
+		OpenGraph::setTitle($site_title);
+		OpenGraph::setDescription($category->meta_description);
+		OpenGraph::setUrl($category->getLink());
+		OpenGraph::setSiteName($site_name);
+		OpenGraph::addProperty('type', 'website');
+		OpenGraph::addProperty('locale', 'vi_VN');
+		OpenGraph::addProperty('locale:alternate', ['vi_VN', 'en_US']);
+		foreach ($category->getVisibleAttachments() as $attachment) {
+			OpenGraph::addImage($attachment->getLink());
+		}
+		OpenGraph::addProperty('image:width', 1200);
+		OpenGraph::addProperty('image:height', 628);
+
 		$limit = Config::getValueByKey('rows_per_page_product');
-		$category = null;
-		$producers = [];
-		$products = [];
+		$products = $category->products()->where('published', 1)->orderBy('id', 'desc')->paginate($limit);
 
-		// fillter
-		//tag=tagid&producttype=producttypeid&orderby=price-desc
-		$request = request();
-
-		$orderBy = explode('-', $request->query('orderby', ''));
-
-		$query = Product::where('published', 1);
-
-		if($request->query('tag', '') != ''){
-			$query->whereHas('tags', function ($query) use ($request) {
-				$query->where('id', $request->query('tag', ''));
-			});
-		}
-
-		if($request->query('producttype', '') != ''){
-			$query->whereHas('productTypes', function ($query) use ($request) {
-				$query->where('id', $request->query('producttype', ''));
-			});
-		}
-
-		// all products
-		if ($key == '') {
-			$this->setMetadata('Sản phẩm', 'allproducts');
-
-			if (count($orderBy) == 2) {
-				$query->orderBy($orderBy[0], $orderBy[1]);
-			}
-			$products = $query->orderBy('id', 'desc')->paginate($limit);
-		}
-		else{
-			$category = ProductCategory::findByKey($key)->where('published', 1)->first();
-			if($category == null){
-				abort(404);
-			}
-
-			$site_title = $category->name;
-			$site_name = Config::getValueByKey('site_name');
-			$facebook_page = Config::getValueByKey('facebook_page');
-			SEOMeta::setTitle($site_title);
-			SEOMeta::setDescription($category->meta_description);
-			SEOMeta::setKeywords([$category->meta_keywords]);
-			SEOMeta::addMeta('copyright', $site_name);
-			SEOMeta::addMeta('author', $site_name);
-			SEOMeta::addMeta('robots', 'all');
-			SEOMeta::addMeta('revisit-after', '1 days');
-			SEOMeta::addMeta('article:author', $facebook_page);
-			SEOMeta::addMeta('article:publisher', $facebook_page);
-			SEOMeta::addMeta('fb:pages', Config::getValueByKey('facebook_fanpage_id'), 'property');
-			SEOMeta::addMeta('fb:app_id', Config::getValueByKey('facebook_app_id'), 'property');
-			SEOMeta::addAlternateLanguage('vi-vn', $category->getLink());
-			SEOMeta::addAlternateLanguage('en-us', $category->getLink());
-
-			OpenGraph::setTitle($site_title);
-			OpenGraph::setDescription($category->meta_description);
-			OpenGraph::setUrl($category->getLink());
-			OpenGraph::setSiteName($site_name);
-			OpenGraph::addProperty('type', 'website');
-			OpenGraph::addProperty('locale', 'vi_VN');
-			OpenGraph::addProperty('locale:alternate', ['vi_VN', 'en_US']);
-			foreach ($category->getVisibleAttachments() as $attachment) {
-				OpenGraph::addImage($attachment->getLink());
-			}
-			OpenGraph::addProperty('image:width', 1200);
-			OpenGraph::addProperty('image:height', 628);
-
-			$query->whereHas('productCategories', function ($query) use ($category) {
-				if (count($category->childrens()->where('published', 1)->get()) > 0) {
-					$query->whereIn('id', $category->childrens()->where('published', 1)->pluck('id')->toArray());
-				}
-				else{
-					$query->where('id', $category->id);
-				}
-			});
-
-			if (count($orderBy) == 2) {
-				$query->orderBy($orderBy[0], $orderBy[1]);
-			}
-
-			$producers = Producer::whereHas('products', function ($query1) use ($category) {
-			    $query1->whereHas('productCategories', function ($query1) use ($category) {
-					if (count($category->childrens()->where('published', 1)->get()) > 0) {
-						$query1->whereIn('id', $category->childrens()->where('published', 1)->pluck('id')->toArray());
-					}
-					else{
-						$query1->where('id', $category->id);
-					}
-				});
-			})->where('published', 1)->get();
-
-			$products = $query->orderBy('id', 'desc')->paginate($limit);
-		}
-
-		if ($request->ajax()) {
-			$products->load('attachments', 'productCategories', 'tags');
-			return response()->json($products->toArray());
-		}
-
-		return view('frontend.pages.products', compact('category', 'products', 'producers'));
+		return view('frontend.pages.products', compact('category', 'products'));
 	}
 
 	public function productsByCategoryAndProducer($categorykey, $producerkey)
@@ -761,7 +700,7 @@ class PageController extends Controller
 			return response()->json($contact->toArray());
 		}
 
-		return redirect(route('contact'))->with('tatus', 'Nội dung liên hệ của quý khách đã được gửi đến ban quản trị. Chúng tôi sẽ phản hồi quý khách trong thời gian sớm nhất. Xin cảm ơn!');
+		return redirect(route('contact'))->with('status', 'Nội dung liên hệ của quý khách đã được gửi đến ban quản trị. Chúng tôi sẽ phản hồi quý khách trong thời gian sớm nhất. Xin cảm ơn!');
 	}
 
 	private function setMetadata($prefix = '', $route = 'home', $routeParams = [])
@@ -795,12 +734,14 @@ class PageController extends Controller
 		OpenGraph::setSiteName($site_name);
 		OpenGraph::addProperty('type', 'website');
 
+		/*
 		$social_banner = BannerCategory::findByKey('banner-social')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->take(5)->get();
 		foreach ($social_banner as $key => $banner) {
 			OpenGraph::addImage($banner->getFirstAttachment());
 		}
 		OpenGraph::addProperty('image:width', 1200);
 		OpenGraph::addProperty('image:height', 628);
+		*/
 		// end metadata
 	}
 }

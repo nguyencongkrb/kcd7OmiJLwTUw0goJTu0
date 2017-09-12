@@ -11,88 +11,80 @@
 @endsection
 
 @section('body')
-<!-- Breadcrumb Start-->
-<ul class="breadcrumb">
-	<li><a href="/"><i class="fa fa-home"></i></a></li>
-	<li><a href="{{ route('contact') }}">Liên hệ</a></li>
-</ul>
-<!-- Breadcrumb End-->
 <div class="row">
-	<!--Middle Part Start-->
-	<div id="content" class="col-sm-9">
-		<h1 class="title">Liên hệ với Chúng tôi</h1>
-		<h3 class="subtitle">Vị trí</h3>
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="contact-info">
-					<div class="contact-info-icon"><i class="fa fa-map-marker"></i></div>
-					<div class="contact-detail">
-						<h4>{{ $config->getValueByKey('site_name') }}</h4>
-						<address>
-							{{ $config->getValueByKey('headquarter_address_street') }},
-							{{ $config->getValueByKey('headquarter_address_ward') }},<br />
-							{{ $config->getValueByKey('headquarter_address_district') }},
-							{{ $config->getValueByKey('headquarter_address_locality') }}
-						</address>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="contact-info">
-					<div class="contact-info-icon"><i class="fa fa-phone"></i></div>
-					<div class="contact-detail">
-						<h4>Điện thoại</h4>
-						Phone: {{ $config->getValueByKey('headquarter_phone_number') }}<br>
-						Fax: {{ $config->getValueByKey('headquarter_fax_number') }} </div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="contact-info">
-						<div class="contact-info-icon"><i class="fa fa-clock-o"></i></div>
-						<div class="contact-detail">
-							<h4>Giờ làm việc</h4>
-							{{ $config->getValueByKey('opening_hours') }} </div>
-						</div>
-					</div>
-				</div>
-				<form class="form-horizontal">
-					<fieldset>
-						<h3 class="subtitle">Gửi liên hệ</h3>
-						<div class="form-group required">
-							<label class="col-md-2 col-sm-3 control-label" for="input-name">Họ tên</label>
-							<div class="col-md-10 col-sm-9">
-								<input type="text" name="name" value="" id="input-name" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group required">
-							<label class="col-md-2 col-sm-3 control-label" for="input-email">Email</label>
-							<div class="col-md-10 col-sm-9">
-								<input type="text" name="email" value="" id="input-email" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group required">
-							<label class="col-md-2 col-sm-3 control-label" for="input-enquiry">Nội dung</label>
-							<div class="col-md-10 col-sm-9">
-								<textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
-							</div>
-						</div>
-					</fieldset>
-					<div class="buttons">
-						<div class="pull-right">
-							<input class="btn btn-primary" type="button" id="btnSendContact" value="Gửi liên hệ" />
-						</div>
-					</div>
-				</form>
-			</div>
-
-			@include('frontend.partials.productsidebar')
-
-			<!--Middle Part End -->
+	<div class="col-md-4 col-md-offset-1">
+		<h1 class="article-title">Thông tin liên hệ</h1>
+		<p class="lead">
+			<span class="glyphicon glyphicon-map-marker"></span> 
+			{{ $config->getValueByKey('headquarter_address_street') }},
+			{{ $config->getValueByKey('headquarter_address_ward') }},<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;{{ $config->getValueByKey('headquarter_address_district') }},
+			{{ $config->getValueByKey('headquarter_address_locality') }}
+			<br>
+			<span class="glyphicon glyphicon-earphone"></span>
+			<a href="tel:{{ $config->getValueByKey('hot_line') }}">{{ $config->getValueByKey('hot_line') }}</a>
+			<br>
+			<span class="glyphicon glyphicon-envelope"></span> 
+			<a href="mailto:{{ $config->getValueByKey('address_received_mail') }}">{{ $config->getValueByKey('address_received_mail') }}</a>
+			<br>
+			<span class="glyphicon glyphicon-calendar"></span>
+			{{ $config->getValueByKey('opening_hours') }}
+		</p>
+	</div>
+	<div class="col-md-6">
+		<h1 class="article-title">Gửi liên hệ</h1>
+		@if(session('status'))
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ session('status') }}
 		</div>
-		@endsection
+		@endif
+		<form class="form-horizontal" method="POST" action="{{ route('contact.create') }}">
+		 {{ csrf_field() }}
+			<div class="form-group">
+				<label class="col-md-3 col-sm-3 control-label">Chủ đề</label>
+				<div class="col-md-9 col-sm-9">
+					<input type="text" name="Contact[subject]" class="form-control" required >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 col-sm-3 control-label">Họ &amp; tên</label>
+				<div class="col-md-9 col-sm-9">
+					<input type="text" name="Contact[full_name]" class="form-control" required >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 col-sm-3 control-label">Email</label>
+				<div class="col-md-9 col-sm-9">
+					<input type="email" name="Contact[email]" class="form-control" required >
+				</div>
+				
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 col-sm-3 control-label">Điện thoại</label>
+				<div class="col-md-9 col-sm-9">
+					<input type="text" name="Contact[phone]" class="form-control" required >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 col-sm-3 control-label">Nội dung</label>
+				<div class="col-md-9 col-sm-9">
+					<textarea name="Contact[content]" rows="5" class="form-control" required></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+			<div class="col-md-12">
+					<button type="submit" class="btn btn-default pull-right">Gửi liên hệ</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
-		@section('plugins.js')
-		@endsection
+@endsection
 
-		@section('customize.js')
-		@endsection
+@section('plugins.js')
+@endsection
+
+@section('customize.js')
+@endsection

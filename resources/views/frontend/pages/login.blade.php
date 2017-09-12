@@ -7,53 +7,69 @@
 @endsection
 
 @section('body')
-<section id="user">
-	<div class="container">
-		<div class="user-tools">
-			<h1 class="text-uppercase">Đăng nhập</h1>
+<div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+	<form class="form-horizontal" method="POST" action="{{ url('/login') }}">
+		<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
+		<h1>SUN MART</h1>
+		{{ csrf_field() }}
+		@if(session('status'))
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ session('status') }}
 		</div>
-		<div class="row">
-			<div class="col-sm-6 col-md-4">
-				<form role="form" method="POST" action="{{ url('/login') }}">
-					{{ csrf_field() }}
-					@if (session('status'))
-						<div class="alert alert-success alert-dismissible" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							{{ session('status') }}
-						</div>
-					@else
-					<p>Vui lòng nhập tài khoản của bạn!</p>
+		@endif
+		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Tên đăng nhập</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<input type="text" id="email" name="email" class="form-control" required>
+					@if ($errors->has('email'))
+					<span class="help-block">
+						<strong>{{ $errors->first('email') }}</strong>
+					</span>
 					@endif
-					<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-						<label for="email">Email</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-						@if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
-					</div>
-					<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-						<label for="password">Mật mã</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Mật mã" required>
-						@if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
-					</div>
-					<a href="{{ route('user.resetpassword') }}">Quên mật khẩu</a><br>
-					<br>
-					<button type="submit" class="btn btn-default btn-block text-uppercase">Đăng nhập</button>
-				</form>
-			</div>
-			<div class="col-sm-6 col-md-offset-2 col-md-4">
-				<h2 class="text-uppercase">Tạo tài khoản</h2><br>
-				<a href="{{ route('user.register') }}" class="btn btn-default btn-block text-uppercase" role="button">Đăng ký</a>
+				</div>
 			</div>
 		</div>
-	</div>
-</section>
+		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Mật khẩu</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<input type="password" id="password" name="password" class="form-control" required>
+					@if ($errors->has('password'))
+					<span class="help-block">
+						<strong>{{ $errors->first('password') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Mã xác thực</label>
+			<div class="col-sm-4">
+				<div class="row">
+					<input type="text" class="form-control text-center" readonly value="8 + 3 =">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="row" style="overflow: hidden;">
+					<input type="number" class="form-control verifycode" placeholder="nhập mã xác thực" required>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-8">
+				<div class="row">
+					<button type="submit" class="btn btn-default btn-block">Đăng nhập</button>
+				</div>
+			</div>
+		</div>
+		<div class="row text-right form-link">
+			<a href="{{ route('user.resetpassword') }}">Quên mật khẩu</a><br>
+			<a href="{ route('user.register') }}">Tạo tài khoản mới</a>
+		</div>
+	</form>
+</div>
 @endsection
 @section('plugins.js')
 @endsection

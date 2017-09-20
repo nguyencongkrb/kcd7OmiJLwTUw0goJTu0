@@ -4,7 +4,7 @@ if(typeof ketnoimoi == 'undefined')
 ketnoimoi.site = {
 	init: function () {
 		var thisObj = ketnoimoi.site;
-		$('span#cart-total').text(thisObj.cart.getTotalQuantity() + ' Sản phẩm');
+		$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 
 		thisObj.events();
 	},
@@ -37,39 +37,45 @@ ketnoimoi.site = {
 			}
 
 			thisObj.cart.addToCart(data);
-			$('span#cart-total').text(thisObj.cart.getTotalQuantity() + ' Sản phẩm');
+			$('span#cart-total').text(thisObj.cart.getTotalQuantity());
+
+			if ($(this).hasClass('go-payment'))
+				window.location = '/gio-hang.html';
+			else
+				window.location = '/';
 		});
 
 		// remove item in cart
-		$('button.remove-item').click(function () {
+		$('span.remove-item').click(function () {
 			if (confirm("Bạn thật sự muốn xóa sản phẩm này ra khỏi giỏ hàng?")) {
 				var data = $(this).data();
 				data.quantity = 0;
 				thisObj.cart.updateQuantity(data);
-				$('span#cart-total').text(thisObj.cart.getTotalQuantity() + ' Sản phẩm');
+				$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 				$(this).parents('tr').remove();
 				
-				var shippingFee = numbro().unformat($('span.shipping-cost').text());
+				var shippingFee = numbro().unformat($('span.shipping-cost').text()) || 0;
 				var totalAmount = thisObj.cart.getTotalAmount();
 
 				$('span.total-amount-without-shipping-cost').text(numbro(totalAmount).format());
+
 				$('span.total-amount').text(numbro(totalAmount + shippingFee).format());
 			};
 		});
 
 		// change item quantity in cart
-		$('button.change-quantity').click(function () {
+		$('input.quantity').change(function () {
 			var data = $(this).data();
-			data.quantity = $(this).parents('td').find('input[name="quantity"]').val();
+			data.quantity = $(this).val();
 			thisObj.cart.updateQuantity(data);
-			$('span#cart-total').text(thisObj.cart.getTotalQuantity() + ' Sản phẩm');
+			$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 			if (!parseInt(data.quantity)) {
 				$(this).parents('tr').remove();
 			}
 
 			$(this).parents('tr').find('span.item-amount').text(numbro(data.quantity * data.product_price).format());
 			
-			var shippingFee = numbro().unformat($('span.shipping-cost').text());
+			var shippingFee = numbro().unformat($('span.shipping-cost').text()) || 0;
 			var totalAmount = thisObj.cart.getTotalAmount();
 
 			$('span.total-amount-without-shipping-cost').text(numbro(totalAmount).format());

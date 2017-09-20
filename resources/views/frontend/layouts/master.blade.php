@@ -1,6 +1,11 @@
 @inject('config', '\App\Config')
-@inject('article', '\App\Article')
 @inject('bannerCategoty', '\App\BannerCategory')
+@php
+$linkgb = '';
+$bg = $bannerCategoty::findByKey('banner-dang-nhap')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->first();
+if($bg)
+$linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
+@endphp
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -17,6 +22,7 @@
 
 	<!-- Bootstrap -->
 	<link href="/frontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/frontend/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +39,7 @@
 
 	{!! $config->getValuebyKey('embed_script_head') !!}
 </head>
-<body class="{{ Auth::guest() ? 'loginpage' : null }}">
+<body class="{{ Auth::guest() ? 'loginpage' : null }}" style="background-image: url({{ Auth::guest() ? $linkgb : null }})">
 	@include('frontend.partials.header')
 	<section>
 		<div class="container">
@@ -46,6 +52,13 @@
 	<script src="/frontend/vendor/jquery/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="/frontend/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="/frontend/vendor/numbro/numbro.min.js"></script>
+	<script src="/frontend/vendor/moment/moment-with-locales.min.js"></script>
+	<script src="/frontend/vendor/cookie/js.cookie.js"></script>
+
+	<script src="/frontend/js/ketnoimoi.core.js"></script>
+	<script src="/frontend/js/ketnoimoi.site.js"></script>
 	@yield('plugins.js')
 	@yield('customize.js')
 	{!! $config->getValuebyKey('embed_script_body_bottom') !!}

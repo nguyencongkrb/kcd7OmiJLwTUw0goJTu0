@@ -9,7 +9,11 @@
 @section('body')
 <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
 	<form class="form-horizontal" method="POST" action="{{ url('/login') }}">
-		<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
+		<div class="col-sm-8 col-sm-offset-4">
+			<div class="row">
+			<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
+		</div>
+		</div>
 		<h1>SUN MART</h1>
 		{{ csrf_field() }}
 		@if(session('status'))
@@ -53,7 +57,7 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="row" style="overflow: hidden;">
-					<input type="number" class="form-control verifycode" placeholder="nhập mã xác thực" required>
+					<input type="text" class="form-control verifycode" placeholder="nhập mã xác thực" required>
 				</div>
 			</div>
 		</div>

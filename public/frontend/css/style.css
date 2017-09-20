@@ -17,30 +17,41 @@ input, textarea{
 	border-radius: 0 !important;
 }
 .btn-default:hover{
-	background-color: #febe10;
-	border-color: #febe10;
+	background-color: #eaab00;
+	border-color: #eaab00;
 }
 
 
 header{
-	border-bottom: solid 5px #febe10;
+	border-bottom: solid 5px #eaab00;
 }
 header a, header a:hover{
-	color: #febe10;
+	color: #eaab00;
 }
 #topbar{
 	background: #e7eeef;
 	height: 48px;
-	color: #075263;
+	color: #003946;
 }
 #topbar ul{
-	margin-bottom: 0px;
+	margin: 20px 0 0 0;
 }
 #topbar ul li:first-child{
 	border-right: solid 1px #fff;
 }
 #topbar a{
-	color: #075263;
+	color: #003946;
+}
+#topbar #cart-total{
+	color: #fff;
+	background: #eaab00;
+	border-radius: 50%;
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	line-height: 24px;
+	overflow: hidden;
 }
 .support{
 	height: 50px;
@@ -68,7 +79,7 @@ header a, header a:hover{
 
 nav ul{
 	margin: 0;
-	background:#075263;
+	background:#003946;
 	margin-left: 0 !important;
 }
 nav ul>li{
@@ -77,7 +88,7 @@ nav ul>li{
 	margin-left: -5px;
 }
 nav ul>li:hover{
-	background-color: #febe10;
+	background-color: #eaab00;
 }
 nav ul>li>a, nav ul>li>a:hover{
 	text-transform: uppercase;
@@ -127,16 +138,16 @@ ul.categories>li>a{
 }
 ul.categories>li>a:before{
 	content:"|";
-	color:#febe10;
+	color:#eaab00;
 	position: absolute;
 	left: -1px;
 	top: -1px;
 }
 ul.categories>li.active, ul.categories>li:hover{
-	background: #febe10;
+	background: #eaab00;
 }
 ul.categories>li.active a, ul.categories>li:hover a{
-	color: #075263;
+	color: #003946;
 }
 .products-item{
 	margin-top: 30px;
@@ -148,22 +159,24 @@ ul.categories>li.active a, ul.categories>li:hover a{
 	font-size: 24px;
 	font-weight: bold;
 	color: #58595b;
-	padding: 12px 10px 0 10px;;
+	padding: 0 10px;
 }
 .products-item-price small{
 	font-size: 12px;
 	font-weight: normal;
 }
+.products-item-name{
+	padding: 15px 10px 0 10px;
+}
 .products-item-name a{
 	color: #808285;
-	padding: 0 10px;
 }
 
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
-	background-color: #febe10;
-	border-color: #febe10;
-	color:#075263;
+	background-color: #eaab00;
+	border-color: #eaab00;
+	color:#003946;
 }
 .pagination>li:first-child>a, .pagination>li:first-child>span,
 .pagination>li:last-child>a, .pagination>li:last-child>span{
@@ -172,7 +185,7 @@ ul.categories>li.active a, ul.categories>li:hover a{
 
 h1.product-title,
 h1.article-title{
-	color: #075263;
+	color: #003946;
 	font-size: 24px;
 	font-weight: bold;
 	margin-top: 27px;
@@ -185,13 +198,13 @@ h1.article-title{
 	margin-bottom: 0 !important;
 }
 .product-price{
-	color:#075263;
+	color:#003946;
 	font-size: 24px;
 	font-weight: bold;
 	margin: 20px 0;
 }
 .product-price small{
-	color:#075263;
+	color:#003946;
 	font-size: 18px;
 	font-weight: normal;
 }
@@ -199,11 +212,11 @@ h1.article-title{
 	margin-bottom: 42px;
 }
 .product-promotion a{
-	color: #075263;
+	color: #003946;
 }
 .product-promotion span, .product-action span{
 	font-size: 12px;
-	color: #075263;
+	color: #003946;
 }
 .product-action button{
 	border: none;
@@ -211,12 +224,12 @@ h1.article-title{
 	padding: 0 35px;
 	text-transform: uppercase;
 	font-size: 18px;
-	color: #075263;
-	background: #febe10;
+	color: #003946;
+	background: #eaab00;
 	line-height: 39px;
 }
 .product-action button.goshoppingcart{
-	background: #075263;
+	background: #003946;
 }
 .product-action button span{
 	display: inline-block;
@@ -224,16 +237,16 @@ h1.article-title{
 	width: 30px;
 	font-size: 18px;
 	font-weight: bold;
-	border: solid 1px #febe10;
+	border: solid 1px #eaab00;
 	border-radius: 50%;
 	color: #fff;
-	background: #febe10;
+	background: #eaab00;
 	line-height: 30px;
 	margin-top: 5px;
 }
 .product-description .nav-tabs{
 	border-bottom: none;
-	border-top: solid 1px #febe10;
+	border-top: solid 1px #eaab00;
 }
 .product-description .nav-tabs>li>a{
 	background: #bdbdbd;
@@ -244,18 +257,13 @@ h1.article-title{
 	margin-right: 0;
 }
 .product-description .nav-tabs>li.active>a, .product-description .nav-tabs>li.active>a:focus, .product-description .nav-tabs>li.active>a:hover{
-	background: #febe10;
-	color: #075263;
+	background: #eaab00;
+	color: #003946;
 	border: none;
 }
 .product-description .tab-pane{
-	padding-top: 45px;
-	padding-bottom: 58px;
-	border-bottom: solid 1px #febe10;
-}
-.product-description p{
-	padding-left: 35px;
-	padding-right: 35px;
+	padding: 35px;
+	border-bottom: solid 1px #eaab00;
 }
 .product-review{
 	padding: 23px 55px;
@@ -278,19 +286,19 @@ form button{
 	border-radius: 0 !important;
 	padding: 0 35px !important;
 	font-size: 18px !important;
-	color: #075263 !important;
-	background: #febe10 !important;
+	color: #003946 !important;
+	background: #eaab00 !important;
 	line-height: 39px !important;
 }
-body.loginpage h1, body.loginpage h3{
+body.loginpage h1{
 	font-weight: bold;
-	color: #e9ab00;
+	color: #eaab00;
 	text-align: center;
 }
 body.loginpage h3{
-	color:#013946;
-	font-size: 18px;
-	text-align: right;
+	color:#003946;
+	font-size: 17px;
+	text-align: left;
 	font-weight: bold;
 }
 body.loginpage form{
@@ -298,19 +306,19 @@ body.loginpage form{
 }
 body.loginpage form input{
 	border-radius: 0 !important;
-	color: #003b46 !important;
+	color: #003946 !important;
 	border-color: #eaaa00 !important;
 	padding: 6px 10px !important;
 	background: #fcfcfc !important;
 }
 body.loginpage form input.verifycode{
-	background: #e2e7ea !important;
+	background: #e1e7e9 !important;
 	text-align: center;
-	border-color: #e2e7ea !important;
+	border-color: #e1e7e9 !important;
 	margin-left: 5px;
 }
 body.loginpage a{
-	color:#003945;
+	color:#003946;
 }
 body.loginpage .form-group{
 	margin-bottom: 5px;
@@ -324,24 +332,19 @@ body.loginpage {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;*/
-	background: url('/frontend/images/bg_login.jpg') no-repeat;
+	background: url('/frontend/images/bg_login.jpg');
+	background-repeat: no-repeat;
 	background-position: left center;
 	background-size: 70%;
 	/* Margin bottom by footer height */
-	margin-bottom: 163px;
+	margin-bottom: 190x;
 }
 body.loginpage header{
 	background: #fff;
 }
-body.loginpage footer{
-	margin-top: 0;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	/* Set the fixed height of the footer here */
-	height: 163px;
+body.loginpage form label{
+	color: #003946;
 }
-
 
 ul.checkout-step{
 	margin: 10px 0;
@@ -357,7 +360,7 @@ ul.checkout-step>li{
 	width: 20%;
 	display: table-cell;
 	font-size: 18px;
-	color: #075263;
+	color: #003946;
 }
 ul.checkout-step>li:before{
 	border: solid 1px #82a7af;
@@ -382,7 +385,7 @@ ul.checkout-step>li>span{
 	margin: auto;
 }
 ul.checkout-step>li.active>span{
-	background: #febe10;
+	background: #eaab00;
 }
 
 table.shoppingcart{
@@ -393,7 +396,7 @@ table.shoppingcart>tbody>tr>td{
 }
 table.shoppingcart td.head{
 	background: #d9e8e5;
-	color: #075263;
+	color: #003946;
 	font-weight: bold;
 }
 table.shoppingcart td.no-border{
@@ -426,8 +429,8 @@ table.shoppingcart .delivery-method.active{
 	height: auto;
 }
 .btn-shopping{
-	background: #075263;
-	border-color: #075263;
+	background: #003946;
+	border-color: #003946;
 	color: #fff;
 	font-size: 14px;
 }
@@ -437,14 +440,9 @@ table.shoppingcart .delivery-method.active{
 .btn-arrow span{
 	position: absolute;
 	color: #fff;
-	right: 0;
-	font-size: 200%;
-}
-span.glyphicon-lg{
-	font-size: 350%;
-}
-span.glyphicon-20{
-	font-size: 20px;
+	right: 5px;
+	top: 15%;
+	font-size: 250%;
 }
 .row-eq-height {
 	display: -webkit-box;
@@ -465,12 +463,12 @@ span.glyphicon-20{
 	margin: 15px 0;
 }
 .article-item-title{
-	color: #075263;
+	color: #003946;
 	font-weight: bold;
 	text-align: left;
 }
 .article-item-title a{
-	color: #075263;
+	color: #003946;
 }
 body.thanhyou footer{
 	margin-top: 0;
@@ -485,13 +483,35 @@ body.thanhyou footer{
 
 /************ FOOTER *****************/
 footer{
-	border-top: solid 5px #febe10;
+	border-top: solid 5px #eaab00;
 	background:#e7eeef;
 	font-size: 12px;
-	color: #004958;
-	padding: 0 0 25px;
+	color: #003946;
+	padding: 0;
 	margin-top: 25px;
 }
 footer a{
-	color: #004958;
+	color: #003946;
+}
+body.loginpage footer{
+	background-color: #eaab00;
+	border-color: #eaab00;
+	color: #fff;
+	margin-top: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 190px;
+}
+body.loginpage footer ul{
+	margin-top: 45px;
+}
+body.loginpage footer a{
+	color: #fff;
+}
+body.loginpage footer .register-trade{
+	background: #fff;
+	color: #003946;
+	padding: 15px 0;
 }

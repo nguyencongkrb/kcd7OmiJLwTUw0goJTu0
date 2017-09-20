@@ -79,7 +79,7 @@ class Product extends BaseModel
 	{
 		$firstCategory = $this->productCategories()->first();
 		if ($firstCategory) {
-			return route('product', ['categorykey' => $firstCategory->key, 'producerkey' => $this->producer->key, 'key' => $this->key]);
+			return route('product', ['categorykey' => $firstCategory->key, 'key' => $this->key]);
 		}
 		return '';
 	}

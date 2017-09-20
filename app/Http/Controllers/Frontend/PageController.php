@@ -107,73 +107,6 @@ class PageController extends Controller
 		return view('frontend.pages.products', compact('category', 'products'));
 	}
 
-	public function productsByCategoryAndProducer($categorykey, $producerkey)
-	{
-		$limit = Config::getValueByKey('rows_per_page_product');
-		$category = null;
-		$producer = null;
-
-		
-		$category = ProductCategory::findByKey($categorykey)->where('published', 1)->first();
-		if($category == null){
-			abort(404);
-		}
-
-		$producer = Producer::findByKey($producerkey)->where('published', 1)->first();
-		if($producer == null){
-			abort(404);
-		}
-
-		$site_title = $category->name . ' ' . $producer->name;
-		$site_name = Config::getValueByKey('site_name');
-		$facebook_page = Config::getValueByKey('facebook_page');
-		SEOMeta::setTitle($site_title);
-		SEOMeta::setDescription($category->meta_description);
-		SEOMeta::setKeywords([$category->meta_keywords]);
-		SEOMeta::addMeta('copyright', $site_name);
-		SEOMeta::addMeta('author', $site_name);
-		SEOMeta::addMeta('robots', 'all');
-		SEOMeta::addMeta('revisit-after', '1 days');
-		SEOMeta::addMeta('article:author', $facebook_page);
-		SEOMeta::addMeta('article:publisher', $facebook_page);
-		SEOMeta::addMeta('fb:pages', Config::getValueByKey('facebook_fanpage_id'), 'property');
-		SEOMeta::addMeta('fb:app_id', Config::getValueByKey('facebook_app_id'), 'property');
-		SEOMeta::addAlternateLanguage('vi-vn', route('products.byCategoryAndProducer', ['categorykey' => $category->key, 'producerkey' => $producer->key]));
-		SEOMeta::addAlternateLanguage('en-us', route('products.byCategoryAndProducer', ['categorykey' => $category->key, 'producerkey' => $producer->key]));
-
-		OpenGraph::setTitle($site_title);
-		OpenGraph::setDescription($category->meta_description);
-		OpenGraph::setUrl(route('products.byCategoryAndProducer', ['categorykey' => $category->key, 'producerkey' => $producer->key]));
-		OpenGraph::setSiteName($site_name);
-		OpenGraph::addProperty('type', 'website');
-		OpenGraph::addProperty('locale', 'vi_VN');
-		OpenGraph::addProperty('locale:alternate', ['vi_VN', 'en_US']);
-		foreach ($category->getVisibleAttachments() as $attachment) {
-			OpenGraph::addImage($attachment->getLink());
-		}
-		OpenGraph::addProperty('image:width', 1200);
-		OpenGraph::addProperty('image:height', 628);
-
-		$query = Product::where('published', 1);
-
-		$query->whereHas('productCategories', function ($query) use ($category) {
-			if (count($category->childrens()->where('published', 1)->get()) > 0) {
-				$query->whereIn('id', $category->childrens()->where('published', 1)->pluck('id')->toArray());
-			}
-			else{
-				$query->where('id', $category->id);
-			}
-		});
-
-		$query->whereHas('producer', function ($query) use ($producer) {
-			$query->where('id', $producer->id);
-		});
-
-		$products = $query->orderBy('id', 'desc')->paginate($limit);
-
-		return view('frontend.pages.products', compact('category', 'producer', 'products'));
-	}
-
 	public function producer($key)
 	{
 		$producer = Producer::findByKey($key)->where('published', 1)->first();
@@ -219,7 +152,7 @@ class PageController extends Controller
 		return view('frontend.pages.products', compact('producer', 'products'));
 	}
 
-	public function product($categorykey, $producerkey, $key)
+	public function product($categorykey, $key)
 	{
 		$category = ProductCategory::where('key', $categorykey)->where('published', 1)->first();
 		if ($category == null) {

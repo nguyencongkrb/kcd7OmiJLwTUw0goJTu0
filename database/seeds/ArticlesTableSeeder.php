@@ -131,7 +131,7 @@ class ArticlesTableSeeder extends Seeder
 			$entry->articleCategories()->attach($category->id);
 		}
 
-		$category = ArticleCategory::findByKey('chuong-trinh')->first();
+		$category = ArticleCategory::findByKey('khuyen-mai')->first();
 
 		for ($i=0; $i < 10; $i++) {
 			$name = $generator->sentence($nbWords = 6);

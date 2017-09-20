@@ -126,11 +126,8 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	// products category
 	Route::get('san-pham/{key}', 'PageController@products')->name('products');
 
-	// products category & producer
-	Route::get('san-pham/{categorykey}/{producerkey}', 'PageController@productsByCategoryAndProducer')->name('products.byCategoryAndProducer');
-
 	// product detail
-	Route::get('san-pham/{categorykey}/{producerkey}/{key}.html', 'PageController@product')->name('product');
+	Route::get('san-pham/{categorykey}/{key}.html', 'PageController@product')->name('product');
 
 	// all products
 	Route::get('san-pham.html', 'PageController@products')->name('allproducts');

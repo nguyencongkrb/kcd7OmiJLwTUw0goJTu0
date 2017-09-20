@@ -67,6 +67,12 @@
 		width: auto;
 		margin-top: 10px;
 	}
+	body.loginpage footer ul{
+	margin-top: 10px;
+}
+body.loginpage footer .register-trade{
+	padding: 15px;
+}
 }
 @media (min-width: 768px) {
 	table.shoppingcart input.quantity{

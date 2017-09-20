@@ -3,11 +3,11 @@
 	<div class="products-item-thumbnail">
 		<a href="{{ $product->getLink() }}"><img src="{{ $product->getFirstAttachment('custom', 360, 0) }}" alt="{{ $product->name }}" class="img-responsive"></a>
 	</div>
+	<div class="products-item-name">
+		<a href="{{ $product->getLink() }}">{{ $product->name }} - <span class="text-uppercase">{{ $product->code }}</span></a>
+	</div>
 	<div class="products-item-price">
 		{{ number_format($product->getLatestPrice()) }} <small>VNĐ</small>
-	</div>
-	<div class="products-item-name">
-		<a href="{{ $product->getLink() }}">{{ $product->name }}</a>
 	</div>
 </div>
 @if($loop->iteration % 3 == 0)

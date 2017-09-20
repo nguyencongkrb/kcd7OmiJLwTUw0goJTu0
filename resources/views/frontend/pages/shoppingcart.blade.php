@@ -8,77 +8,60 @@
 @endsection
 
 @section('body')
-<!-- Breadcrumb Start-->
-<ul class="breadcrumb">
-	<li><a href="index.html"><i class="fa fa-home"></i></a></li>
-	<li><a href="{{ route('shopping.cart') }}">Giỏ hàng</a></li>
+<ul class="list-inline checkout-step">
+	<li class="active"><span>1</span>Giỏ hàng</li>
+	<li><span>2</span>Thanh toán</li>
+	<li><span>3</span>Xác nhận</li>
+	<li><span>4</span>Hoàn tất</li>
 </ul>
-<!-- Breadcrumb End-->
+<table class="table table-condensed table-hover table-bordered shoppingcart">
+	<tr>
+		<td class="text-center head"></td>
+		<td class="text-center head">Tên sản phẩm</td>
+		<td class="text-center head">Đơn giá</td>
+		<td class="text-center head">Số lượng</td>
+		<td class="text-center head">Thành tiền</td>
+		<td class="text-center head">Xoá</td>
+	</tr>
+	@foreach($cart->cartDetails as $item)
+	<tr>
+		<td class="text-center">
+			<a href="{{ $item->product->getLink() }}"><img src="{{ $item->product->getFirstAttachment('custom', 94, 0) }}" alt="{{ $item->product->name }}" title="{{ $item->product->name }}" class="img-thumbnail" /></a>
+		</td>
+		<td>
+			<a href="{{ $item->product->getLink() }}" title="{{ $item->product->name }}">{{ $item->product->name }}</a>
+		</td>
+		<td class="text-right">
+			{{ number_format($item->product_price) }}
+		</td>
+		<td class="text-center">
+			<input type="number" value="{{ $item->quantity }}" class="form-control quantity text-right" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}">
+		</td>
+		<td class="text-right">
+			<span class="item-amount">{{ number_format($item->quantity * $item->product_price) }}</span>
+		</td>
+		<td class="text-center">
+			<a href="#"><span class="glyphicon glyphicon-trash glyphicon-20 remove-item" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"></span></a>
+		</td>
+	</tr>
+	@endforeach
+</table>
 <div class="row">
-	<!--Middle Part Start-->
-	<div id="content" class="col-sm-12">
-		<h1 class="title">Giỏ hàng</h1>
-		<div class="table-responsive">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<td class="text-center">Hình ảnh</td>
-						<td class="text-left">Tên sản phẩm</td>
-						<td class="text-left">Mã sản phẩm</td>
-						<td class="text-left">Số lượng</td>
-						<td class="text-right">Giá</td>
-						<td class="text-right">Thành tiền</td>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($cart->cartDetails as $item)
-					<tr>
-						<td class="text-center"><a href="{{ $item->product->getLink() }}"><img src="{{ $item->product->getFirstAttachment('custom', 50, 50) }}" alt="{{ $item->product->name }}" title="{{ $item->product->name }}" class="img-thumbnail" /></a></td>
-						<td class="text-left"><a href="{{ $item->product->getLink() }}">{{ $item->product->name }}</a><br />
-							<!-- <small>Reward Points: 1000</small> -->
-						</td>
-						<td class="text-left">{{ $item->product->code }}</td>
-						<td class="text-left"><div class="input-group btn-block quantity">
-							<input type="text" name="quantity" value="{{ $item->quantity }}" size="1" class="form-control" />
-							<span class="input-group-btn">
-								<button type="submit" data-toggle="tooltip" title="Cập nhật" class="btn btn-primary change-quantity" data-product_id="{{ $item->product_id }}" data-product_size_id="{{ $item->product_size_id }}" data-product_color_id="{{ $item->product_color_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"><i class="fa fa-refresh"></i></button>
-								<button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger remove-item"  data-product_id="{{ $item->product_id }}" data-product_size_id="{{ $item->product_size_id }}" data-product_color_id="{{ $item->product_color_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"><i class="fa fa-times-circle"></i></button>
-							</span></div></td>
-							<td class="text-right">{{ number_format($item->product_price) }}</td>
-							<td class="text-right"><span class="item-amount">{{ number_format($item->quantity * $item->product_price) }}</span></td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-8">
-					<table class="table table-bordered">
-						<tr>
-							<td class="text-right"><strong>Thành tiền:</strong></td>
-							<td class="text-right"><span class="total-amount-without-shipping-cost">{{ number_format($cart->getTotalAmount()) }}</span></td>
-						</tr>
-						<tr>
-							<td class="text-right"><strong>Phí vận chuyển:</strong></td>
-							<td class="text-right"><span class="shipping-cost">{{ number_format($config->getValueByKey('default_shipping_fee')) }}</span></td>
-						</tr>
-				<!-- <tr>
-				  <td class="text-right"><strong>VAT (20%):</strong></td>
-				  <td class="text-right">$188.00</td>
-				</tr> -->
-				<tr>
-					<td class="text-right"><strong>Tổng cộng:</strong></td>
-					<td class="text-right"><span class="total-amount">{{ number_format($cart->getTotalAmount() + $config->getValueByKey('default_shipping_fee')) }}</span></td>
-				</tr>
-			</table>
+	<div class="col-xs-12 col-sm-9 col-md-9 col-md-push-3">
+		<div class="col-xs-8 col-sm-6 col-sm-offset-2 col-md-4 col-md-offset-5 text-right pb-10">
+			<strong>Trị giá hàng hoá</strong><br>
+			<small>(Đã bao gồm VAT)</small>
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-3 text-right pb-10">
+			<strong><span class="total-amount">{{ number_format($cart->getTotalAmount()) }}</span></strong> VNĐ
 		</div>
 	</div>
-	<div class="buttons">
-		<div class="pull-left"><a href="/" class="btn btn-default">Tiếp tục mua hàng</a></div>
-		<div class="pull-right"><a href="{{ route('payment.info') }}" class="btn btn-primary">Thanh toán</a></div>
+	<div class="col-xs-6 col-sm-3 col-md-3 col-md-pull-9">
+		<a class="btn btn-default btn-block btn-shopping" href="/">Tiếp tục mua hàng</a>
 	</div>
-</div>
-<!--Middle Part End -->
+	<div class="col-xs-6 col-sm-3 col-md-3 col-md-offset-9">
+		<a class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng <br>&amp; thanh toán <span class="glyphicon glyphicon-play glyphicon-lg"></span></a>
+	</div>
 </div>
 @endsection
 

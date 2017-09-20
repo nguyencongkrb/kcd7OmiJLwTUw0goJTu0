@@ -5,13 +5,13 @@
 	<div class="product-thumbnail">
 		<ul class="bxslider">
 			@foreach($product->getVisibleAttachments() as $item)
-			<li><img src="{{ $product->getFirstAttachment('custom', 555, 0) }}" alt="{ $product->name }}"></li>
+			<li><img src="{{ $item->getLink('custom', 555, 0) }}" alt="{ $product->name }}"></li>
 			@endforeach
 		</ul>
 	</div>
 	<div id="bx-pager" class="product-thumbnail-list">
 		@foreach($product->getVisibleAttachments() as $item)
-		<a data-slide-index="{{ $loop->index }}" href=""><img src="{{ $product->getFirstAttachment('custom', 84, 0) }}" /></a>
+		<a data-slide-index="{{ $loop->index }}" href=""><img src="{{ $item->getLink('custom', 84, 0) }}" /></a>
 		@endforeach
 	</div>
 </div>
@@ -26,15 +26,14 @@
 	<div class="product-action">
 		<div class="row">
 			<div class="col-xs-6 col-sm-12 col-md-4">
-				<button class="btn btn-default btn-block" type="button">Mua ngay</button>
-				<a href="#"><span>(Xem phương thức mua hàng)</span></a>
+				<button class="btn btn-default btn-block add-to-cart quick-add-to-cart go-payment" type="button" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">Mua ngay</button>
+				<a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-dat-hang']) }}"><span>(Xem phương thức mua hàng)</span></a>
 			</div>
 			<div class="col-xs-6 col-sm-12 col-md-4 text-center">
-				<button class="btn btn-default goshoppingcart btn-block" type="button">
-					<span>2</span>
-					<img src="/frontend/images/icon_shoppingcart2.png" alt="">
+				<button class="btn btn-default goshoppingcart btn-block add-to-cart quick-add-to-cart" type="button" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">
+					<i class="fa fa-cart-plus fa-lg" style="color: #fff;" aria-hidden="true"></i>
 				</button>
-				<a href="#"><span>(Thêm vào giỏ hàng<br>&amp; tiếp tục mua sắm)</span></a>
+				<a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-dat-hang']) }}"><span>(Thêm vào giỏ hàng)</span></a>
 			</div>
 		</div>
 	</div>

@@ -74,7 +74,7 @@
 			</div>
 			<div class="form-group">
 			<div class="col-md-12">
-					<button type="submit" class="btn btn-default pull-right">Gửi liên hệ</button>
+					<button type="submit" class="btn btn-default pull-right">Gửi</button>
 				</div>
 			</div>
 		</form>

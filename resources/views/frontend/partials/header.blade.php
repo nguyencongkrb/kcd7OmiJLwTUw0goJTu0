@@ -13,7 +13,7 @@
 							</form>
 						</li>
 						<li>Xin chào <a href="{{ route('users.profile') }}"><strong>{{ Auth::user()->getFullname() }}</strong></a></li>
-						<li><a href="{{ route('shopping.cart') }}"><img src="/frontend/images/icon_shopping_cart.png" alt="giỏ hàng"></a></li>
+						<li><a href="{{ route('shopping.cart') }}"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> <span id="cart-total">0</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -47,9 +47,10 @@
 <nav>
 	<div class="container text-center">
 		<ul class="list-inline">
+			<li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
 			<li><a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'gioi-thieu']) }}">Giới thiệu</a></li>
 			<li><a href="{{ route('articles', ['categorykey' => 'kien-thuc-qua-tang']) }}">Kiến thức quà tặng</a></li>
-			<li><a href="{{ route('articles', ['categorykey' => 'chuong-trinh']) }}">Chương trình</a></li>
+			<li><a href="{{ route('articles', ['categorykey' => 'khuyen-mai']) }}">Khuyến mãi</a></li>
 			<li><a href="{{ route('contact') }}">Liên hệ</a></li>
 			<li><a href="#" class="last">Kiểm tra đơn hàng</a></li>
 		</ul>

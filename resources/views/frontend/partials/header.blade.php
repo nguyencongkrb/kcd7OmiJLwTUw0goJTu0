@@ -13,7 +13,10 @@
 							</form>
 						</li>
 						<li>Xin chào <a href="{{ route('users.profile') }}"><strong>{{ Auth::user()->getFullname() }}</strong></a></li>
-						<li><a href="{{ route('shopping.cart') }}"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> <span id="cart-total">0</span></a></li>
+						<li>
+							<a href="{{ route('shopping.cart') }}">
+								<img src="/frontend/images/icon_shopping_cart.png" alt="giỏ hàng"> <span id="cart-total">0</span></a>
+						</li>
 					</ul>
 				</div>
 			</div>

@@ -7,7 +7,7 @@
 		<a href="{{ $product->getLink() }}">{{ $product->name }} - <span class="text-uppercase">{{ $product->code }}</span></a>
 	</div>
 	<div class="products-item-price">
-		{{ number_format($product->getLatestPrice()) }} <small>VNĐ</small>
+		{{ number_format($product->getLatestPrice(), 0, ',', '.') }} <small>VNĐ</small>
 	</div>
 </div>
 @if($loop->iteration % 3 == 0)

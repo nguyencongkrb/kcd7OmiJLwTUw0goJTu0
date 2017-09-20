@@ -30,6 +30,13 @@
 	ul.categories>li a{
 		padding-left: 30px;
 	}
+	ul.categories>li:first-child>a:before,
+	ul.categories>li.active>a:before,
+	ul.categories>li:hover >a:before,
+	ul.categories>li.active + li>a:before,
+	ul.categories>li:hover + li>a:before { 
+		content:"|";
+	}
 	body.loginpage h3{
 		text-align: center;
 	}
@@ -68,16 +75,16 @@
 		margin-top: 10px;
 	}
 	body.loginpage footer ul{
-	margin-top: 10px;
-}
-body.loginpage footer .register-trade{
-	padding: 15px;
-}
+		margin-top: 10px;
+	}
+	body.loginpage footer .register-trade{
+		padding: 15px;
+	}
 }
 @media (min-width: 768px) {
 	table.shoppingcart input.quantity{
-	width: 100px;
-	margin: 0 auto;
-    float: none;
-}
+		width: 100px;
+		margin: 0 auto;
+		float: none;
+	}
 }

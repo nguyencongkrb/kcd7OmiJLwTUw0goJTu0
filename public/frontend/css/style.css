@@ -53,6 +53,10 @@ header a, header a:hover{
 	line-height: 24px;
 	overflow: hidden;
 }
+#logo{
+	padding-top: 4px;
+	padding-bottom: 14px;
+}
 .support{
 	height: 50px;
 	float: left;
@@ -67,13 +71,16 @@ header a, header a:hover{
 }
 .customer_service{
 	background: url('/frontend/images/icon_cskh.png') left center no-repeat;
+	background-size: 50px;
 	
 }
 .chat_online{
 	background: url('/frontend/images/icon_chatonline.png') left center no-repeat;
+	background-size: 50px;
 }
 .question_answer{
 	background: url('/frontend/images/icon_qa.png') left center no-repeat;
+	background-size: 50px;
 	line-height: 45px;
 }
 
@@ -97,6 +104,9 @@ nav ul>li>a, nav ul>li>a:hover{
 	line-height: 39px;
 	padding: 0 30px;
 }
+nav ul>li:hover>a{
+	border-color: transparent;
+}
 nav ul>li>a.last{
 	border-right: none;
 }
@@ -114,8 +124,11 @@ nav ul>li>a.last{
 
 
 .categories-link img{
-	padding-top: 30px;
+	margin-top: 30px;
 	width: 100%;
+}
+.categories-link img:hover{
+	border: solid 1px #eaab00;
 }
 ul.categories{
 	margin: 0;
@@ -143,11 +156,20 @@ ul.categories>li>a:before{
 	left: -1px;
 	top: -1px;
 }
-ul.categories>li.active, ul.categories>li:hover{
+ul.categories>li.active{
 	background: #eaab00;
+}
+ul.categories>li:hover{
+	background: #fad87f;
 }
 ul.categories>li.active a, ul.categories>li:hover a{
 	color: #003946;
+}
+ul.categories>li.active + li>a:before, ul.categories>li:hover + li>a:before { 
+    content:"";
+}
+ul.categories>li:first-child>a:before, ul.categories>li.active>a:before, ul.categories>li:hover >a:before { 
+    content:"";
 }
 .products-item{
 	margin-top: 30px;
@@ -171,7 +193,6 @@ ul.categories>li.active a, ul.categories>li:hover a{
 .products-item-name a{
 	color: #808285;
 }
-
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
 	background-color: #eaab00;
@@ -302,7 +323,7 @@ body.loginpage h3{
 	font-weight: bold;
 }
 body.loginpage form{
-	margin-top: 50px;
+	margin-top: 30px;
 }
 body.loginpage form input{
 	border-radius: 0 !important;
@@ -317,6 +338,9 @@ body.loginpage form input.verifycode{
 	border-color: #e1e7e9 !important;
 	margin-left: 5px;
 }
+body.loginpage form button{
+	font-size: 14px !important;
+}
 body.loginpage a{
 	color:#003946;
 }
@@ -324,7 +348,7 @@ body.loginpage .form-group{
 	margin-bottom: 5px;
 }
 body.loginpage .form-link{
-	margin-top: 60px;
+	margin-top: 33px;
 }
 body.loginpage {
 	/*background: url('/frontend/images/bg_login.jpg') no-repeat 150% 100% fixed;
@@ -337,7 +361,7 @@ body.loginpage {
 	background-position: left center;
 	background-size: 70%;
 	/* Margin bottom by footer height */
-	margin-bottom: 190x;
+	margin-bottom: 202px;
 }
 body.loginpage header{
 	background: #fff;
@@ -374,14 +398,14 @@ ul.checkout-step>li:before{
 }
 ul.checkout-step>li>span{
 	display:block;
-	width: 44px;
-	height: 44px;
+	width: 36px;
+	height: 36px;
 	background: #bdbdbd;
 	color: #fff;
 	font-size: 24px;
 	font-weight: bold;
 	border-radius: 50%;
-	line-height: 44px;
+	line-height: 36px;
 	margin: auto;
 }
 ul.checkout-step>li.active>span{
@@ -395,7 +419,7 @@ table.shoppingcart>tbody>tr>td{
 	vertical-align: middle;
 }
 table.shoppingcart td.head{
-	background: #d9e8e5;
+	background: #fad87f;
 	color: #003946;
 	font-weight: bold;
 }
@@ -411,7 +435,10 @@ table.shoppingcart .delivery-method{
 	cursor: pointer;
 }
 table.shoppingcart .delivery-method.active{
-	background:#fffced;
+	background:#fad87f;
+}
+table.shoppingcart .delivery-method strong{
+	font-size: 20px;
 }
 .payment-method{
 	border: solid 1px #ccc;
@@ -419,7 +446,7 @@ table.shoppingcart .delivery-method.active{
 	cursor: pointer;
 }
 .payment-method.active{
-	background: #e4f3ee;
+	background: #fad87f;
 }
 .payment-method img{
 	display: block;
@@ -489,6 +516,7 @@ footer{
 	color: #003946;
 	padding: 0;
 	margin-top: 25px;
+	padding-bottom: 25px;
 }
 footer a{
 	color: #003946;
@@ -501,8 +529,12 @@ body.loginpage footer{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	padding-bottom: 0;
 	/* Set the fixed height of the footer here */
-	height: 190px;
+	height: 202px;
+}
+body.loginpage footer .container{
+	padding-bottom: 15px;
 }
 body.loginpage footer ul{
 	margin-top: 45px;
@@ -513,5 +545,5 @@ body.loginpage footer a{
 body.loginpage footer .register-trade{
 	background: #fff;
 	color: #003946;
-	padding: 15px 0;
+	padding: 15px 0 0 0;
 }

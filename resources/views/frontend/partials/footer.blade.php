@@ -9,7 +9,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-6">
 				Địa chỉ: {{ $config->getValueByKey('headquarter_address_street') }}, {{ $config->getValueByKey('headquarter_address_ward') }}<br>
 				{{ $config->getvalueByKey('headquarter_address_district') }}, {{ $config->getValueByKey('headquarter_address_locality') }}<br>
-				Hotline: <a href="tel:{{ $config->getValueByKey('hot_line') }}">{{ $config->getValueByKey('hot_line') }}</a><br>
+				Hotline: <a href="tel:{{ $config->getValueByKey('hot_line') }}"><strong>{{ $config->getValueByKey('hot_line') }}</strong></a><br>
 				Email: <a href="mailto:{{ $config->getValueByKey('address_received_mail') }}">{{ $config->getValueByKey('address_received_mail') }}</a>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-6">
@@ -44,7 +44,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-6">
 				<a href="#"><img src="/frontend/images/logo_asgroup.png" alt="logo ASGroup"></a><br>
-				Hotline: <a href="tel:{{ $config->getValueByKey('hot_line') }}">{{ $config->getValueByKey('hot_line') }}</a><br>
+				Hotline: <a href="tel:{{ $config->getValueByKey('hot_line') }}"><strong>{{ $config->getValueByKey('hot_line') }}</strong></a><br>
 				Email: <a href="mailto:{{ $config->getValueByKey('address_received_mail') }}">{{ $config->getValueByKey('address_received_mail') }}</a>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-6">

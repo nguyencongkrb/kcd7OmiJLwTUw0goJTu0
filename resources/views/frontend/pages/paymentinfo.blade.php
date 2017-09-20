@@ -82,20 +82,14 @@
 			<tr>
 				<td class="text-center">
 					<div class="center-block delivery-method">
-						<strong>Thứ 6, 12 -</strong><br>
-						<strong>Thứ 4, 17</strong><br>
-						<strong>Tháng 5 2017</strong><br>
-						<span class="text-uppercase">Miễn phí</span><br>
+						<strong class="text-uppercase">Miễn phí</strong><br>
 						<img src="/frontend/images/freeshipping.png" alt="freeshipping"><br>
 						<span>Giao hàng tiêu chuẩn</span>
 					</div>
 				</td>
 				<td class="text-center">
 					<div class="center-block delivery-method active">
-						<strong>Thứ 6, 12 -</strong><br>
-						<strong>Thứ 4, 17</strong><br>
-						<strong>Tháng 5 2017</strong><br>
-						<span class="text-uppercase">22.000 VNĐ</span><br>
+						<strong class="text-uppercase">22.000 VNĐ</strong><br>
 						<img src="/frontend/images/standardshipping.png" alt="freeshipping"><br>
 						<span>Giao hàng nhanh</span>
 					</div>
@@ -150,14 +144,9 @@
 			<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10">0 VNĐ</div>
 			<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Chiết khấu theo chương</div>
 			<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10">0 VNĐ</div>
-			<div class="col-xs-8 col-sm-6 col-sm-offset-2 col-md-5 col-md-offset-4 pb-10">
+			<div class="col-xs-8 col-sm-6 col-sm-offset-2 col-md-5 col-md-offset-4 text-right pb-10">
 				<input type="text" class="form-control pull-right text-center" placeholder="Nhập mã số thưởng (nếu có)">
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-3 pb-10">
-				<button class="btn btn-default btn-block pull-right text-uppercase">Áp dụng</button>
-			</div>
-			<div class="col-xs-8 col-sm-6 col-sm-offset-2 col-md-5 col-md-offset-4 pb-10">
-				<input type="text" class="form-control pull-right text-center" placeholder="Nhập mã số thưởng (nếu có)">
+				<small>(Được áp dụng nhiều mã số thưởng)</small>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-3 pb-10">
 				<button class="btn btn-default btn-block pull-right text-uppercase">Áp dụng</button>
@@ -175,8 +164,8 @@
 		</div>
 	</div>
 </div>
-<div class="row row-eq-height">
-	<div class="col-xs-12 col-sm-12 col-md-8">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12">
 		<table class="table table-condensed shoppingcart">
 			<tr>
 				<td class="head">
@@ -184,27 +173,32 @@
 				</td>
 			</tr>
 		</table>
-		<div class="col-xs-3 col-sm-3 col-md-3 text-center payment-method active">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 text-center payment-method active">
 			<strong>Thanh toán<br>khi nhận hàng</strong><br>
 			<img src="/frontend/images/cash.png" alt="cod"><br>
 			<input type="checkbox" name="paymentmethod" checked>
 		</div>
-		<div class="col-xs-3 col-sm-3 col-md-3 text-center payment-method">
+		<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method">
 			<strong>Thẻ tín dụng</strong><br><br>
 			<img src="/frontend/images/credit.png" alt="credit"><br>
 			<input type="checkbox" name="paymentmethod">
 		</div>
-		<div class="col-xs-3 col-sm-3 col-md-3 text-center payment-method">
+		<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method">
 			<strong>Thẻ ATM nội địa</strong><br>(Internet banking)
 			<img src="/frontend/images/atm.png" alt="atm"><br>
 			<input type="checkbox" name="paymentmethod">
 		</div>
-		<div class="col-xs-3 col-sm-3 col-md-3 text-center payment-method">
+		<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method">
 			<strong>Chuyển khoản</strong><br>(ATM/Ngân hàng)<br>
 			<img src="/frontend/images/bank.png" alt="bank"><br>
 			<input type="checkbox" name="paymentmethod">
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-12">
+		<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method">
+			<strong>Thanh toán sau</strong><br>(Dành cho nhân viên)<br>
+			<img src="/frontend/images/nhanvien.png" alt="nhanvien"><br>
+			<input type="checkbox" name="paymentmethod">
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
 			<br>
 			<p>Bạn sẽ thanh toán tiền mặt khi nhận hàng tại nhà</p>
 			<p><u>Lưu ý:</u><br>
@@ -216,9 +210,9 @@
 			<br>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-2 col-md-offset-2 content-bottom">
-		<a class="btn btn-default btn-block btn-shopping btn-arrow">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a>
-	</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-2 col-md-offset-10">
+	<a class="btn btn-default btn-block btn-shopping btn-arrow">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a>
 </div>
 @endsection
 

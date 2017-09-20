@@ -17,7 +17,7 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-6">
 	<div class="product-price">
-		{{ number_format($product->getLatestPrice()) }} <small>VNĐ</small>
+		{{ number_format($product->getLatestPrice(), 0, ',', '.') }} <small>VNĐ</small>
 	</div>
 	<div class="product-promotion">
 		<a href="#">Chương trình khuyến mãi</a><br>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="col-xs-6 col-sm-12 col-md-4 text-center">
 				<button class="btn btn-default goshoppingcart btn-block add-to-cart quick-add-to-cart" type="button" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">
-					<i class="fa fa-cart-plus fa-lg" style="color: #fff;" aria-hidden="true"></i>
+					<img src="/frontend/images/icon_shoppingcart2.png" alt="Thêm vào giỏ hàng">
 				</button>
 				<a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-dat-hang']) }}"><span>(Thêm vào giỏ hàng)</span></a>
 			</div>

@@ -11,8 +11,8 @@
 	<form class="form-horizontal" method="POST" action="{{ url('/login') }}">
 		<div class="col-sm-8 col-sm-offset-4">
 			<div class="row">
-			<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
-		</div>
+				<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
+			</div>
 		</div>
 		<h1>SUN MART</h1>
 		{{ csrf_field() }}

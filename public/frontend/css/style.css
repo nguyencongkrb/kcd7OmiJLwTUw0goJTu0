@@ -444,6 +444,8 @@ table.shoppingcart .delivery-method strong{
 	border: solid 1px #ccc;
 	padding: 10px;
 	cursor: pointer;
+	display: table-cell;
+	width: 20%;
 }
 .payment-method.active{
 	background: #fad87f;

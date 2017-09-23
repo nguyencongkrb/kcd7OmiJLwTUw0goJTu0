@@ -32,4 +32,9 @@ class ShoppingCart extends BaseModel
 	{
 		return $this->hasOne('App\InvoiceInfo');
 	}
+
+	public function promotionCodes()
+	{
+		return $this->hasMany('App\PromotionCode');
+	}
 }

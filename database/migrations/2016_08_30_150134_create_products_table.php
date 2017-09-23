@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
 			$table->string('code', 20)->unique()->index();
 			$table->string('model', 100);
 			$table->string('custom_size', 100);
+			$table->integer('weight')->default(0);
 			$table->integer('producer_id')->nullable();
 			$table->string('origin', 100);
 			$table->string('unit', 100);

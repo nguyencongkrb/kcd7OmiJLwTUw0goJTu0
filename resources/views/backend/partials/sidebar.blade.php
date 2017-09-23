@@ -19,20 +19,19 @@
 		<!-- Optionally, you can add icons to the links -->
 		<li><a target="_blank" href="/"><i class="fa fa-globe text-yellow" aria-hidden="true"></i> <span>Xem Online</span></a></li>
 		<li class="{{ Request::is('backend/dashboard*') ? 'active' : null }} hide"><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard" aria-hidden="true"></i> <span>Màn hình chính</span></a></li>
-		<li class="treeview {{ Request::is('backend/article*') ? 'active' : null }}">
-			<a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span>Bài viết</span>
+		<li class="treeview">
+			<a href="#"><i class="fa fa-product-hunt" aria-hidden="true"></i> <span>Đơn hàng</span>
 				<span class="pull-right-container">
 					<i class="fa fa-angle-left pull-right" aria-hidden="true"></i>
 				</span>
 			</a>
 			<ul class="treeview-menu">
-				<li class="{{ Route::currentRouteName() == 'articles.index' ? 'active' : null }}"><a href="{{ route('articles.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh sách bài viết</a></li>
-				@can('create', App\ArticleCategory::class)
-				<li class="{{ Route::currentRouteName() == 'articlecategories.index' ? 'active' : null }}"><a href="{{ route('articlecategories.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh mục bài viết</a></li>
-				@endcan
-				@can('create', App\ArticleType::class)
-				<li class="{{ Route::currentRouteName() == 'articletypes.index' ? 'active' : null }} hide"><a href="{{ route('articletypes.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Loại bài viết</a></li>
-				@endcan
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Tất cả đơn hàng</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Mới đặt hàng</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Đã xác nhận</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Đang giao hàng</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Đã giao hàng</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Đã thanh toán</a></li>
 			</ul>
 		</li>
 		<li class="treeview {{ (Request::is('backend/product*') || Request::is('backend/producers*')) ? 'active' : null }}">
@@ -48,6 +47,33 @@
 				<li class="{{ Route::currentRouteName() == 'productcolors.index' ? 'active' : null }} hide"><a href="{{ route('productcolors.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Màu sắc</a></li>
 				<li class="{{ Route::currentRouteName() == 'productsizes.index' ? 'active' : null }} hide"><a href="{{ route('productsizes.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Kích thước</a></li>
 				<li class="{{ Route::currentRouteName() == 'producttypes.index' ? 'active' : null }}"><a href="{{ route('producttypes.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Loại sản phẩm</a></li>
+			</ul>
+		</li>
+		<li class="treeview">
+			<a href="#"><i class="fa fa-product-hunt" aria-hidden="true"></i> <span>Mã khuyến mãi</span>
+				<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right" aria-hidden="true"></i>
+				</span>
+			</a>
+			<ul class="treeview-menu">
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh sách mã khuyến mãi</a></li>
+				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Import mã khuyến mãi</a></li>
+			</ul>
+		</li>
+		<li class="treeview {{ Request::is('backend/article*') ? 'active' : null }}">
+			<a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span>Bài viết</span>
+				<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right" aria-hidden="true"></i>
+				</span>
+			</a>
+			<ul class="treeview-menu">
+				<li class="{{ Route::currentRouteName() == 'articles.index' ? 'active' : null }}"><a href="{{ route('articles.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh sách bài viết</a></li>
+				@can('create', App\ArticleCategory::class)
+				<li class="{{ Route::currentRouteName() == 'articlecategories.index' ? 'active' : null }}"><a href="{{ route('articlecategories.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh mục bài viết</a></li>
+				@endcan
+				@can('create', App\ArticleType::class)
+				<li class="{{ Route::currentRouteName() == 'articletypes.index' ? 'active' : null }} hide"><a href="{{ route('articletypes.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Loại bài viết</a></li>
+				@endcan
 			</ul>
 		</li>
 		<li class="treeview {{ Request::is('backend/project*') ? 'active' : null }} hide">

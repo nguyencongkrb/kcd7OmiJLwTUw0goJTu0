@@ -214,6 +214,22 @@ ketnoimoi.products.index = {
 			'dbfieldname': 'unit'
 		},
 		{
+			'label': 'Trọng lượng (gram)',
+			'id': 'weight',
+			'name': 'Product[weight]',
+			'type': 'number',
+			'required': false,
+			'placeholder': '',
+			'cssclass': '',
+			'value': '0',
+			'disabled': false,
+			'readonly': false,
+			'datas': [],
+			'help_block': '',
+			'input_icon': '',
+			'dbfieldname': 'weight'
+		},
+		{
 			'label': 'Bảo hành',
 			'id': 'warranty',
 			'name': 'Product[warranty]',

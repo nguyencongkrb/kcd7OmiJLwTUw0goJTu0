@@ -17,4 +17,19 @@ class ShoppingCart extends BaseModel
 		}
 		return $amount;
 	}
+
+	public function status()
+	{
+		return $this->belongsTo('App\ShoppingCartStatus');
+	}
+
+	public function paymentMethod()
+	{
+		return $this->belongsTo('App\PaymentMethod');
+	}
+
+	public function invoiceInfo()
+	{
+		return $this->hasOne('App\InvoiceInfo');
+	}
 }

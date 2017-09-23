@@ -64,6 +64,7 @@ class ProductController extends Controller
 			$product->code = $request->input('Product.code');
 			$product->model = $request->input('Product.model');
 			$product->custom_size = $request->input('Product.custom_size');
+			$product->weight = $request->input('Product.weight', 0);
 			$product->producer_id = $request->input('Product.producer_id');
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');
@@ -203,6 +204,7 @@ class ProductController extends Controller
 			$product->code = $request->input('Product.code');
 			$product->model = $request->input('Product.model');
 			$product->custom_size = $request->input('Product.custom_size');
+			$product->weight = $request->input('Product.weight', 0);
 			$product->producer_id = $request->input('Product.producer_id');
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');

@@ -184,6 +184,7 @@ return [
         Barryvdh\Elfinder\ElfinderServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         GrahamCampbell\HTMLMin\HTMLMinServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
         'OpenGraph' => Artesaos\SEOTools\Facades\OpenGraph::class,
         'Twitter'   => Artesaos\SEOTools\Facades\TwitterCard::class,
         'HTMLMin' => GrahamCampbell\HTMLMin\Facades\HTMLMin::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

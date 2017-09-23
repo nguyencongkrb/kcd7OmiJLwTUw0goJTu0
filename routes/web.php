@@ -28,6 +28,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 
 	Route::resource('languages', 'LanguageController');
 	Route::resource('uploads', 'UploadController');
+
+
+	Route::get('dashboard/importprovinces', 'DashboardController@importProvinces')->name('dashboard.importprovinces');
 	Route::resource('dashboard', 'DashboardController');
 	
 	Route::post('configs/filter', 'ConfigController@filter')->name('configs.filter');

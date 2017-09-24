@@ -91,6 +91,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	
 	Route::post('projecttypes/filter', 'ProjectTypeController@filter')->name('projecttypes.filter');
 	Route::resource('projecttypes', 'ProjectTypeController');
+
+	Route::post('promotioncodes/filter', 'PromotionCodeController@filter')->name('promotioncodes.filter');
+	Route::get('promotioncodes/imports', 'PromotionCodeController@imports')->name('promotioncodes.importsform');
+	Route::post('promotioncodes/imports', 'PromotionCodeController@importPromotionCodes')->name('promotioncodes.imports');
+	Route::resource('promotioncodes', 'PromotionCodeController');
 });
 
 

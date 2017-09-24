@@ -67,6 +67,6 @@ class DashboardController extends Controller
 				//return dd($ward);
 			}
 		});
-		return 'mport done!';
+		return 'Import done!';
 	}
 }

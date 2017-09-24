@@ -56,8 +56,8 @@
 				</span>
 			</a>
 			<ul class="treeview-menu">
-				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh sách mã khuyến mãi</a></li>
-				<li class=""><a href="#"><i class="fa fa-circle-o" aria-hidden="true"></i> Import mã khuyến mãi</a></li>
+				<li class="{{ Route::currentRouteName() == 'promotioncodes.index' ? 'active' : null }}"><a href="{{ route('promotioncodes.index') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Danh sách mã khuyến mãi</a></li>
+				<li class="{{ Route::currentRouteName() == 'promotioncodes.imports' ? 'active' : null }}"><a href="{{ route('promotioncodes.imports') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Import mã khuyến mãi</a></li>
 			</ul>
 		</li>
 		<li class="treeview {{ Request::is('backend/article*') ? 'active' : null }}">

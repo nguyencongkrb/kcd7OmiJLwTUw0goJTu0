@@ -39,6 +39,8 @@ use App\AdditionalValue;
 use App\Policies\AdditionalValuePolicy;
 use App\AdditionalCategory;
 use App\Policies\AdditionalCategoryPolicy;
+use App\PromotionCode;
+use App\Policies\PromotionCodePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -65,6 +67,7 @@ class AuthServiceProvider extends ServiceProvider
 		Testimonial::class => TestimonialPolicy::class,
 		AdditionalValue::class => AdditionalValuePolicy::class,
 		AdditionalCategory::class => AdditionalCategoryPolicy::class,
+		PromotionCode::class => PromotionCodePolicy::class,
 	];
 
 	/**

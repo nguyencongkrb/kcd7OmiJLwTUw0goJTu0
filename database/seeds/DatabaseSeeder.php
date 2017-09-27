@@ -30,5 +30,10 @@ class DatabaseSeeder extends Seeder
 		$this->call(TestimonialsTableSeeder::class);
 		$this->call(AdditionalCategoriesTableSeeder::class);
 		$this->call(AdditionalValuesTableSeeder::class);
+		$this->call(PaymentMethodsTableSeeder::class);
+		$this->call(ShoppingCartStatusesTableSeeder::class);
+		$this->call(AreaInfosTableSeeder::class);
+		$this->call(ShoppingCartDiscountsTableSeeder::class);
+		$this->call(DeliveryFeesTableSeeder::class);
 	}
 }

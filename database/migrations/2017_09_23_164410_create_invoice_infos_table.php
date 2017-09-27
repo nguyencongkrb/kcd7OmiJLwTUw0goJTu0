@@ -15,9 +15,10 @@ class CreateInvoiceInfosTable extends Migration
 	{
 		Schema::create('invoice_infos', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('company_name');
-			$table->string('company_address');
+			$table->string('company_name', 250);
+			$table->string('company_address', 250);
 			$table->string('tax_code')->index();
+			$table->integer('shopping_cart_id');
 		});
 	}
 

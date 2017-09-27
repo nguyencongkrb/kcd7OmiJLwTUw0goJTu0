@@ -17,7 +17,7 @@ class ArticleCategoriesTableSeeder extends Seeder
 	{
 		$generator = \Faker\Factory::create('vi_VN');
 
-		$categories = ['Về chúng tôi', 'Kiến thức quà tặng', 'Khuyến mãi', 'Hướng dẫn', 'Chính sách'];
+		$categories = ['Về chúng tôi', 'Kiến thức quà tặng', 'Khuyến mãi', 'Hướng dẫn', 'Chính sách', 'Thông tin thanh toán'];
 
 		foreach ($categories as $key => $category) {
 			$entry = ArticleCategory::create([

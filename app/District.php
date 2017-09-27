@@ -18,4 +18,14 @@ class District extends Model
 	{
 		return $this->hasMany('App\Ward');
 	}
+
+	public function shoppingCarts()
+	{
+		return $this->hasMany('App\ShoppingCart');
+	}
+
+	public function shippingShoppingCarts()
+	{
+		return $this->hasMany('App\ShoppingCart', 'shipping_district_id');
+	}
 }

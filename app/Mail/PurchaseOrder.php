@@ -31,6 +31,6 @@ class PurchaseOrder extends Mailable
      */
     public function build()
     {
-        return $this->view('frontend.emails.purchaseorder')->subject('Thông Tin Mua Hàng');
+        return $this->view('frontend.emails.purchaseorder')->subject('Thông Tin Mua Hàng ' . $this->cart->code);
     }
 }

@@ -47,7 +47,7 @@ ketnoimoi.promotioncodes.index = {
 		'label': 'Giá trị %',
 		'id': 'percent_value',
 		'name': 'PromotionCode[percent_value]',
-		'type': 'text',
+		'type': 'number',
 		'required': false,
 		'placeholder': '',
 		'cssclass': '',
@@ -63,7 +63,7 @@ ketnoimoi.promotioncodes.index = {
 		'label': 'Giá trị tiền tệ',
 		'id': 'cash_value',
 		'name': 'PromotionCode[cash_value]',
-		'type': 'text',
+		'type': 'number',
 		'required': false,
 		'placeholder': 'Giá trị tiền tệ',
 		'cssclass': '',
@@ -108,21 +108,20 @@ ketnoimoi.promotioncodes.index = {
 		'dbfieldname': 'expiry_date'
 	},
 	{
-		'label': 'Đã sử dụng',
-		'id': 'used',
-		'name': 'PromotionCode[used]',
-		'type': 'checkbox',
+		'label': 'Số lượng',
+		'id': 'quantity',
+		'name': 'PromotionCode[quantity]',
+		'type': 'number',
 		'required': false,
 		'placeholder': '',
 		'cssclass': '',
-		'value': '1',
+		'value': '0',
 		'disabled': false,
 		'readonly': false,
 		'datas': [],
 		'help_block': '',
 		'input_icon': '',
-		'dbfieldname': 'used',
-		'selected': false
+		'dbfieldname': 'quantity'
 	},
 	{
 		'label': 'Tạo bởi',
@@ -202,6 +201,12 @@ ketnoimoi.promotioncodes.index = {
 			{ 
 				data: 'cash_value',
 				className: 'text-right',
+				render: function (data, type, row) {
+					if(type === 'display'){
+						return numbro(data).format();
+					}
+					return data;
+				}
 			},
 			{ 
 				data: 'effective_date',
@@ -224,16 +229,21 @@ ketnoimoi.promotioncodes.index = {
 				}
 			},
 			{ 
-				data: 'used',
-				className: 'text-center',
+				data: 'quantity',
+				className: 'text-right',
 				render: function (data, type, row) {
 					if(type === 'display'){
-						if(data){
-							return $.format('<a href="javascript:;" data-action="" data-id="{0}" data-toggle="tooltip" data-placement="top" title="Đã sử dụng"><i class="fa fa-check-square-o text-green" aria-hidden="true"></i></a>', row.id);
-						}
-						else{
-							return $.format('<a href="javascript:;" data-action="" data-id="{0}" data-toggle="tooltip" data-placement="top" title="Chưa sử dụng"><i class="fa fa-square-o text-yellow" aria-hidden="true"></i></a>', row.id);
-						}
+						return numbro(data).format();
+					}
+					return data;
+				}
+			},
+			{ 
+				data: 'quantity_used',
+				className: 'text-right',
+				render: function (data, type, row) {
+					if(type === 'display'){
+						return numbro(data).format();
 					}
 					return data;
 				}

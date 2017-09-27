@@ -12,7 +12,7 @@
 								{{ csrf_field() }}
 							</form>
 						</li>
-						<li>Xin chào <a href="{{ route('users.profile') }}"><strong>{{ Auth::user()->getFullname() }}</strong></a></li>
+						<li>Xin chào <a href="{{ route('user.profile') }}"><strong>{{ Auth::user()->getFullname() }}</strong></a></li>
 						<li>
 							<a href="{{ route('shopping.cart') }}">
 								<img src="/frontend/images/icon_shopping_cart.png" alt="giỏ hàng"> <span id="cart-total">0</span></a>
@@ -55,7 +55,7 @@
 			<li><a href="{{ route('articles', ['categorykey' => 'kien-thuc-qua-tang']) }}">Kiến thức quà tặng</a></li>
 			<li><a href="{{ route('articles', ['categorykey' => 'khuyen-mai']) }}">Khuyến mãi</a></li>
 			<li><a href="{{ route('contact') }}">Liên hệ</a></li>
-			<li><a href="#" class="last">Kiểm tra đơn hàng</a></li>
+			<li><a href="{{ route('order.check') }}" class="last">Kiểm tra đơn hàng</a></li>
 		</ul>
 	</div>
 </nav>

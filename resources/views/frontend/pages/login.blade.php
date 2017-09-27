@@ -11,7 +11,7 @@
 	<form class="form-horizontal" method="POST" action="{{ url('/login') }}">
 		<div class="col-sm-8 col-sm-offset-4">
 			<div class="row">
-				<h3>Chào mừng bạn đến với cửa hàng quà tặng</h3>
+				<h3 style="margin-left:-4px;">Chào mừng bạn đến với cửa hàng quà tặng</h3>
 			</div>
 		</div>
 		<h1>SUN MART</h1>
@@ -70,7 +70,7 @@
 		</div>
 		<div class="row text-right form-link">
 			<a href="{{ route('user.resetpassword') }}">Quên mật khẩu</a><br>
-			<a href="{ route('user.register') }}">Tạo tài khoản mới</a>
+			<a href="{{ route('user.register') }}">Tạo tài khoản mới</a>
 		</div>
 	</form>
 </div>

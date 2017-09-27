@@ -96,6 +96,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::get('promotioncodes/imports', 'PromotionCodeController@imports')->name('promotioncodes.importsform');
 	Route::post('promotioncodes/imports', 'PromotionCodeController@importPromotionCodes')->name('promotioncodes.imports');
 	Route::resource('promotioncodes', 'PromotionCodeController');
+
+	Route::resource('shoppingcarts', 'ShoppingCartController');
 });
 
 
@@ -116,6 +118,9 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::get('lien-he.html', 'PageController@contact')->name('contact');
 	Route::post('lien-he.html', 'PageController@createContact')->name('contact.create');
 
+	Route::get('deliverydetail/{province}', 'PageController@deliveryDetail')->name('delivery.detail');
+	Route::get('promotioncodes/{code}', 'PageController@promotionCodeDetail')->name('promotioncode.detail');
+
 	Route::get('gio-hang.html', 'PageController@shoppingCart')->name('shopping.cart');
 	Route::get('thong-tin-thanh-toan.html', 'PageController@paymentInfo')->name('payment.info');
 	Route::post('thong-tin-thanh-toan.html', 'PageController@purchase')->name('purchase');
@@ -127,7 +132,8 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::post('thay-doi-mat-ma.html', 'PageController@updatePassword')->name('user.updatepassword');
 	
 	Route::get('lich-su-mua-hang.html', 'PageController@orderHistory')->name('order.history');
-	Route::get('chi-tiet-don-hang/{key}.html', 'PageController@memberProfile')->name('order.detail');
+	Route::get('kiem-tra-don-hang.html', 'PageController@orderCheck')->name('order.check');
+	Route::get('chi-tiet-don-hang.html', 'PageController@orderDetail')->name('order.detail');
 	
 	Route::get('tim-kiem.html', 'PageController@search')->name('search');
 

@@ -11,21 +11,8 @@ ketnoimoi.site = {
 	events: function () {
 		var thisObj = ketnoimoi.site;
 
-		// filter product, sort product
-		$('.filter-param, .sort-param').change(function () {
-			var urlParams = $.parseQuerystring();
-			urlParams[$(this).data('param')] = $(this).val();
-			if ($(this).val() == 0 || $(this).val() == '') {
-				delete urlParams[$(this).data('param')];
-			};
-
-			var queryString = $.param(urlParams);
-
-			window.location = $.format('{0}?{1}', window.location.pathname, queryString);
-		});
-
 		// add-to-cart
-		$('button.add-to-cart').click(function () {
+		$('button.add-to-cart, a.add-to-cart').click(function () {
 			var data = $(this).data();
 			if ($(this).hasClass('quick-add-to-cart')) {
 				data.quantity = 1;
@@ -54,12 +41,8 @@ ketnoimoi.site = {
 				$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 				$(this).parents('tr').remove();
 				
-				var shippingFee = numbro().unformat($('span.shipping-cost').text()) || 0;
 				var totalAmount = thisObj.cart.getTotalAmount();
-
-				$('span.total-amount-without-shipping-cost').text(numbro(totalAmount).format());
-
-				$('span.total-amount').text(numbro(totalAmount + shippingFee).format());
+				$('span.total-amount').text(numbro(totalAmount).format());
 			};
 		});
 
@@ -75,33 +58,177 @@ ketnoimoi.site = {
 
 			$(this).parents('tr').find('span.item-amount').text(numbro(data.quantity * data.product_price).format());
 			
-			var shippingFee = numbro().unformat($('span.shipping-cost').text()) || 0;
 			var totalAmount = thisObj.cart.getTotalAmount();
+			$('span.total-amount').text(numbro(totalAmount).format());
 
-			$('span.total-amount-without-shipping-cost').text(numbro(totalAmount).format());
-			$('span.total-amount').text(numbro(totalAmount + shippingFee).format());
+			thisObj.calculateFormInfo();
 		});
 
-		$('#cart select.change-attribute').change(function () {
-			var data = $(this).data();
+		// dropdown province -> district
+		$('select.province').change(function (argument) {
+			var province = $(this).val();
+			var subcontrol = $(this).attr('sub-control');
+			subcontrol = $('#' + subcontrol);
+			subcontrol.find('option').addClass('hide');
+			console.log(subcontrol.find('option[data-province_id="' + province + '"]'));
+			subcontrol.find('option[data-province_id="' + province + '"]').removeClass('hide');
+			subcontrol.val('');
 
-			if ($(this).hasClass('attribute-color')) {
-				data.product_color_id_to = $(this).val();
-			};
-			if ($(this).hasClass('attribute-size')) {
-				data.product_size_id_to = $(this).val();
-			};
+			thisObj.calculateFormInfo();
+		});
 
-			thisObj.cart.changeAttribute(data);
+		// open shipping form
+		$('#cboOpenShippingForm').change(function (argument) {
+			if(this.checked){
+				$('.shipping-form').show('slow');
+				$('.shipping-form input, .shipping-form select, .shipping-form textarea').attr('required', true);
+			}
+			else{
+				$('.shipping-form').hide('slow');
+				$('.shipping-form input, .shipping-form select, .shipping-form textarea').removeAttr('required');
+			}
+		});
+
+		// open invoice form
+		$('#cboOpenInvoiceForm').change(function (argument) {
+			if(this.checked){
+				$('.invoice-form').show('slow');
+				$('.invoice-form input, .invoice-form select, .invoice-form textarea').attr('required', true);
+			}
+			else{
+				$('.invoice-form').hide('slow');
+				$('.invoice-form input, .invoice-form select, .invoice-form textarea').removeAttr('required');
+			}
+		});
+
+		$('.delivery-method').click(function (argument) {
+			$('.delivery-method').removeClass('active');
+			$(this).addClass('active');
+			$('.delivery-method input[type="radio"]').removeAttr('checked');
+			$(this).find('input[type="radio"]').eq(0).prop('checked', true).trigger('change');
+			thisObj.calculateFormInfo();
+		});
+
+		$('.payment-method').click(function (argument) {
+			$('.payment-method').removeClass('active');
+			$(this).addClass('active');
+			$('.payment-method input[type="radio"]').removeAttr('checked');
+			$(this).find('input[type="radio"]').eq(0).prop('checked', true);
+			$('.payment-method-info').addClass('hide');
+			$activeTab = $(this).data('tab');
+			$('#' + $activeTab).removeClass('hide');
+		});
+
+		$('#btnApplyPromotionCode').click(function (argument) {
+			var promotioncode = $.trim($('#txtPromotionCode').val());
+			if(promotioncode != ''){
+				thisObj.getPromotionCode(promotioncode, function (data) {
+					var amount = 0;
+					if($.parseJSON(data.value_type)){	// percent
+						amount = thisObj.cart.getTotalAmount() * ($.parseJSON(data.percent_value) / 100)
+					}
+					else{
+						amount = $.parseJSON(data.cash_value)
+					}
+					if (amount > 0) {
+						thisObj.cart.applyPromotionCode({
+							code: promotioncode,
+							amount: amount
+						});
+
+						var html = $('#promtion-template').html();
+						html = $.format(html, promotioncode, numbro(amount).format(), data.id)
+						$(html).insertBefore('#promtion-template');
+
+						var totalAmount = thisObj.cart.getTotalAmountWithPromotion();
+						$('span.total-payment-amount').text(numbro(totalAmount).format());
+					}
+					else{
+						alert('Mã thưởng không hợp lệ!');
+					}
+					$('#txtPromotionCode').val('');
+				});
+			}
 		});
 
 		// send contact
 		$('#btnSendContact').click(function (argument) {
 			thisObj.sendContact();
 		});
+	},
+	calculateFormInfo: function () {
+		var thisObj = ketnoimoi.site;
+		var delivery_province = $('select[name="ShoppingCart[province_id]"]').val();
+		if($('#cboOpenShippingForm:checked').prop('checked')){
+			delivery_province = $('select[name="ShoppingCart[shipping_province_id]"]').val();
+		}
 
-		$(window).scroll(function(){
-			$(".banner-fixed-left, .banner-fixed-right").css("top", Math.max(40, 270 - $(this).scrollTop()));
+		// calculate delivery fee & time
+		$('#express-delivery-fee').html('--');
+		$('#delivery-time').html('--/--/----');
+		if (delivery_province) {
+			thisObj.calculateDeliveryDate(delivery_province, function (data) {
+				var delivery_method = $('input[name="ShoppingCart[delivery_method_id]"]:checked').val() || 0;
+				var delivery_fee_pay = 0;
+				$('#express-delivery-fee').html(numbro(data.fee).format());
+				if($.parseJSON(delivery_method)){	// express delivery
+					delivery_fee_pay = data.fee;
+					$('#delivery-time').html(data.express_delivery_days);
+				}
+				else{
+					$('#delivery-time').html(data.standard_delivery_days);
+				}
+				$('#express-delivery-fee-pay').html(numbro(delivery_fee_pay).format());
+				$('input[name="ShoppingCart[shipping_fee]"]').val(delivery_fee_pay);
+
+				var totalAmountWithPromotion = thisObj.cart.getTotalAmountWithPromotion();
+				$('span.total-payment-amount').text(numbro(totalAmountWithPromotion + parseFloat(delivery_fee_pay)).format());
+			});
+		}
+		else{
+			var totalAmountWithPromotion = thisObj.cart.getTotalAmountWithPromotion();
+			$('span.total-payment-amount').text(numbro(totalAmountWithPromotion).format());
+		}
+	},
+	getPromotionCode: function (code, callback) {
+		$.ajax({
+			url: 'promotioncodes/' + code,
+			type: 'GET',
+			beforeSend: function (argument) {
+				
+			},
+			success: function (data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			},
+			error: function (argument) {
+				alert('Mã số thưởng không hợp lệ!');
+			}
+		});
+	},
+	removePromotionCode: function (promotioncode) {
+		var thisObj = ketnoimoi.site;
+		$('.promotion-code-' + promotioncode).remove();
+		thisObj.cart.removePromotionCode(promotioncode);
+		var totalAmount = thisObj.cart.getTotalAmountWithPromotion();
+		$('span.total-payment-amount').text(numbro(totalAmount).format());
+	},
+	calculateDeliveryDate: function (province, callback) {
+		$.ajax({
+			url: 'deliverydetail/' + province,
+			type: 'GET',
+			beforeSend: function (argument) {
+				
+			},
+			success: function (data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			},
+			error: function (argument) {
+				
+			}
 		});
 	},
 	sendContact: function () {
@@ -137,6 +264,7 @@ ketnoimoi.site = {
 	},
 	cart: {
 		data: Cookies.getJSON('ShoppingCartData') || [],
+		promotionCodes: [],
 		addToCart: function(option){
 			var thisObj = ketnoimoi.site.cart;
 			var _default = {
@@ -233,6 +361,21 @@ ketnoimoi.site = {
 			$.each(thisObj.data, function(index, item){
 				count += parseInt(item.product_price) * parseInt(item.quantity);
 			});
+
+			return count;
+		},
+		getTotalAmountWithPromotion: function(){
+			var thisObj = this;
+			var count = 0;
+			$.each(thisObj.data, function(index, item){
+				count += parseInt(item.product_price) * parseInt(item.quantity);
+			});
+
+			// apply promotion code
+			$.each(thisObj.promotionCodes, function(index, item){
+				count -= parseInt(item.amount);
+			});
+
 			return count;
 		},
 		getTotalQuantity: function(){
@@ -247,6 +390,24 @@ ketnoimoi.site = {
 			var thisObj = this;
 			Cookies.remove('ShoppingCartData');
 		},
+		applyPromotionCode: function (promotiondata) {
+			var thisObj = this;
+			var _default = {
+				code: '',
+				amount: 0
+			};
+			$.extend(true, _default, promotiondata);
+			thisObj.promotionCodes.push(_default);
+		},
+		removePromotionCode: function (promotioncode) {
+			var thisObj = ketnoimoi.site.cart;
+			$.each(thisObj.promotionCodes, function (index, item) {
+				if (item.code == promotioncode) {
+					thisObj.promotionCodes.splice(index, 1);
+					return false;
+				}
+			})
+		},
 		purchase: function () {
 			var thisObj = this;
 			var html = '';
@@ -257,6 +418,7 @@ ketnoimoi.site = {
 				html += $.format('<input type="hidden" name="ShoppingCart[cartDetails][{0}][quantity]" value="{1}">', index, item.quantity);
 			});
 			$('form').append(html);
+			//console.log($('form').serialize());
 			return true;
 		}
 	}

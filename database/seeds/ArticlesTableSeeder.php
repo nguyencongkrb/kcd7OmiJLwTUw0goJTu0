@@ -98,6 +98,32 @@ class ArticlesTableSeeder extends Seeder
 			$entry->articleCategories()->attach($category->id);
 		}
 
+		$articles = ['Thanh toán khi nhận hàng', 'Thẻ tín dụng', 'Thẻ ATM nội địa', 'Chuyển khoản ngân hàng', 'Thanh toán sau'];
+		$category = ArticleCategory::findByKey('thong-tin-thanh-toan')->first();
+		foreach ($articles as $key => $article) {
+			$entry = Article::create([
+				'key' => Common::createKeyURL($article),
+				'priority' => 0,
+				'published' => 1,
+				'created_by' => '1',
+				'not_delete' => 1,
+				'published_by' => '1',
+				'published_at' => $generator->dateTimeThisYear($max = 'now')
+			]);
+
+			$entry->translations()->save( new ArticleTranslation ([
+				'article_id' => $entry->id,
+				'locale' => 'vi',
+				'name' => $article,
+				'summary' => $generator->realText($maxNbChars = 200, $indexSize = 2),
+				'content' => $generator->realText($maxNbChars = 500, $indexSize = 2),
+				'meta_description' => $generator->realText($maxNbChars = 200, $indexSize = 2),
+				'meta_keywords' => $generator->realText($maxNbChars = 200, $indexSize = 2)
+			]));
+
+			$entry->articleCategories()->attach($category->id);
+		}
+
 		$category = ArticleCategory::findByKey('kien-thuc-qua-tang')->first();
 
 		for ($i=0; $i < 10; $i++) {

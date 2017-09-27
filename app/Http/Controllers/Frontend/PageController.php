@@ -16,6 +16,7 @@ use Hash;
 use Notification;
 use DateTime;
 use Cookie;
+use Carbon\Carbon;
 use App\Notifications\VerifyUser;
 use App\Config;
 use App\User;
@@ -34,6 +35,12 @@ use App\Banner;
 use App\BannerCategory;
 use App\Contact;
 use App\Notifications\ContactRequest;
+use App\Province;
+use App\District;
+use App\InvoiceInfo;
+use App\PromotionCode;
+use App\DeliveryFee;
+use App\AreaInfo;
 
 // to return raw query
 //DB::enableQueryLog();
@@ -42,10 +49,10 @@ use App\Notifications\ContactRequest;
 class PageController extends Controller
 {
 	public function __construct()
-    {
-        //$this->middleware('auth')->except(['locate', 'user.register', 'user.create', 'create.verify', 'user.login', 'user.resetpassword', 'user.resetpasswordform']);
-        //$this->middleware('auth');
-    }
+	{
+		//$this->middleware('auth')->except(['locate', 'user.register', 'user.create', 'create.verify', 'user.login', 'user.resetpassword', 'user.resetpasswordform']);
+		//$this->middleware('auth');
+	}
 
 	// for multi language site
 	public function locate($locate)
@@ -353,6 +360,10 @@ class PageController extends Controller
 	{		
 		if (isset($_COOKIE['ShoppingCartData'])) {
 			$this->setMetadata('Thông tin thanh toán', 'payment.info');
+			$provinces = Province::orderBy('name')->get();
+			$districts = District::orderBy('name')->get();
+
+
 			$cart = new ShoppingCart;
 			$cartDetails = [];
 			foreach (json_decode($_COOKIE['ShoppingCartData'], true) as $key => $value) {
@@ -361,22 +372,87 @@ class PageController extends Controller
 				array_push($cartDetails, $cartDetail);
 			}
 			$cart->cartDetails = $cartDetails;
-			return view('frontend.pages.paymentinfo', compact('cart'));
+			return view('frontend.pages.paymentinfo', compact('cart', 'provinces', 'districts'));
 		}
 		return redirect()->route('shopping.cart');
 	}
 
+	public function promotionCodeDetail($code)
+	{
+		$promotioncode = PromotionCode::where('code', $code)->whereColumn('quantity', '>', 'quantity_used')->whereDate('effective_date', '<=', Carbon::now())->whereDate('expiry_date', '>=', Carbon::now())->first();
+		if(!$promotioncode)
+			abort(404);
+		return response()->json($promotioncode->toArray());
+	}
+
+	public function deliveryDetail($province_id)
+	{
+		$province = Province::findOrFail($province_id);
+
+		$weight = 0;
+		$cartDetails = [];
+		if (isset($_COOKIE['ShoppingCartData'])) {
+			foreach (json_decode($_COOKIE['ShoppingCartData'], true) as $key => $value) {
+				$cartDetail = new ShoppingCartDetail;
+				$cartDetail->fill($value);
+				array_push($cartDetails, $cartDetail);
+			}
+		}
+
+		foreach ($cartDetails as $cartDetail) {
+			$weight += $cartDetail->quantity * $cartDetail->product->weight;
+		}
+		return response()->json(['fee' => $province->getDeliveryFee($weight), 'standard_delivery_days' => $province->getStandardDeliveryTime()->format('d/m/Y'), 'express_delivery_days' => $province->getExpressDeliveryTime()->format('d/m/Y')]);
+	}
+
 	public function purchase(PageRequest $request)
 	{
+		//return dd($request->all());
 		$cart = new ShoppingCart;
 		DB::transaction(function () use ($cart, $request) {
-			$cart->code = uniqid();
+			//$cart->code = uniqid();
+			$cart->code = 'SM-' . Carbon::now()->format('my') . '-' . mt_rand(100000,999999);
 			$cart->customer_name = $request->input('ShoppingCart.customer_name', '');
 			$cart->customer_phone = $request->input('ShoppingCart.customer_phone', '');
 			$cart->customer_email = $request->input('ShoppingCart.customer_email', '');
 			$cart->customer_address = $request->input('ShoppingCart.customer_address', '');
+			$cart->province_id = $request->input('ShoppingCart.province_id');
+			$cart->district_id = $request->input('ShoppingCart.district_id');
+
+			$cart->shipping_address_same_order = $request->input('ShoppingCart.shipping_address_same_order', 1);
+			if(!$cart->shipping_address_same_order){
+				$cart->shipping_name = $request->input('ShoppingCart.shipping_name', '');
+				$cart->shipping_phone = $request->input('ShoppingCart.shipping_phone', '');
+				$cart->shipping_email = $request->input('ShoppingCart.shipping_email', '');
+				$cart->shipping_address = $request->input('ShoppingCart.shipping_address', '');
+				$cart->shipping_province_id = $request->input('ShoppingCart.shipping_province_id');
+				$cart->shipping_district_id = $request->input('ShoppingCart.shipping_district_id');
+			}
+			
 			$cart->customer_note = $request->input('ShoppingCart.customer_note', '');
-			$cart->shipping_fee = Config::getValueByKey('default_shipping_fee');
+			$cart->shopping_cart_status_id = 1;
+			$cart->payment_method_id = $request->input('ShoppingCart.payment_method_id');
+			$cart->delivery_method_id = (bool)$request->input('ShoppingCart.delivery_method_id');
+			$cart->shipping_fee = $request->input('ShoppingCart.shipping_fee');
+
+			if($cart->delivery_method_id){
+				if($cart->shipping_address_same_order){
+					$cart->delivery_date = Province::findOrFail($cart->province_id)->getExpressDeliveryTime();
+				}
+				else{
+					$cart->delivery_date = Province::findOrFail($cart->shipping_province_id)->getExpressDeliveryTime();
+				}
+			}
+			else{
+				if($cart->shipping_address_same_order){
+					$cart->delivery_date = Province::findOrFail($cart->province_id)->getStandardDeliveryTime();
+				}
+				else{
+					$cart->delivery_date = Province::findOrFail($cart->shipping_province_id)->getStandardDeliveryTime();
+				}
+			}
+
+			$cart->invoice_export = (bool)$request->input('ShoppingCart.invoice_export');
 			
 			if (!is_null(Auth::user())) {
 				$cart->customer_id = Auth::user()->id;
@@ -393,13 +469,36 @@ class PageController extends Controller
 				array_push($cartDetails, $cartDetail);
 			}
 			$cart->cartDetails()->saveMany($cartDetails);
+
+			if($cart->invoice_export){
+				$invoice = new InvoiceInfo;
+				$invoice->company_name = $request->input('ShoppingCart.invoiceInfo.company_name', '');
+				$invoice->company_address = $request->input('ShoppingCart.invoiceInfo.company_address', '');
+				$invoice->tax_code = $request->input('ShoppingCart.invoiceInfo.tax_code', '');
+				$cart->invoiceInfo()->save($invoice);
+			}
+
+			// sync promotionCodes
+			$promotionCodes =  $request->input('ShoppingCart.promotionCodes', []);
+			$promotionCodes = array_diff($promotionCodes, array('{2}'));
+			if (count($promotionCodes) > 0) {
+				// validate promotionCodes
+				$ids = PromotionCode::whereIn('id', $promotionCodes)->whereColumn('quantity', '>', 'quantity_used')->whereDate('effective_date', '<=', Carbon::now())->whereDate('expiry_date', '>=', Carbon::now())->pluck('id');
+
+				// update used promotion code
+				PromotionCode::whereIn('id', $ids)->increment('quantity_used');
+
+				$cart->promotionCodes()->attach($promotionCodes);
+			}
 		});
 
 		Mail::to($cart->customer_email)
 		->cc(Config::getValueByKey('address_received_mail'))
 		->send(new PurchaseOrder($cart));
 
-		return redirect()->route('purchase.success')->withCookie(Cookie::forget('ShoppingCartData'));
+		return redirect()->route('purchase.success')
+		->withCookie(Cookie::forget('ShoppingCartData'))
+		->with('status', $cart->code);
 	}
 
 	public function purchaseSuccess()
@@ -407,6 +506,12 @@ class PageController extends Controller
 		$this->setMetadata('Mua hàng thành công', 'purchase.success');
 
 		return view('frontend.pages.purchasesuccess');
+	}
+
+	public function orderCheck()
+	{
+		$this->setMetadata('Kiểm tra đơn hàng', 'order.check');
+		return view('frontend.pages.ordercheck');
 	}
 
 	public function register()
@@ -600,12 +705,14 @@ class PageController extends Controller
 		return view('frontend.pages.orderhistory');
 	}
 
-	public function orderDetail($key)
+	public function orderDetail(PageRequest $request)
 	{
-
-		$this->setMetadata('Chi tiết đơn hàng', 'order.detail');
-
-		return view('frontend.pages.orderdetail');
+		$code = $request->input('code', '');
+		$cart = ShoppingCart::where('code', $code)->first();
+		if(is_null($cart))
+			abort(404);
+		$this->setMetadata('Đơn hàng: ' . $code, 'order.check');
+		return view('frontend.pages.orderdetail', compact('cart'));
 	}
 
 	public function contact()

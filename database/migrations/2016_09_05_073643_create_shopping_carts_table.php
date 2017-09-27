@@ -22,15 +22,18 @@ class CreateShoppingCartsTable extends Migration
 			$table->string('customer_address', 250);
 			$table->integer('province_id');
 			$table->integer('district_id');
+			$table->boolean('shipping_address_same_order')->default(1);
 			$table->string('shipping_name', 50)->nullable();
 			$table->string('shipping_email', 50)->nullable();
 			$table->string('shipping_phone', 20)->nullable();
 			$table->string('shipping_address', 250)->nullable();
 			$table->integer('shipping_province_id')->nullable();
 			$table->integer('shipping_district_id')->nullable();
+			$table->integer('delivery_method_id')->default(0);
 			$table->double('shipping_fee')->default(0);
 			$table->date('delivery_date');
 			$table->string('customer_note', 300);
+			$table->boolean('invoice_export')->default(0);
 			$table->integer('invoice_info_id')->nullable();
 			$table->boolean('invoice_exported')->default(0);
 			$table->integer('customer_id')->nullable();

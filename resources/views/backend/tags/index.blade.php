@@ -29,7 +29,7 @@
 			</div>
 			<!-- /.box-header -->
 			<div class="box-body">
-				<table id="tblEntryList" class="table table-bordered table-striped table-hover">
+				<table id="tblEntryList" class="table table-condensed table-bordered table-striped table-hover">
 					<thead>
 						<tr>
 							<th>Hình ảnh</th>

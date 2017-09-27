@@ -8,7 +8,7 @@ class InvoiceInfo extends Model
 {
 	public $timestamps = false;
 
-	public function shoppingcart()
+	public function shoppingCart()
 	{
 		return $this->belongsTo('App\ShoppingCart');
 	}

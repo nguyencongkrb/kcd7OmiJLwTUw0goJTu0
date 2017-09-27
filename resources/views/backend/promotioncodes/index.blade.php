@@ -38,6 +38,7 @@
 							<th>Giá trị tiền tệ</th>
 							<th>Ngày hiệu lực</th>
 							<th>Ngày hết hạn</th>
+							<th>Số lượng</th>
 							<th>Đã sử dụng</th>
 							<th>Thao tác</th>
 						</tr>

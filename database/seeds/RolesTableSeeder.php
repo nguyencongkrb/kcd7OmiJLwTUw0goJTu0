@@ -32,5 +32,20 @@ class RolesTableSeeder extends Seeder
 			'name'	=> 'Người dùng web',
 			'description'	=> 'Người dùng web'
 		]);
+		Role::create([
+			'key'	=> 'Staffs',
+			'name'	=> 'Nhân viên',
+			'description'	=> 'Nhân viên'
+		]);
+		Role::create([
+			'key'	=> 'Agency',
+			'name'	=> 'Đại lý',
+			'description'	=> 'Đại lý'
+		]);
+		Role::create([
+			'key'	=> 'Share',
+			'name'	=> 'Tài khoản dùng chung',
+			'description'	=> 'Tài khoản dùng chung'
+		]);
     }
 }

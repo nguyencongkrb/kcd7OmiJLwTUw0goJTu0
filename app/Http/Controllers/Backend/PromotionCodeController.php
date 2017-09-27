@@ -54,7 +54,8 @@ class PromotionCodeController extends Controller
 		$promotioncode->percent_value = $request->input('PromotionCode.percent_value', 0);
 		$promotioncode->effective_date = DateTime::createFromFormat('Y-m-d', $request->input('PromotionCode.effective_date'));
 		$promotioncode->expiry_date = DateTime::createFromFormat('Y-m-d', $request->input('PromotionCode.expiry_date'));
-		$promotioncode->used = $request->input('PromotionCode.used', 0);
+		$promotioncode->quantity = $request->input('PromotionCode.quantity', 0);
+		$promotioncode->quantity_used = 0;
 		$promotioncode->created_by = Auth::user()->id;
 		$promotioncode->save();
 
@@ -108,7 +109,7 @@ class PromotionCodeController extends Controller
 		$promotioncode->percent_value = $request->input('PromotionCode.percent_value', 0);
 		$promotioncode->effective_date = DateTime::createFromFormat('Y-m-d', $request->input('PromotionCode.effective_date'));
 		$promotioncode->expiry_date = DateTime::createFromFormat('Y-m-d', $request->input('PromotionCode.expiry_date'));
-		$promotioncode->used = $request->input('PromotionCode.used', 0);
+		$promotioncode->quantity = $request->input('PromotionCode.quantity', 0);
 		$promotioncode->updated_by = Auth::user()->id;
 		$promotioncode->save();
 
@@ -196,7 +197,7 @@ class PromotionCodeController extends Controller
 						$promotioncode->cash_value = $row['gia_tri_tien_mat'];
 						$promotioncode->effective_date = $row['ngay_hieu_luc'];
 						$promotioncode->expiry_date = $row['ngay_het_han'];
-						$promotioncode->used = (bool)$row['da_su_dung'];
+						$promotioncode->quantity = (int)$row['so_luong'];
 						$promotioncode->created_by = Auth::user()->id;
 						$promotioncode->save();
 					} catch (Exception $e) {

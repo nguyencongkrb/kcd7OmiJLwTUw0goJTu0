@@ -40,6 +40,7 @@ class PromotionCodeRequest extends FormRequest
 					'PromotionCode.effective_date' => 'required|date|date_format:"Y-m-d"',
 					//'PromotionCode.expiry_date' => 'required|date|after:effective_date|date_format:"Y-m-d"',
 					'PromotionCode.expiry_date' => 'required|date|date_format:"Y-m-d"',
+					'PromotionCode.quantity' => 'required|integer|min:0',
 				];
 				break;
 		}

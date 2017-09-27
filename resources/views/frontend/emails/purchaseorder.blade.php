@@ -64,11 +64,24 @@ $style = [
 				Bên dưới là thông tin mua hàng của quý khách:
 			</p>
 			<p style="{{ $style['paragraph'] }}">
-				Mã đơn hàng: {{ $cart->code }}<br>
+				Mã đơn hàng: <strong>{{ $cart->code }}</strong><br>
 				Họ tên: {{ $cart->customer_name }}<br>
 				Điện thoại: {{ $cart->customer_phone }}<br>
 				Email: {{ $cart->customer_email }}<br>
-				Địa chỉ: {{ $cart->customer_address }}
+				Địa chỉ: {{ $cart->customer_address }}, {{ $cart->customerDistrict->name }}, {{ $cart->customerProvince->name }}
+			</p>
+			@if(!$cart->shipping_address_same_order)
+			<p style="{{ $style['paragraph'] }}">
+				Họ tên người nhận: {{ $cart->shipping_name }}<br>
+				Điện thoại: {{ $cart->shipping_phone }}<br>
+				Email: {{ $cart->shipping_email }}<br>
+				Địa chỉ: {{ $cart->shipping_address }}, {{ $cart->shippingDistrict->name }}, {{ $cart->shippingProvince->name }}
+			</p>
+			@endif
+			<p style="{{ $style['paragraph'] }}">
+				Trạng thái đơn hàng: {{ $cart->status->name }}<br>
+				Phương thức thanh toán: {{ $cart->paymentMethod->name }}<br>
+				Thời gian giao hàng dự kiến: {{ $cart->delivery_date->format('d/m/Y') }}
 			</p>
 			<p style="{{ $style['paragraph'] }}">
 				Ghi chú: {{ $cart->customer_note }}

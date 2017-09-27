@@ -39,7 +39,7 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 
 	{!! $config->getValuebyKey('embed_script_head') !!}
 </head>
-<body class="{{ Auth::guest() ? 'loginpage' : null }}" style="background-image: url({{ Auth::guest() ? $linkgb : null }})">
+<body class="{{ Auth::guest() ? 'loginpage' : null }} {{ Route::is('purchase.success') ? 'thanhyou' : null }}" style="background-image: url({{ Auth::guest() ? $linkgb : null }})">
 	@include('frontend.partials.header')
 	<section>
 		<div class="container">

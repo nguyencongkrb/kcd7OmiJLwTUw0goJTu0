@@ -16,7 +16,7 @@ class AdditionalValuesTableSeeder extends Seeder
 		$generator = \Faker\Factory::create('vi_VN');
 
 		// hidden controls
-		$hiddenControls = ['Article[articleTypes][]', 'Article[tags][]', '', 'Product[model]', 'Product[productColors][]', 'Product[productSizes][]', 'Product[custom_size]', 'Product[unit]', 'Product[tags][]', 'Product[origin]'];
+		$hiddenControls = ['Article[articleTypes][]', 'Article[tags][]', 'Product[producer_id]', 'Product[warranty]', 'Product[model]', 'Product[relatedProducts][]', 'Product[productColors][]', 'Product[productSizes][]', 'Product[custom_size]', 'Product[unit]', 'Product[tags][]', 'Product[origin]'];
 		foreach ($hiddenControls as $control) {
 			$entry = AdditionalValue::create([
 				'additional_category_id' => 1,

@@ -41,6 +41,8 @@ use App\AdditionalCategory;
 use App\Policies\AdditionalCategoryPolicy;
 use App\PromotionCode;
 use App\Policies\PromotionCodePolicy;
+use App\ShoppingCart;
+use App\Policies\ShoppingCartPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -68,6 +70,7 @@ class AuthServiceProvider extends ServiceProvider
 		AdditionalValue::class => AdditionalValuePolicy::class,
 		AdditionalCategory::class => AdditionalCategoryPolicy::class,
 		PromotionCode::class => PromotionCodePolicy::class,
+		ShoppingCart::class => ShoppingCartPolicy::class,
 	];
 
 	/**

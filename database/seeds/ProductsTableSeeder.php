@@ -41,6 +41,7 @@ class ProductsTableSeeder extends Seeder
 				'producer_id' => $generator->randomElement($producer),
 				'origin' => $generator->sentence($nbWords = 2),
 				'unit' => $generator->word,
+				'weight' => $generator->numberBetween($min = 100, $max = 2500),
 				'price' => $generator->numberBetween($min = 1500000, $max = 2000000),
 				'sale_price' => $generator->numberBetween($min = 1000000, $max = 1500000),
 				'sale_ratio' => 0,

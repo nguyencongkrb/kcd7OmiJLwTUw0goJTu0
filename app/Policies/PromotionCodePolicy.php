@@ -49,7 +49,7 @@ class PromotionCodePolicy
 	 */
 	public function update(User $user, PromotionCode $promotionCode)
 	{
-		return !$promotionCode->used && $user->hasRoles('Moderator');
+		return ($promotionCode->quantity == $promotionCode->quantity_used) && $user->hasRoles('Moderator');
 	}
 
 	/**
@@ -61,6 +61,6 @@ class PromotionCodePolicy
 	 */
 	public function delete(User $user, PromotionCode $promotionCode)
 	{
-		return !$promotionCode->used && $user->hasRoles('Moderator');
+		return ($promotionCode->quantity == $promotionCode->quantity_used) && $user->hasRoles('Moderator');
 	}
 }

@@ -13,6 +13,9 @@ class ShoppingCartStatusesTableSeeder extends Seeder
 	public function run()
 	{
 		ShoppingCartStatus::create([
+			'name' => 'Đơn hàng huỷ'
+		]);
+		ShoppingCartStatus::create([
 			'name' => 'Mới đặt hàng'
 		]);
 		ShoppingCartStatus::create([

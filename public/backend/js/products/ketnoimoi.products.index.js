@@ -246,6 +246,22 @@ ketnoimoi.products.index = {
 			'dbfieldname': 'warranty'
 		},
 		{
+			'label': 'Số lượng trong kho',
+			'id': 'inventory_quantity',
+			'name': 'Product[inventory_quantity]',
+			'type': 'number',
+			'required': false,
+			'placeholder': '',
+			'cssclass': '',
+			'value': '0',
+			'disabled': false,
+			'readonly': false,
+			'datas': [],
+			'help_block': '',
+			'input_icon': '',
+			'dbfieldname': 'inventory_quantity'
+		},
+		{
 			'label': 'Giá sản phẩm',
 			'id': 'price',
 			'name': 'Product[price]',
@@ -542,9 +558,19 @@ ketnoimoi.products.index = {
 					return data;
 				}
 			},
+			{
+				data: 'inventory_quantity',
+				className: 'text-right',
+				render: function (data, type, row) {
+					if (type=== 'display') {
+						return numbro(data).format();
+					}
+					return data;
+				}
+			},
 			{ 
 				data: 'priority',
-				className: 'text-right',
+				className: 'text-right'
 			},
 			{
 				data: 'product_categories',

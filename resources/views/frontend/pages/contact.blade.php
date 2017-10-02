@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col-md-4 col-md-offset-1">
 		<h1 class="article-title">Thông tin liên hệ</h1>
-		<p class="lead">
+		<p>
 			<span class="glyphicon glyphicon-map-marker"></span> 
 			{{ $config->getValueByKey('headquarter_address_street') }},
 			{{ $config->getValueByKey('headquarter_address_ward') }},<br>

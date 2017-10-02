@@ -81,7 +81,7 @@ $style = [
 			<p style="{{ $style['paragraph'] }}">
 				Trạng thái đơn hàng: {{ $cart->status->name }}<br>
 				Phương thức thanh toán: {{ $cart->paymentMethod->name }}<br>
-				Thời gian giao hàng dự kiến: {{ $cart->delivery_date->format('d/m/Y') }}
+				Thời gian giao hàng dự kiến: {{ $cart->delivery_date }}
 			</p>
 			<p style="{{ $style['paragraph'] }}">
 				Ghi chú: {{ $cart->customer_note }}
@@ -116,7 +116,7 @@ $style = [
 				</tr>
 				<tr style="font-weight:bold;">
 					<td colspan="7">Tổng cộng</td>
-					<td style="text-align:right;">{{ number_format($cart->getTotalAmount() + $cart->shipping_fee) }}</td>
+					<td style="text-align:right;">{{ number_format($cart->getTotalPaymentAmount()) }}</td>
 				</tr>
 			</table>
 

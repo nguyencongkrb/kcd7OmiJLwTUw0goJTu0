@@ -48,12 +48,6 @@ use App\AreaInfo;
 
 class PageController extends Controller
 {
-	public function __construct()
-	{
-		//$this->middleware('auth')->except(['locate', 'user.register', 'user.create', 'create.verify', 'user.login', 'user.resetpassword', 'user.resetpasswordform']);
-		//$this->middleware('auth');
-	}
-
 	// for multi language site
 	public function locate($locate)
 	{
@@ -63,7 +57,7 @@ class PageController extends Controller
 
 	public function index()
 	{
-		$this->setMetadata();
+		$this->setMetadata('Trang chủ');
 
 		$sliders = BannerCategory::findByKey('banner-trang-chu')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->take(5)->get();
 		$productCategories = ProductCategory::where('parent_id', 0)->where('published', 1)->orderBy('priority')->get();
@@ -218,7 +212,7 @@ class PageController extends Controller
 			abort(404);
 
 		$limit = Config::getValueByKey('rows_per_page_article');
-		$site_title = $category->name;
+		$site_title = $category->name . ' | ' . Config::getValueByKey('site_title');;
 		$site_name = Config::getValueByKey('site_name');
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
@@ -265,7 +259,7 @@ class PageController extends Controller
 		}
 
 		// metadata
-		$site_title = $article->name;
+		$site_title = $article->name . ' | ' . Config::getValueByKey('site_title');;
 		$site_name = Config::getValueByKey('site_name');
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
@@ -361,8 +355,6 @@ class PageController extends Controller
 		if (isset($_COOKIE['ShoppingCartData'])) {
 			$this->setMetadata('Thông tin thanh toán', 'payment.info');
 			$provinces = Province::orderBy('name')->get();
-			$districts = District::orderBy('name')->get();
-
 
 			$cart = new ShoppingCart;
 			$cartDetails = [];
@@ -372,7 +364,7 @@ class PageController extends Controller
 				array_push($cartDetails, $cartDetail);
 			}
 			$cart->cartDetails = $cartDetails;
-			return view('frontend.pages.paymentinfo', compact('cart', 'provinces', 'districts'));
+			return view('frontend.pages.paymentinfo', compact('cart', 'provinces'));
 		}
 		return redirect()->route('shopping.cart');
 	}
@@ -430,7 +422,7 @@ class PageController extends Controller
 			}
 			
 			$cart->customer_note = $request->input('ShoppingCart.customer_note', '');
-			$cart->shopping_cart_status_id = 1;
+			$cart->shopping_cart_status_id = 2;
 			$cart->payment_method_id = $request->input('ShoppingCart.payment_method_id');
 			$cart->delivery_method_id = (bool)$request->input('ShoppingCart.delivery_method_id');
 			$cart->shipping_fee = $request->input('ShoppingCart.shipping_fee');
@@ -492,13 +484,19 @@ class PageController extends Controller
 			}
 		});
 
-		Mail::to($cart->customer_email)
-		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new PurchaseOrder($cart));
+		if ($cart->payment_method_id == 2 || $cart->payment_method_id == 3) {
+			return redirect()->route('payment.process', ['code' => $cart->code])
+			->withCookie(Cookie::forget('ShoppingCartData'));
+		}
+		else{
+			Mail::to($cart->customer_email)
+			->cc(Config::getValueByKey('address_received_mail'))
+			->send(new PurchaseOrder($cart));
 
-		return redirect()->route('purchase.success')
-		->withCookie(Cookie::forget('ShoppingCartData'))
-		->with('status', $cart->code);
+			return redirect()->route('purchase.success')
+			->withCookie(Cookie::forget('ShoppingCartData'))
+			->with('status', $cart->code);
+		}
 	}
 
 	public function purchaseSuccess()
@@ -595,7 +593,7 @@ class PageController extends Controller
 			return redirect()->route('home');
 		}
 
-		$this->setMetadata('Đăng nhập', 'user.login');
+		$this->setMetadata('', 'user.login');
 
 		return view('frontend.pages.login');
 	}
@@ -650,14 +648,13 @@ class PageController extends Controller
 
 	public function changePassword()
 	{
-		return redirect()->route('home');
 		//if (Auth::check()) {
 		//	abort('403');
 		//}
 
-		//$this->setMetadata('Thông tin tài khoản', 'user.profile');
+		$this->setMetadata('Thay đổi mật khẩu', 'user.changepassword');
 
-		//return view('frontend.pages.profile');
+		return view('frontend.pages.changepassword');
 	}
 
 	public function updatePassword(PageRequest $request)
@@ -702,17 +699,33 @@ class PageController extends Controller
 
 		$this->setMetadata('Lịch sử mua hàng', 'order.history');
 
-		return view('frontend.pages.orderhistory');
+		$shoppingCarts = Auth::user()->shoppingCarts()->orderBy('id', 'desc')->get();
+
+		return view('frontend.pages.orderhistory', compact('shoppingCarts'));
 	}
 
 	public function orderDetail(PageRequest $request)
 	{
-		$code = $request->input('code', '');
+		$code = trim($request->input('code', ''));
 		$cart = ShoppingCart::where('code', $code)->first();
 		if(is_null($cart))
 			abort(404);
 		$this->setMetadata('Đơn hàng: ' . $code, 'order.check');
 		return view('frontend.pages.orderdetail', compact('cart'));
+	}
+
+	public function changeOrderStatus($cart_id, $status_id = 1)
+	{
+		if($status_id != 1)	// chỉ cho phép huỷ đơn hàng
+			abort(404);
+
+		$cart = ShoppingCart::findOrFail($cart_id);
+			abort(404);
+		if($cart->shopping_cart_status_id == 5)
+		$cart->shopping_cart_status_id = $status_id;
+		$cart->updated_by = Auth::user()->id;
+		$cart->save();
+		return redirect()->route('order.history')->with('status', 'Trạng thái đơn hàng đã được cập nhật.');
 	}
 
 	public function contact()
@@ -749,7 +762,7 @@ class PageController extends Controller
 		$site_name = Config::getValueByKey('site_name');
 		$site_title = Config::getValueByKey('site_title');
 		if ($prefix != '') {
-			$site_title = $prefix . ' - ' . $site_title;
+			$site_title = $prefix . ' | ' . $site_title;
 		}
 		$meta_description = Config::getValueByKey('meta_description');
 		$meta_keywords = Config::getValueByKey('meta_keywords');
@@ -784,4 +797,156 @@ class PageController extends Controller
 		*/
 		// end metadata
 	}
+
+	public function paymentProcess($code)
+	{
+		$cart = ShoppingCart::where('code', $code)->first();
+		if(is_null($cart))
+			abort(404);
+
+		$vnp_Url = env('vnp_Url', '');
+		$vnp_Returnurl = url('/') . '/paymentinfo';
+		$vnp_TmnCode = env('vnp_TmnCode', '');//Mã website tại VNPAY 
+		$vnp_HashSecret = env('vnp_HashSecret', ''); //Chuỗi bí mật
+
+		$vnp_TxnRef = $cart->code;	//Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+		$vnp_OrderInfo = 'Thanh toan don hang '.$cart->code;
+		$vnp_OrderType = 'other';	// option
+		$vnp_Amount = $cart->getTotalPaymentAmount() * 100;
+		$vnp_Locale = 'vn';
+		$vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+		$inputData = array(
+			"vnp_Version" => env('vnp_Version', '2.0.0'),
+			"vnp_TmnCode" => $vnp_TmnCode,
+			"vnp_Amount" => $vnp_Amount,
+			"vnp_Command" => "pay",
+			"vnp_CreateDate" => date('YmdHis'),
+			"vnp_CurrCode" => env('vnp_CurrCode', 'VND'),
+			"vnp_IpAddr" => $vnp_IpAddr,
+			"vnp_Locale" => $vnp_Locale,   
+			"vnp_OrderInfo" => $vnp_OrderInfo,
+			"vnp_OrderType" => $vnp_OrderType,
+			"vnp_ReturnUrl" => $vnp_Returnurl,
+			"vnp_TxnRef" => $vnp_TxnRef,    
+		);
+		ksort($inputData);
+		$query = "";
+		$i = 0;
+		$hashdata = "";
+		foreach ($inputData as $key => $value) {
+			if ($i == 1) {
+				$hashdata .= '&' . $key . "=" . $value;
+			} else {
+				$hashdata .= $key . "=" . $value;
+				$i = 1;
+			}
+			$query .= urlencode($key) . "=" . urlencode($value) . '&';
+		}
+
+		$vnp_Url = $vnp_Url . "?" . $query;
+		if (isset($vnp_HashSecret)) {
+			$vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+			$vnp_Url .= 'vnp_SecureHashType=MD5&vnp_SecureHash=' . $vnpSecureHash;
+		}
+		return \Redirect::to($vnp_Url);
+	}
+
+	public function getInfoPayment()
+	{
+		$inputData = array();
+		$returnData = array();
+		$data = $_REQUEST;
+		foreach ($data as $key => $value) {
+			if (substr($key, 0, 4) == "vnp_") {
+				$inputData[$key] = $value;
+			}
+		}
+
+		$vnp_SecureHash = $inputData['vnp_SecureHash'];
+		unset($inputData['vnp_SecureHashType']);
+		unset($inputData['vnp_SecureHash']);
+		ksort($inputData);
+		$i = 0;
+		$hashData = "";
+		foreach ($inputData as $key => $value) {
+			if ($i == 1) {
+				$hashData = $hashData . '&' . $key . "=" . $value;
+			} else {
+				$hashData = $hashData . $key . "=" . $value;
+				$i = 1;
+			}
+		}
+		$vnpTranId = $inputData['vnp_TransactionNo']; //Mã giao dịch tại VNPAY
+		$vnp_BankCode = $inputData['vnp_BankCode']; //Ngân hàng thanh toán
+		$secureHash = md5(env('vnp_HashSecret', '') . $hashData);
+		$Status = 0;
+		$orderId = $inputData['vnp_TxnRef'];
+
+		try {
+			//Check Orderid    
+			//Kiểm tra checksum của dữ liệu
+			if ($secureHash == $vnp_SecureHash) {
+				//Lấy thông tin đơn hàng lưu trong Database và kiểm tra trạng thái của đơn hàng, mã đơn hàng là: $orderId            
+				//Việc kiểm tra trạng thái của đơn hàng giúp hệ thống không xử lý trùng lặp, xử lý nhiều lần một giao dịch
+				//Giả sử: $order = mysqli_fetch_assoc($result);
+				$order = ShoppingCart::where('code', $orderId)->first();;
+				if ($order != NULL) {
+					if ($order->payment_status == 0) {
+						if ($inputData['vnp_ResponseCode'] == '00') {
+							$Status = 1;
+						} else {
+							$Status = 2;
+						}
+						//Cài đặt Code cập nhật kết quả thanh toán, tình trạng đơn hàng vào DB
+						//
+						
+						$order->payment_status = 1;
+						$order->save();
+
+						Mail::to($order->customer_email)
+						->cc(Config::getValueByKey('address_received_mail'))
+						->send(new PurchaseOrder($order));
+
+						return redirect()->route('purchase.success')
+						->withCookie(Cookie::forget('ShoppingCartData'))
+						->with('status', $order->code);
+
+						//
+						//Trả kết quả về cho VNPAY: Website TMĐT ghi nhận yêu cầu thành công                
+						$returnData['RspCode'] = '00';
+						$returnData['Message'] = 'Confirm Success';
+					} else {
+						$returnData['RspCode'] = '02';
+						$returnData['Message'] = 'Order already confirmed';
+					}
+				} else {
+					$returnData['RspCode'] = '01';
+					$returnData['Message'] = 'Order not found';
+				}
+			} else {
+				$returnData['RspCode'] = '97';
+				$returnData['Message'] = 'Chu ky khong hop le';
+			}
+		} catch (Exception $e) {
+			$returnData['RspCode'] = '99';
+			$returnData['Message'] = 'Unknow error';
+		}
+		//Trả lại VNPAY theo định dạng JSON
+		echo json_encode($returnData);
+	}
+
+	public function getDistrict($province_id)
+	{
+		$province = Province::findOrFail($province_id);
+
+		return response()->json($province->districts()->orderBy('name')->get()->toArray());
+	}
 }
+
+
+
+
+
+
+
+

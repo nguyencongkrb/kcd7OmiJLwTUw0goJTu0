@@ -7,67 +7,99 @@
 @endsection
 
 @section('body')
-@include('frontend.partials.errors')
-@if (session('status'))
-<div class="alert alert-success alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	{{ session('status') }}
-</div>
-@endif
-
-<div class="col-sm-6 col-md-4 col-md-offset-1">
-	<h1 class="article-title">Thông tin tài khoản</h1>
-	<form role="form" method="POST" action="{{ route('user.updateprofile') }}">
-		{{ csrf_field() }}
-		<div class="form-group">
-			<label for="first_name">Họ tên</label>
-			<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ $user->first_name }}" placeholder="Họ tên" required>
-		</div>
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" name="User[email]" value="{{ $user->email }}" placeholder="Email" required>
-		</div>
-		<div class="form-group">
-			<label for="mobile_phone">Số điện thoại</label>
-			<input type="text" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ $user->mobile_phone }}" placeholder="Số điện thoại">
-		</div>
-		<div class="form-group">
-			<label for="gender">Giới tính</label>
-			<select id="gender" name="User[gender]" class="form-control">
-				<option value="" {{ is_null($user->gender) ? 'selected' : null }}>Giới tính</option>
-				<option value="0" {{ $user->gender == 0 ? 'selected' : null }}>Nữ</option>
-				<option value="1" {{ $user->gender == 1 ? 'selected' : null }}>Nam</option>
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="birthday">Ngày tháng năm sinh</label>
-			<input type="text" class="form-control" id="birthday" name="User[birthday]" value="{{ date_format(new DateTime($user->birthday), 'd/m/Y') }}" placeholder="ngày/tháng/năm">
-		</div>
-		<div class="form-group">
-			<label for="address">Địa chỉ</label>
-			<input type="text" class="form-control" id="address" name="User[address]" value="{{ $user->address }}" placeholder="Địa chỉ">
-		</div>
-		<button type="submit" class="btn btn-default btn-block">Cập nhật</button>
-	</form>
-</div>
-<div class="col-sm-6 col-md-offset-2 col-md-4">
-	<h1 class="article-title">Cập nhật mật mã</h1><br>
-	<form role="form" method="POST" action="{{ route('user.updatepassword') }}">
-		{{ csrf_field() }}
-		<div class="form-group">
-			<label for="currentpassword">Mật mã hiện tại</label>
-			<input type="password" class="form-control" id="currentpassword" name="User[currentpassword]" placeholder="Mật mã hiện tại" required>
-		</div>
-		<div class="form-group">
-			<label for="password">Mật mã mới</label>
-			<input type="password" class="form-control" id="password" name="User[password]" placeholder="Mật mã" required>
-		</div>
-		<div class="form-group">
-			<label for="password_confirmation">Nhắc lại mật mã mới</label>
-			<input type="password" class="form-control" id="password_confirmation" name="User[password_confirmation]" placeholder="Nhắc lại mật mã" required>
-		</div>
-		<button type="submit" class="btn btn-default btn-block">Thay đổi mật mã</button>
-	</form>
+<div class="row">
+	<div class="col-md-3">
+		@include('frontend.partials.sidebar')
+	</div>
+	<div class="col-md-9">
+		<h1 class="article-title">Thông tin tài khoản</h1>
+		<hr>
+		<form role="form" class="form-horizontal" method="POST" action="{{ route('user.updateprofile') }}">
+			{{ csrf_field() }}
+			@include('frontend.partials.errors')
+			@if (session('status'))
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ session('status') }}
+			</div>
+			@endif
+			<div class="form-group {{ $errors->has('User[first_name]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Họ tên</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ $user->first_name }}" placeholder="Họ tên" required>
+					@if ($errors->has('User[first_name]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[first_name]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group {{ $errors->has('User[email]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Email</label>
+				<div class="col-sm-9">
+					<input type="email" class="form-control" id="email" name="User[email]" value="{{ $user->email }}" placeholder="Email" required>
+					@if ($errors->has('User[email]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[email]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group {{ $errors->has('User[mobile_phone]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Số điện thoại</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ $user->mobile_phone }}" placeholder="Số điện thoại">
+					@if ($errors->has('User[mobile_phone]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group {{ $errors->has('User[gender]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Giới tính</label>
+				<div class="col-sm-9">
+					<select id="gender" name="User[gender]" class="form-control">
+						<option value="" {{ is_null($user->gender) ? 'selected' : null }}>Giới tính</option>
+						<option value="0" {{ $user->gender == 0 ? 'selected' : null }}>Nữ</option>
+						<option value="1" {{ $user->gender == 1 ? 'selected' : null }}>Nam</option>
+					</select>
+					@if ($errors->has('User[gender]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[gender]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group {{ $errors->has('User[birthday]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Ngày tháng năm sinh</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="birthday" name="User[birthday]" value="{{ date_format(new DateTime($user->birthday), 'd/m/Y') }}" placeholder="ngày/tháng/năm">
+					@if ($errors->has('User[birthday]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[birthday]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group {{ $errors->has('User[address]') ? 'has-error' : '' }}">
+				<label class="col-sm-3 control-label">Địa chỉ</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="address" name="User[address]" value="{{ $user->address }}" placeholder="Địa chỉ">
+					@if ($errors->has('User[address]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[address]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<button type="submit" class="btn btn-default btn-block">Cập nhật</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 @endsection
 @section('plugins.js')

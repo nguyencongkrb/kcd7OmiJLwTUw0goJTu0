@@ -35,6 +35,7 @@
 						<tr>
 							<th>H.ảnh</th>
 							<th>Tên Sản phẩm</th>
+							<th>Số lượng</th>
 							<th>Stt</th>
 							<th>Danh mục</th>
 							<th>Loại</th>

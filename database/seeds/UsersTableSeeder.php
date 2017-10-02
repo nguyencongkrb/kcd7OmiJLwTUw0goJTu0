@@ -47,5 +47,54 @@ class UsersTableSeeder extends Seeder
 			'confirmed'		=> 1,
 			'confirmation_code' => str_random(30)
 		]);
+
+		User::create([
+			'last_name'		=> 'Staffs',
+			'first_name'	=> 'Staffs',
+			'job_title'		=> 'Staffs',
+			'mobile_phone'	=> '0909 24-7179',
+			'home_phone'	=> '',
+			'address'		=> '118/42 Huỳnh Thiện Lộc, Tân Phú, HCM',
+			'website'		=> 'http://ketnoimoi.com',
+			'facebook'		=> 'http://facebook.com/phantsang',
+			'email'			=> 'staffs@gmail.com',
+			'password'		=> Hash::make('123456'),
+			'type'			=> 0,
+			'active'		=> 1,
+			'confirmed'		=> 1,
+			'confirmation_code' => str_random(30)
+		]);
+		User::create([
+			'last_name'		=> 'Agency',
+			'first_name'	=> 'Agency',
+			'job_title'		=> 'Agency',
+			'mobile_phone'	=> '0909 24-7179',
+			'home_phone'	=> '',
+			'address'		=> '118/42 Huỳnh Thiện Lộc, Tân Phú, HCM',
+			'website'		=> 'http://ketnoimoi.com',
+			'facebook'		=> 'http://facebook.com/phantsang',
+			'email'			=> 'agency@gmail.com',
+			'password'		=> Hash::make('123456'),
+			'type'			=> 0,
+			'active'		=> 1,
+			'confirmed'		=> 1,
+			'confirmation_code' => str_random(30)
+		]);
+		User::create([
+			'last_name'		=> 'Share',
+			'first_name'	=> 'Share',
+			'job_title'		=> 'Share',
+			'mobile_phone'	=> '0909 24-7179',
+			'home_phone'	=> '',
+			'address'		=> '118/42 Huỳnh Thiện Lộc, Tân Phú, HCM',
+			'website'		=> 'http://ketnoimoi.com',
+			'facebook'		=> 'http://facebook.com/phantsang',
+			'email'			=> 'share@gmail.com',
+			'password'		=> Hash::make('123456'),
+			'type'			=> 0,
+			'active'		=> 1,
+			'confirmed'		=> 1,
+			'confirmation_code' => str_random(30)
+		]);
 	}
 }

@@ -68,6 +68,7 @@ class ProductController extends Controller
 			$product->producer_id = $request->input('Product.producer_id');
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');
+			$product->inventory_quantity = $request->input('Product.inventory_quantity', 0);
 			$product->price = $request->input('Product.price', 0);
 			$product->sale_price = $request->input('Product.sale_price', 0);
 			$product->sale_ratio = $request->input('Product.sale_ratio', 0);
@@ -208,6 +209,7 @@ class ProductController extends Controller
 			$product->producer_id = $request->input('Product.producer_id');
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');
+			$product->inventory_quantity = $request->input('Product.inventory_quantity', 0);
 			$product->price = $request->input('Product.price', 0);
 			$product->sale_price = $request->input('Product.sale_price', 0);
 			$product->sale_ratio = $request->input('Product.sale_ratio', 0);

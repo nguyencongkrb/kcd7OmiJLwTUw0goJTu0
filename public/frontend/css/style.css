@@ -13,6 +13,9 @@ a:hover {
 input, textarea{
 	border-radius: 0 !important;
 }
+.text-colored{
+	color: #eaab00;
+}
 .btn{
 	border-radius: 0 !important;
 }
@@ -61,7 +64,7 @@ header a, header a:hover{
 	height: 50px;
 	float: left;
 	vertical-align: middle;
-	margin: 25px 0 0 25px;
+	margin: 15px 0 0 25px;
 	padding-top: 5px;
 }
 .support a{
@@ -71,16 +74,16 @@ header a, header a:hover{
 }
 .customer_service{
 	background: url('/frontend/images/icon_cskh.png') left center no-repeat;
-	background-size: 50px;
+	background-size: 46px;
 	
 }
 .chat_online{
 	background: url('/frontend/images/icon_chatonline.png') left center no-repeat;
-	background-size: 50px;
+	background-size: 46px;
 }
 .question_answer{
 	background: url('/frontend/images/icon_qa.png') left center no-repeat;
-	background-size: 50px;
+	background-size: 46px;
 	line-height: 45px;
 }
 
@@ -160,7 +163,7 @@ ul.categories>li.active{
 	background: #eaab00;
 }
 ul.categories>li:hover{
-	background: #fad87f;
+	background: #f9df9c;
 }
 ul.categories>li.active a, ul.categories>li:hover a{
 	color: #003946;
@@ -302,7 +305,7 @@ form label{
 	color: #404040;
 	font-weight: normal;
 }
-form button{
+form button:not(.close){
 	border: none !important;
 	border-radius: 0 !important;
 	padding: 0 35px !important;
@@ -313,7 +316,6 @@ form button{
 body.loginpage h1{
 	font-weight: bold;
 	color: #eaab00;
-	text-align: center;
 }
 body.loginpage h3{
 	color:#003946;
@@ -324,7 +326,10 @@ body.loginpage h3{
 body.loginpage form{
 	margin-top: 30px;
 }
-body.loginpage form input{
+body.loginpage form input,
+body.loginpage form select{
+	-webkit-appearance: none;
+	-webkit-border-radius: 0px;
 	border-radius: 0 !important;
 	color: #003946 !important;
 	border-color: #eaaa00 !important;
@@ -337,7 +342,7 @@ body.loginpage form input.verifycode{
 	border-color: #e1e7e9 !important;
 	margin-left: 5px;
 }
-body.loginpage form button{
+body.loginpage form button:not(.close){
 	font-size: 14px !important;
 }
 body.loginpage a{
@@ -367,6 +372,7 @@ body.loginpage header{
 }
 body.loginpage form label{
 	color: #003946;
+	padding-left: 0;
 }
 
 ul.checkout-step{
@@ -401,7 +407,7 @@ ul.checkout-step>li>span{
 	height: 36px;
 	background: #bdbdbd;
 	color: #fff;
-	font-size: 24px;
+	font-size: 14px;
 	font-weight: bold;
 	border-radius: 50%;
 	line-height: 36px;
@@ -418,7 +424,7 @@ table.shoppingcart>tbody>tr>td{
 	vertical-align: middle;
 }
 table.shoppingcart td.head{
-	background: #fad87f;
+	background: #f9df9c;
 	color: #003946;
 	font-weight: bold;
 }
@@ -432,26 +438,27 @@ table.shoppingcart .checkbox{
 .invoice-form{
 	display: none;
 }
-table.shoppingcart .delivery-method{
+.delivery-method{
 	border: solid 1px #ccc;
 	padding: 10px;
 	cursor: pointer;
+	display: block;
+	text-align: center;
 }
-table.shoppingcart .delivery-method.active{
-	background:#fad87f;
+.delivery-method.active{
+	background:#eaab00;
 }
-table.shoppingcart .delivery-method strong{
+.delivery-method strong{
 	font-size: 20px;
 }
 .payment-method{
 	border: solid 1px #ccc;
 	padding: 10px;
 	cursor: pointer;
-	display: table-cell;
-	width: 20%;
+	display: block;
 }
 .payment-method.active{
-	background: #fad87f;
+	background: #eaab00;
 }
 .payment-method img{
 	display: block;
@@ -470,11 +477,7 @@ table.shoppingcart .delivery-method strong{
 	position: relative;
 }
 .btn-arrow span{
-	position: absolute;
-	color: #fff;
-	right: 5px;
-	top: 15%;
-	font-size: 250%;
+	padding-left: 20px;
 }
 form#fromCheckout button{
 	border: none !important;
@@ -503,6 +506,15 @@ form#fromCheckout button:hover{
 	justify-content: flex-end;
 	align-items: right;
 }
+.pl-0{
+	padding-left: 0 !important;
+}
+.pr-0{
+	padding-right: 0 !important;
+}
+.pt-10{
+	padding-top: 10px;
+}
 .pb-10{
 	padding-bottom: 10px;
 }
@@ -517,16 +529,6 @@ form#fromCheckout button:hover{
 .article-item-title a{
 	color: #003946;
 }
-body.thanhyou footer{
-	margin-top: 0;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	/* Set the fixed height of the footer here */
-	height: 163px;
-}
-
-
 
 /************ FOOTER *****************/
 footer{
@@ -536,7 +538,6 @@ footer{
 	color: #003946;
 	padding: 0;
 	margin-top: 25px;
-	padding-bottom: 25px;
 }
 footer a{
 	color: #003946;
@@ -553,7 +554,7 @@ body.loginpage footer{
 	/* Set the fixed height of the footer here */
 	height: 202px;
 }
-body.loginpage footer .container{
+footer .container{
 	padding-bottom: 15px;
 }
 body.loginpage footer ul{
@@ -562,7 +563,7 @@ body.loginpage footer ul{
 body.loginpage footer a{
 	color: #fff;
 }
-body.loginpage footer .register-trade{
+footer .register-trade{
 	background: #fff;
 	color: #003946;
 	padding: 15px 0 0 0;
@@ -576,17 +577,17 @@ body.loginpage footer .register-trade{
 
 
 
-
+/* overlay hover */
 .content {
 	position: relative;
-	width: 90%;
+	width: 100%;
 	max-width: 400px;
 	margin: auto;
 	overflow: hidden;
 }
 
 .content .content-overlay {
-	background: rgba(0,0,0,0.7);
+	background: rgba(27, 29, 31, 0.3);
 	position: absolute;
 	height: 99%;
 	width: 100%;
@@ -599,15 +600,12 @@ body.loginpage footer .register-trade{
 	-moz-transition: all 0.4s ease-in-out 0s;
 	transition: all 0.4s ease-in-out 0s;
 }
-
 .content:hover .content-overlay{
 	opacity: 1;
 }
-
 .content-image{
 	width: 100%;
 }
-
 .content-details {
 	position: absolute;
 	text-align: center;
@@ -633,6 +631,11 @@ body.loginpage footer .register-trade{
 
 .content-details a{
 	background: #eaab00;
+	border-color: #eaab00;
+}
+.content-details a:hover{
+	background: #f9df9c;
+	border-color: #f9df9c;
 }
 .fadeIn-bottom{
 	top: 80%;
@@ -648,4 +651,17 @@ body.loginpage footer .register-trade{
 
 .fadeIn-right{
 	left: 80%;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child{
+	border-radius: 0;
+}
+a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover{
+	background: #f9df9c;
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover
+{
+	background: #eaab00;
+	border-color: #eaab00;
 }

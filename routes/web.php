@@ -24,6 +24,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::post('users/passwordchange', 'UserController@passwordChange')->name('users.passwordchange');
 	Route::post('users/filter', 'UserController@filter')->name('users.filter');
 	Route::post('users/toggleactive', 'UserController@toggleActive')->name('users.toggleactive');
+	Route::get('users/imports', 'UserController@imports')->name('users.importsform');
+	Route::post('users/imports', 'UserController@importUsers')->name('users.imports');
 	Route::resource('users', 'UserController');
 
 	Route::resource('languages', 'LanguageController');
@@ -97,7 +99,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::post('promotioncodes/imports', 'PromotionCodeController@importPromotionCodes')->name('promotioncodes.imports');
 	Route::resource('promotioncodes', 'PromotionCodeController');
 
+	Route::post('shoppingcarts/filter', 'ShoppingCartController@filter')->name('shoppingcarts.filter');
 	Route::resource('shoppingcarts', 'ShoppingCartController');
+
+	Route::post('shoppingcartstatuses/filter', 'ShoppingCartStatusController@filter')->name('shoppingcartstatuses.filter');
+	Route::resource('shoppingcartstatuses', 'ShoppingCartStatusController');
 });
 
 
@@ -118,12 +124,16 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::get('lien-he.html', 'PageController@contact')->name('contact');
 	Route::post('lien-he.html', 'PageController@createContact')->name('contact.create');
 
+
+	Route::get('province/{province}/districts', 'PageController@getDistrict')->name('province.districts');
 	Route::get('deliverydetail/{province}', 'PageController@deliveryDetail')->name('delivery.detail');
 	Route::get('promotioncodes/{code}', 'PageController@promotionCodeDetail')->name('promotioncode.detail');
 
 	Route::get('gio-hang.html', 'PageController@shoppingCart')->name('shopping.cart');
 	Route::get('thong-tin-thanh-toan.html', 'PageController@paymentInfo')->name('payment.info');
 	Route::post('thong-tin-thanh-toan.html', 'PageController@purchase')->name('purchase');
+	Route::get('/paymentprocess/{code}', 'PageController@paymentProcess')->name('payment.process');
+	Route::get('/paymentinfo', 'PageController@getInfoPayment')->name('payment.process.info');
 	Route::get('mua-hang-thanh-cong.html', 'PageController@purchaseSuccess')->name('purchase.success');
 	
 	Route::get('thong-tin-thanh-vien.html', 'PageController@profile')->name('user.profile');
@@ -134,6 +144,7 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::get('lich-su-mua-hang.html', 'PageController@orderHistory')->name('order.history');
 	Route::get('kiem-tra-don-hang.html', 'PageController@orderCheck')->name('order.check');
 	Route::get('chi-tiet-don-hang.html', 'PageController@orderDetail')->name('order.detail');
+	Route::get('updateorderstatus/{cart_id}/{status_id}', 'PageController@changeOrderStatus')->name('order.updatestatus');
 	
 	Route::get('tim-kiem.html', 'PageController@search')->name('search');
 
@@ -155,3 +166,5 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	// article detail
 	Route::get('{categorykey}/{key}.html', 'PageController@article')->name('article');
 });
+//Route::get('{key}', '\App\Http\Controllers\Frontend\PageController@articles')->name('articles');
+//Route::get('{categorykey}/{key}.html', '\App\Http\Controllers\Frontend\PageController@articles')->name('article');

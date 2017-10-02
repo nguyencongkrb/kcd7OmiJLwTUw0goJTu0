@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
 			$table->integer('producer_id')->nullable();
 			$table->string('origin', 100);
 			$table->string('unit', 100);
+			$table->integer('inventory_quantity')->default(0);
 			$table->double('price')->default(0);
 			$table->double('sale_price')->default(0);
 			$table->integer('sale_ratio')->default(0);

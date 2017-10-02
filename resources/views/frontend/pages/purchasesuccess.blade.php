@@ -15,14 +15,14 @@
 	<li class="active"><span>4</span>Hoàn tất</li>
 </ul>
 <br><br><br>
-<p class="text-center" style="font-size: 18px;">Xin cảm ơn bạn đã đặt hàng tại sunmart-online.com</p>
+<p class="text-center" style="font-size: 18px;">Xin cảm ơn bạn đã đặt hàng tại <span class="text-colored">Sunmart-online.com</span></p>
 <br>
 <p class="text-center" style="font-size: 18px;">Đơn hàng của bạn có mã số là: <strong class="text-nowrap">
 	@if (session('status'))
 		{{ session('status') }}
 	@endif
 </strong><br>
-Chi tiết đơn hàng của bạn sẽ được gửi về email hoặc số điện thoại của bạn.<br> Tổng đài CSKH <a href="tel:{{ $config->getValueByKey('hot_line') }}"><strong>{{ $config->getValueByKey('hot_line') }}</strong></a> sẽ gọi cho bạn trong vòng 24h để xác nhận trước khi giao hàng.</p>
+Chi tiết đơn hàng của bạn sẽ được gửi về email hoặc số điện thoại của bạn.<br> Tổng đài CSKH <strong>{{ $config->getValueByKey('hot_line') }}</strong> sẽ gọi cho bạn trong vòng 24h để xác nhận trước khi giao hàng.</p>
 <br>
 <p class="text-center" style="font-size: 18px;">Xin chào và hẹn gặp lại!</p>
 @endsection

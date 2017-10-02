@@ -32,14 +32,12 @@ class Province extends Model
 
 	public function getStandardDeliveryTime()
 	{
-		// plus 1 day confirm order
-		return Carbon::now()->addWeekdays($this->areaInfo->standard_delivery_days + 1);
+		return Carbon::now()->addWeekdays($this->areaInfo->standard_delivery_days);
 	}
 
 	public function getExpressDeliveryTime()
 	{
-		// plus 1 day confirm order
-		return Carbon::now()->addWeekdays($this->areaInfo->express_delivery_days + 1);
+		return Carbon::now()->addWeekdays($this->areaInfo->express_delivery_days);
 	}
 
 	public function getDeliveryFee($weight)

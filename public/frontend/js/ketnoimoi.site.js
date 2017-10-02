@@ -69,10 +69,14 @@ ketnoimoi.site = {
 			var province = $(this).val();
 			var subcontrol = $(this).attr('sub-control');
 			subcontrol = $('#' + subcontrol);
-			subcontrol.find('option').addClass('hide');
-			console.log(subcontrol.find('option[data-province_id="' + province + '"]'));
-			subcontrol.find('option[data-province_id="' + province + '"]').removeClass('hide');
-			subcontrol.val('');
+			thisObj.getDistricts(province, function (data) {
+				var html = '<option value="">Quận/Huyện</option>';
+				$.each(data, function (index, item) {
+					html += $.format('<option value="{0}">{1}</option>', item.id, item.name);
+				});
+				subcontrol.html(html);
+				subcontrol.val('');
+			});
 
 			thisObj.calculateFormInfo();
 		});
@@ -125,7 +129,11 @@ ketnoimoi.site = {
 				thisObj.getPromotionCode(promotioncode, function (data) {
 					var amount = 0;
 					if($.parseJSON(data.value_type)){	// percent
-						amount = thisObj.cart.getTotalAmount() * ($.parseJSON(data.percent_value) / 100)
+						//amount = thisObj.cart.getTotalAmount() * ($.parseJSON(data.percent_value) / 100)
+
+						// không sử dụng mã thưởng %
+						alert('Mã thưởng không hợp lệ!');
+						return false;
 					}
 					else{
 						amount = $.parseJSON(data.cash_value)
@@ -203,7 +211,7 @@ ketnoimoi.site = {
 				}
 			},
 			error: function (argument) {
-				alert('Mã số thưởng không hợp lệ!');
+				alert('Mã thưởng không hợp lệ!');
 			}
 		});
 	},
@@ -230,6 +238,38 @@ ketnoimoi.site = {
 				
 			}
 		});
+	},
+	getDistricts: function (province_id, callback) {
+		$.ajax({
+			url: 'province/' + province_id + '/districts',
+			type: 'GET',
+			beforeSend: function (argument) {
+				
+			},
+			success: function (data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			},
+			error: function (argument) {
+				
+			}
+		});
+	},
+	validatePurchase: function (argument) {
+		var thisObj = ketnoimoi.site;
+
+		if(thisObj.cart.getTotalAmount() < 100000){
+			alert('Đơn hàng phải có giá trị lớn hơn 100.000 VNĐ');
+			return false;
+		}
+
+		if(thisObj.cart.getTotalAmount() >= 5000000 && $('input[name="ShoppingCart[payment_method_id]"]:checked').val() == '1'){
+			alert('Đơn hàng lớn hơn 5.000.000 VNĐ, vui lòng sử dụng phương thức thanh toán khác.');
+			return false;
+		}
+
+		return thisObj.cart.purchase();
 	},
 	sendContact: function () {
 		if (!$.validateEmail($('#input-email').val())) {

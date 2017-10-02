@@ -32,13 +32,13 @@
 			<a href="{{ $item->product->getLink() }}" title="{{ $item->product->name }}">{{ $item->product->name }}</a>
 		</td>
 		<td class="text-right">
-			{{ number_format($item->product_price) }}
+			{{ number_format($item->product_price, 0, ',', '.') }} <small>VNĐ</small>
 		</td>
 		<td class="text-center">
 			<input type="number" value="{{ $item->quantity }}" class="form-control quantity text-right" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}">
 		</td>
 		<td class="text-right">
-			<span class="item-amount">{{ number_format($item->quantity * $item->product_price) }}</span>
+			<span class="item-amount">{{ number_format($item->quantity * $item->product_price, 0, ',', '.') }}</span> <small>VNĐ</small>
 		</td>
 		<td class="text-center">
 			<a href="#"><span class="glyphicon glyphicon-trash glyphicon-20 remove-item" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"></span></a>
@@ -53,14 +53,14 @@
 			<small>(Đã bao gồm VAT)</small>
 		</div>
 		<div class="col-xs-4 col-sm-4 col-md-3 text-right pb-10">
-			<strong><span class="total-amount">{{ number_format($cart->getTotalAmount()) }}</span></strong> VNĐ
+			<strong><span class="total-amount">{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</span></strong> <small>VNĐ</small>
 		</div>
 	</div>
 	<div class="col-xs-6 col-sm-3 col-md-3 col-md-pull-9">
 		<a class="btn btn-default btn-block btn-shopping" href="/">Tiếp tục mua hàng</a>
 	</div>
 	<div class="col-xs-6 col-sm-3 col-md-3 col-md-offset-9">
-		<a class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng <br>&amp; thanh toán <span class="glyphicon glyphicon-play glyphicon-lg"></span></a>
+		<a class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng &amp; thanh toán <span class="glyphicon glyphicon-play hidden-xs"></span></a>
 	</div>
 </div>
 @endsection

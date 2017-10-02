@@ -78,4 +78,9 @@ class User extends Authenticatable
 		}
 		return '';
 	}
+
+	public function shoppingCarts()
+	{
+		return $this->hasMany('App\ShoppingCart', 'customer_id');
+	}
 }

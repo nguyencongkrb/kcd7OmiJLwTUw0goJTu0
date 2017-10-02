@@ -11,6 +11,7 @@ use Hash;
 use DB;
 use Notification;
 use DateTime;
+use Excel;
 use App\Notifications\VerifyUser;
 use App\Common;
 use App\Language;
@@ -239,5 +240,66 @@ class UserController extends Controller
 		return view('backend.users.reset')->with(
 			['token' => $token, 'email' => $request->email]
 		);
+	}
+
+	public function imports()
+	{
+		//$this->authorize('imports', User::class);
+		return view('backend.users.imports');
+	}
+
+	public function importUsers(UserRequest $request)
+	{
+		//return dd($request->file('User.import_file'));
+		$message = '';
+		$errorcodes = '';
+
+		if($request->hasFile('User.import_file')){
+			ini_set('max_execution_time', 300);
+
+			//$path = storage_path('app/public/user_list.xlsx');
+			$path = $request->file('User.import_file')->path();
+			Excel::filter('chunk')->load($path)->chunk(250, function($results)
+			{
+				foreach($results as $row)
+				{
+					//return dd($row);
+					try {
+						$user = new User;
+						$user->first_name = $row['ho_ten'];
+						$user->email = $row['email'];
+						$user->password = Hash::make($row['password']);
+
+						$user->last_name = '';
+						$user->job_title = '';
+						$user->address = '';
+						$user->mobile_phone = '';
+						$user->home_phone = '';
+						$user->website = '';
+						$user->facebook = '';
+						$user->type = 0;
+						$user->active = 1;
+						$user->confirmed = 1;
+						$user->save();
+
+						if((bool)$row['loai_tai_khoan']){
+							$user->roles()->attach([6]);	// đại lý
+						}
+						else{
+							$user->roles()->attach([5]);	// nhân viên
+						}
+					} catch (Exception $e) {
+						$errorcodes = $errorcodes . ', ' . $row['email'];
+					}
+				}
+			});
+			$message = 'Import thành công!';
+		}
+		else{
+			$message = 'Vui lòng upload file!';
+		}
+		if($errorcodes != '')
+			$message =  'Những user sau đã gặp lỗi trong quá trình import: ' . $errorcodes;
+		return redirect(route('users.importsform'))->with('status', $message);
 	}
 }

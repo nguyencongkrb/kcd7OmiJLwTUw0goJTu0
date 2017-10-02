@@ -12,7 +12,9 @@
 @section('body')
 <div class="col-md-10 col-md-offset-1">
 	<div class="row">
-		<h1 class="article-title">{{ $category->name }}</h1>
+		<div class="col-md-12">
+			<h1 class="article-title">{{ $category->name }}</h1>
+		</div>
 		@include('frontend.partials.articles')
 	</div>
 </div>

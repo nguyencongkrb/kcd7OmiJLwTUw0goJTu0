@@ -39,7 +39,7 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 
 	{!! $config->getValuebyKey('embed_script_head') !!}
 </head>
-<body class="{{ Auth::guest() ? 'loginpage' : null }} {{ Route::is('purchase.success') ? 'thanhyou' : null }}" style="background-image: url({{ Auth::guest() ? $linkgb : null }})">
+<body class="{{ Auth::guest() ? 'loginpage' : '' }}" style="background-image: url('{{ Auth::guest() ? $linkgb : '' }}')">
 	@include('frontend.partials.header')
 	<section>
 		<div class="container">
@@ -54,8 +54,14 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 	<script src="/frontend/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<script src="/frontend/vendor/numbro/numbro.min.js"></script>
+	<script src="/frontend/vendor/numbro/languages.min.js"></script>
 	<script src="/frontend/vendor/moment/moment-with-locales.min.js"></script>
 	<script src="/frontend/vendor/cookie/js.cookie.js"></script>
+
+	<script type="text/javascript">
+		numbro.culture('vi-VN');
+		moment.locale('vi');
+	</script>
 
 	<script src="/frontend/js/ketnoimoi.core.js"></script>
 	<script src="/frontend/js/ketnoimoi.site.js"></script>

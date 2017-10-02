@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use Auth;
+use Datetime;
 use App\Config;
 use App\ShoppingCart;
 use App\Http\Requests\ShoppingCartRequest;
@@ -23,7 +24,7 @@ class ShoppingCartController extends Controller
 	 */
 	public function index()
 	{
-		$this->sentPurchaseOrder(17);
+		return view('backend.shoppingcarts.index');
 	}
 
 	/**
@@ -42,7 +43,7 @@ class ShoppingCartController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(ShoppingCartRequest $request)
 	{
 		//
 	}
@@ -55,7 +56,7 @@ class ShoppingCartController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		return view('backend.shoppingcarts.view');
 	}
 
 	/**
@@ -76,9 +77,21 @@ class ShoppingCartController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(ShoppingCartRequest $request, $id)
 	{
-		//
+		$cart = ShoppingCart::findOrFail($id);
+		$this->authorize('update', $cart);
+
+		$user = Auth::user();
+
+		if(!is_null($request->input('ShoppingCart.payment_status')))
+			$cart->payment_status = $request->input('ShoppingCart.payment_status', 0);
+		if(!is_null($request->input('ShoppingCart.shopping_cart_status_id')))
+			$cart->shopping_cart_status_id = $request->input('ShoppingCart.shopping_cart_status_id', 0);
+		if(!is_null($request->input('ShoppingCart.invoice_exported')))
+			$cart->invoice_exported = $request->input('ShoppingCart.invoice_exported', 0);
+		$cart->updated_by = $user->id;
+		$cart->save();
 	}
 
 	/**
@@ -90,6 +103,43 @@ class ShoppingCartController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function filter(ShoppingCartRequest $request)
+	{
+		$search = $request->input('search', '');
+		$fromDate = $request->input('fromdate', '');
+		$toDate = $request->input('todate', '');
+		$status = $request->input('status', 0);
+		$payment_status = $request->input('payment_status', '');
+
+		$query = ShoppingCart::with('status', 'paymentMethod');
+
+		if ($fromDate != '') {
+			$query->where('created_at', '>=', DateTime::createFromFormat('d/m/Y', $fromDate));
+		}
+
+		if ($toDate != '') {
+			$query->where('created_at', '<=', DateTime::createFromFormat('d/m/Y', $toDate));
+		}
+
+		if ($status > 0) {
+			$query->where('shopping_cart_status_id', $status);
+		}
+		if ($payment_status != '') {
+			$query->where('payment_status', $payment_status);
+		}
+
+		if ($search != '') {
+			$query->where('code', 'LIKE', '%' . $search . '%')
+				->orWhere('customer_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('customer_phone', 'LIKE', '%' . $search . '%')
+                ->orWhere('shipping_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('shipping_phone', 'LIKE', '%' . $search . '%');
+		}
+
+		$shoppingCarts = $query->get();
+		return response()->json($shoppingCarts->toArray());
 	}
 
 	public function sentPurchaseOrder($id)

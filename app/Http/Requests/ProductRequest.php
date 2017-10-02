@@ -34,6 +34,7 @@ class ProductRequest extends FormRequest
 			'Product.sale_ratio'  => 'integer|min:0|max:100',
 			'Product.warranty'  => 'max:100',
 			'Product.priority'  => 'integer|min:0',
+			'Product.inventory_quantity'  => 'integer|min:0',
 			'Product.published' => 'boolean',
 			'Product.availability' => 'in:instock,outofstock,preorder,availablefororder',
 			'Product.ProductTranslation.*.name' => 'required|max:250',

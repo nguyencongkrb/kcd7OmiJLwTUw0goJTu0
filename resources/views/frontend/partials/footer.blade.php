@@ -74,6 +74,7 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<div class="row register-trade">
 		<div class="container">
 			<div class="row">
@@ -89,5 +90,4 @@
 			</div>
 		</div>
 	</div>
-	@endif
 </footer>

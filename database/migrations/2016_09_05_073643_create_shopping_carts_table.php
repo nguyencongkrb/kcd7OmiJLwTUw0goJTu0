@@ -34,7 +34,6 @@ class CreateShoppingCartsTable extends Migration
 			$table->date('delivery_date');
 			$table->string('customer_note', 300);
 			$table->boolean('invoice_export')->default(0);
-			$table->integer('invoice_info_id')->nullable();
 			$table->boolean('invoice_exported')->default(0);
 			$table->integer('customer_id')->nullable();
 			$table->integer('payment_method_id');

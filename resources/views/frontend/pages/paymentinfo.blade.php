@@ -36,7 +36,7 @@
 					<td class="head" colspan="2">Thông tin Người đặt hàng &amp; Người nhận</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Họ và tên <em>(*)</em></label>
 							<div class="col-sm-7">
@@ -66,9 +66,6 @@
 									<div class="row">
 										<select class="form-control" name="ShoppingCart[district_id]" id="shoppingcart_district" required>
 											<option value="">Quận/Huyện</option>
-											@foreach($districts as $district)
-											<option data-province_id="{{ $district->province->id }}" value="{{ $district->id }}">{{ $district->name }}</option>
-											@endforeach
 										</select>
 									</div>
 								</div>
@@ -98,7 +95,7 @@
 					</td>
 				</tr>
 				<tr class="shipping-form">
-					<td colspan="2">
+					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Họ và tên người nhận <em>(*)</em></label>
 							<div class="col-sm-7">
@@ -128,9 +125,6 @@
 									<div class="row">
 										<select class="form-control" name="ShoppingCart[shipping_district_id]" id="shoppingcart_shipping_district_id">
 											<option value="">Quận/Huyện</option>
-											@foreach($districts as $district)
-											<option data-province_id="{{ $district->province->id }}" value="{{ $district->id }}">{{ $district->name }}</option>
-											@endforeach
 										</select>
 									</div>
 								</div>
@@ -151,25 +145,25 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Ghi chú</label>
 							<div class="col-sm-7">
 								<textarea class="form-control" name="ShoppingCart[customer_note]" value="{{ old('ShoppingCart[customer_note]') }}" rows="3"></textarea>
 							</div>
+							<div class="col-sm-12 text-right">
+								<em><small>Vui lòng ghi chính xác/chi tiết về địa chỉ giao hàng<br>Chúng tôi sẽ liên lạc với bạn theo thông tin trên để xác nhận giao hàng</small></em>
+							</div>
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2" class="text-right no-border"><strong><em><small>Vui lòng ghi chính xác/chi tiết về địa chỉ giao hàng<br>Chúng tôi sẽ liên lạc với bạn theo thông tin trên để xác nhận giao hàng</small></em></strong></td>
-				</tr>
 			</table>
-			<table class="table table-condensed shoppingcart">
+			<table class="table table-condensed shoppingcart no-padding-left-right">
 				<tr>
 					<td class="head" colspan="2">Chọn phương án giao hàng</td>
 				</tr>
 				<tr>
-					<td class="text-center">
+					<td style="width: 50%;" class="pl-0">
 						<div class="center-block delivery-method active">
 							<strong class="text-uppercase">Miễn phí</strong><br>
 							<img src="/frontend/images/freeshipping.png" alt="freeshipping"><br>
@@ -177,7 +171,7 @@
 							<input type="radio" value="0" class="hide" name="ShoppingCart[delivery_method_id]">
 						</div>
 					</td>
-					<td class="text-center">
+					<td style="width: 50%;" class="pr-0">
 						<div class="center-block delivery-method">
 							<strong class="text-uppercase"><span id="express-delivery-fee">---</span> VNĐ</strong><br>
 							<img src="/frontend/images/standardshipping.png" alt="freeshipping"><br>
@@ -187,13 +181,14 @@
 					</td>
 				</tr>
 			</table>
+			
 			<table class="table table-condensed table-bordered shoppingcart">
 				<tr>
 					<td class="head">Thời gian giao hàng dự kiến</td>
 					<td class="text-center"><span id="delivery-time">--/--/----</span></td>
 				</tr>
 			</table>
-			<div class="text-right pb-10"><strong><small>Chúng tôi sẽ liên hệ với bạn trong vòng 24h để xác nhận đơn hàng</small></strong></div>
+			<div class="text-right pb-10"><em><small>Chúng tôi sẽ liên hệ với bạn trong vòng 24h để xác nhận đơn hàng</small></em></div>
 			<table class="table table-condensed shoppingcart">
 				<tr>
 					<td class="head" colspan="2">
@@ -205,7 +200,7 @@
 					</td>
 				</tr>
 				<tr class="invoice-form">
-					<td colspan="2">
+					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Tên công ty <em>(*)</em></label>
 							<div class="col-sm-7">
@@ -242,17 +237,17 @@
 					<td class="text-left"><a href="{{ $item->product->getLink() }}">{{ $item->product->name }}</a><br />
 						<!-- <small>Reward Points: 1000</small> -->
 					</td>
-					<td class="text-right">{{ number_format($item->product_price) }}</td>
+					<td class="text-right">{{ number_format($item->product_price, 0, ',', '.') }}</td>
 					<td>
 						<input type="number" name="quantity" value="{{ $item->quantity }}" size="1" class="form-control quantity text-right"  data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"/>
 					</td>
-					<td class="text-right"><span class="item-amount">{{ number_format($item->quantity * $item->product_price) }}</span></td>
+					<td class="text-right"><span class="item-amount">{{ number_format($item->quantity * $item->product_price, 0, ',', '.') }}</span></td>
 				</tr>
 				@endforeach
 			</table>
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Trị giá hàng hoá</div>
-				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10"><strong><span class="total-amount">{{ number_format($cart->getTotalAmount()) }}</span></strong> VNĐ</div>
+				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10"><strong><span class="total-amount">{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</span></strong> VNĐ</div>
 				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Chiết khấu theo chương trình</div>
 				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10">0 VNĐ</div>
 				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Phí giao hàng nhanh</div>
@@ -281,7 +276,7 @@
 					<small>(Đã bao gồm VAT)</small>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-3 text-right pb-10">
-					<strong><span class="total-payment-amount">{{ number_format($cart->getTotalAmount()) }}</span></strong> VNĐ
+					<strong><span class="total-payment-amount">{{ number_format($cart->getTotalPaymentAmount(), 0, ',', '.') }}</span></strong> VNĐ
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12">
 					<small><strong>Chú ý: </strong> <em>*Chương trình khuyến mãi theo giá trị đơn hàng sẽ được áp dụng khi bạn hoàn tất bước xác nhận mua hàng</em></small>
@@ -293,82 +288,98 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<table class="table table-condensed shoppingcart">
 				<tr>
-					<td class="head">
+					<td class="head" colspan="{{ Auth::user()->hasRoles('Staffs') ? 5 : 4 }}">
 						Phương thức thanh toán
 					</td>
 				</tr>
+				<tr>
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="pl-0">
+						<div class="text-center payment-method active" data-tab="payment-method-info-1">
+							<strong>Thanh toán<br>khi nhận hàng</strong><br>
+							<img src="/frontend/images/cash.png" alt="cod"><br>
+							<input type="radio" value="1" name="ShoppingCart[payment_method_id]" checked>
+						</div>
+					</td>
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
+						<div class="text-center payment-method" data-tab="payment-method-info-2">
+							<strong>Thẻ tín dụng</strong><br><br>
+							<img src="/frontend/images/credit.png" alt="credit"><br>
+							<input type="radio" value="2" name="ShoppingCart[payment_method_id]">
+						</div>
+					</td>
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
+						<div class="text-center payment-method" data-tab="payment-method-info-3">
+							<strong>Thẻ ATM nội địa</strong><br>(Internet banking)
+							<img src="/frontend/images/atm.png" alt="atm"><br>
+							<input type="radio" value="3" name="ShoppingCart[payment_method_id]">
+						</div>
+					</td>
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
+						<div class="text-center payment-method" data-tab="payment-method-info-4">
+							<strong>Chuyển khoản</strong><br>(ATM / Ngân hàng)<br>
+							<img src="/frontend/images/bank.png" alt="bank"><br>
+							<input type="radio" value="4" name="ShoppingCart[payment_method_id]">
+						</div>
+					</td>
+					@if(Auth::user()->hasRoles('Staffs'))
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="pr-0">
+						<div class="text-center payment-method" data-tab="payment-method-info-5">
+							<strong>Thanh toán sau</strong><br>(Dành cho nhân viên)<br>
+							<img src="/frontend/images/nhanvien.png" alt="nhanvien"><br>
+							<input type="radio" value="5" name="ShoppingCart[payment_method_id]">
+						</div>
+					</td>
+					@endif
+				</tr>
 			</table>
-			<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method active" data-tab="payment-method-info-1">
-				<strong>Thanh toán<br>khi nhận hàng</strong><br>
-				<img src="/frontend/images/cash.png" alt="cod"><br>
-				<input type="radio" value="1" name="ShoppingCart[payment_method_id]" checked>
-			</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method" data-tab="payment-method-info-2">
-				<strong>Thẻ tín dụng</strong><br><br>
-				<img src="/frontend/images/credit.png" alt="credit"><br>
-				<input type="radio" value="2" name="ShoppingCart[payment_method_id]">
-			</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method" data-tab="payment-method-info-3">
-				<strong>Thẻ ATM nội địa</strong><br>(Internet banking)
-				<img src="/frontend/images/atm.png" alt="atm"><br>
-				<input type="radio" value="3" name="ShoppingCart[payment_method_id]">
-			</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method" data-tab="payment-method-info-4">
-				<strong>Chuyển khoản</strong><br>(ATM/Ngân hàng)<br>
-				<img src="/frontend/images/bank.png" alt="bank"><br>
-				<input type="radio" value="4" name="ShoppingCart[payment_method_id]">
-			</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 text-center payment-method" data-tab="payment-method-info-5">
-				<strong>Thanh toán sau</strong><br>(Dành cho nhân viên)<br>
-				<img src="/frontend/images/nhanvien.png" alt="nhanvien"><br>
-				<input type="radio" value="5" name="ShoppingCart[payment_method_id]">
-			</div>
-			<div class="col-xs-10 col-sm-10 col-md-10 payment-method-info" id="payment-method-info-1">
+			<div class="col-xs-10 col-sm-10 col-md-9 payment-method-info" id="payment-method-info-1">
 				<br>
 				@php
-					$article = $articleModel::findByKey('thanh-toan-khi-nhan-hang')->first();
+				$article = $articleModel::findByKey('thanh-toan-khi-nhan-hang')->first();
 				@endphp
 				{!! $article->content !!}
 				<br>
 			</div>
-			<div class="col-xs-10 col-sm-10 col-md-10 payment-method-info hide" id="payment-method-info-2">
+			<div class="col-xs-10 col-sm-10 col-md-9 payment-method-info hide" id="payment-method-info-2">
 				<br>
 				@php
-					$article = $articleModel::findByKey('the-tin-dung')->first();
+				$article = $articleModel::findByKey('the-tin-dung')->first();
 				@endphp
 				{!! $article->content !!}
 				<br>
 			</div>
-			<div class="col-xs-10 col-sm-10 col-md-10 payment-method-info hide" id="payment-method-info-3">
+			<div class="col-xs-10 col-sm-10 col-md-9 payment-method-info hide" id="payment-method-info-3">
 				<br>
 				@php
-					$article = $articleModel::findByKey('the-atm-noi-dia')->first();
+				$article = $articleModel::findByKey('the-atm-noi-dia')->first();
 				@endphp
 				{!! $article->content !!}
 				<br>
 			</div>
-			<div class="col-xs-10 col-sm-10 col-md-10 payment-method-info hide" id="payment-method-info-4">
+			<div class="col-xs-10 col-sm-10 col-md-9 payment-method-info hide" id="payment-method-info-4">
 				<br>
 				@php
-					$article = $articleModel::findByKey('chuyen-khoan-ngan-hang')->first();
+				$article = $articleModel::findByKey('chuyen-khoan-ngan-hang')->first();
 				@endphp
 				{!! $article->content !!}
 				<br>
 			</div>
-			<div class="col-xs-10 col-sm-10 col-md-10 payment-method-info hide" id="payment-method-info-5">
+			@if(Auth::user()->hasRoles('Staffs'))
+			<div class="col-xs-10 col-sm-10 col-md-9 payment-method-info hide" id="payment-method-info-5">
 				<br>
 				@php
-					$article = $articleModel::findByKey('thanh-toan-sau')->first();
+				$article = $articleModel::findByKey('thanh-toan-sau')->first();
 				@endphp
 				{!! $article->content !!}
 				<br>
 			</div>
+			@endif
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-2 col-md-offset-10">
+	<div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9">
 		<!-- <a class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a> -->
-		<button type="submit" onclick="return ketnoimoi.site.cart.purchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
-			Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span>
+		<button type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
+			Xác nhận mua hàng <span class="glyphicon glyphicon-play"></span>
 		</button>
 	</div>
 </form>

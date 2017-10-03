@@ -216,7 +216,7 @@ updateStatus: function (id, status) {
 			thisObj.table.setdata(id, currentData);
 			toastr['success']("Cập nhật trạng thái thành công.", "Cập nhật trạng thái");
 		},
-		error: function (argument) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			toastr['error']("Cập nhật trạng thái không thành công.", "Cập nhật trạng thái");
 		}
 	});

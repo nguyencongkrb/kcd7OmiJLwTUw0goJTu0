@@ -30,7 +30,8 @@ use App\ShoppingCartDetail;
 use App\Article;
 use App\ArticleCategory;
 use App\Http\Requests\Page\PageRequest;
-use App\Mail\PurchaseOrder;
+use App\Mail\OrderPurchase;
+use App\Mail\OrderCancel;
 use App\Banner;
 use App\BannerCategory;
 use App\Contact;
@@ -491,7 +492,7 @@ class PageController extends Controller
 		else{
 			Mail::to($cart->customer_email)
 			->cc(Config::getValueByKey('address_received_mail'))
-			->send(new PurchaseOrder($cart));
+			->send(new OrderPurchase($cart));
 
 			return redirect()->route('purchase.success')
 			->withCookie(Cookie::forget('ShoppingCartData'))
@@ -551,6 +552,7 @@ class PageController extends Controller
 			$user->password = Hash::make($password);
 			$user->confirmation_code = str_random(30);
 			$user->type = 0;	// normal user
+			$user->active = 1;	// auto active user
 			$user->save();
 
 			//Role::findByKey('Normal')->first()->users()->attach($user);
@@ -714,17 +716,24 @@ class PageController extends Controller
 		return view('frontend.pages.orderdetail', compact('cart'));
 	}
 
-	public function changeOrderStatus($cart_id, $status_id = 1)
+	public function changeOrderStatus($cart_id, $status_id)
 	{
 		if($status_id != 1)	// chỉ cho phép huỷ đơn hàng
 			abort(404);
 
 		$cart = ShoppingCart::findOrFail($cart_id);
-			abort(404);
 		if($cart->shopping_cart_status_id == 5)
+			abort(404);
+		
 		$cart->shopping_cart_status_id = $status_id;
 		$cart->updated_by = Auth::user()->id;
 		$cart->save();
+
+		// send email notify
+		Mail::to($cart->customer_email)
+		->cc(Config::getValueByKey('address_received_mail'))
+		->send(new OrderCancel($cart));
+
 		return redirect()->route('order.history')->with('status', 'Trạng thái đơn hàng đã được cập nhật.');
 	}
 
@@ -905,7 +914,7 @@ class PageController extends Controller
 
 						Mail::to($order->customer_email)
 						->cc(Config::getValueByKey('address_received_mail'))
-						->send(new PurchaseOrder($order));
+						->send(new OrderPurchase($order));
 
 						return redirect()->route('purchase.success')
 						->withCookie(Cookie::forget('ShoppingCartData'))

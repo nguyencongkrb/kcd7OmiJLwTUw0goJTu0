@@ -10,7 +10,7 @@
 					<a href="#" class="btn btn-default btn-block add-to-cart quick-add-to-cart go-payment" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">Mua ngay</a>
 				</div>
 				<div class="col-xs-6 col-sm-6">
-					<a href="#" class="btn btn-default btn-block goshoppingcart add-to-cart quick-add-to-cart" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">
+					<a href="#" class="btn btn-default btn-block goshoppingcart add-to-cart quick-add-to-cart" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}" style="padding-left: 6px; padding-right: 6px;">
 						Thêm vào giỏ hàng
 					</a>
 				</div>

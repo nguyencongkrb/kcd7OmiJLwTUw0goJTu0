@@ -13,7 +13,9 @@ use Datetime;
 use App\Config;
 use App\ShoppingCart;
 use App\Http\Requests\ShoppingCartRequest;
-use App\Mail\PurchaseOrder;
+use App\Mail\OrderPurchase;
+use App\Mail\OrderCancel;
+use App\Mail\OrderDelivered;
 
 class ShoppingCartController extends Controller
 {
@@ -56,7 +58,7 @@ class ShoppingCartController extends Controller
 	 */
 	public function show($id)
 	{
-		return view('backend.shoppingcarts.view');
+		//
 	}
 
 	/**
@@ -84,14 +86,34 @@ class ShoppingCartController extends Controller
 
 		$user = Auth::user();
 
-		if(!is_null($request->input('ShoppingCart.payment_status')))
-			$cart->payment_status = $request->input('ShoppingCart.payment_status', 0);
-		if(!is_null($request->input('ShoppingCart.shopping_cart_status_id')))
-			$cart->shopping_cart_status_id = $request->input('ShoppingCart.shopping_cart_status_id', 0);
-		if(!is_null($request->input('ShoppingCart.invoice_exported')))
-			$cart->invoice_exported = $request->input('ShoppingCart.invoice_exported', 0);
-		$cart->updated_by = $user->id;
-		$cart->save();
+		// sure execute success, if not success rollback
+		DB::transaction(function () use ($request, $cart, $user) {
+			if(!is_null($request->input('ShoppingCart.payment_status')))
+				$cart->payment_status = $request->input('ShoppingCart.payment_status', 0);
+			if(!is_null($request->input('ShoppingCart.invoice_exported')))
+				$cart->invoice_exported = $request->input('ShoppingCart.invoice_exported', 0);
+			if(!is_null($request->input('ShoppingCart.shopping_cart_status_id')))
+				$cart->shopping_cart_status_id = $request->input('ShoppingCart.shopping_cart_status_id', 0);
+
+			// giảm invetory_quantity products khi xác nhận đơn hàng
+			if((int)$cart->shopping_cart_status_id == 3){
+				foreach($cart->cartDetails()->get() as $item){
+					if($item->product->inventory_quantity < $item->quantity)
+						throw new \Exception('Sản phẩm '. $item->product->name .' không đủ số lượng cung cấp cho đơn hàng này.');
+					$item->product->decrement('inventory_quantity', $item->quantity);
+				}
+			}
+
+			$cart->updated_by = $user->id;
+			$cart->save();
+		});
+
+		if((int)$request->input('ShoppingCart.shopping_cart_status_id') == 1){	// huỷ đơn hàng
+			$this->sentOrderCancel($cart->id);
+		}
+		elseif ((int)$request->input('ShoppingCart.shopping_cart_status_id') == 5) {	// đã giao hàng
+			$this->sentOrderDelivered($cart->id);
+		}
 	}
 
 	/**
@@ -142,11 +164,27 @@ class ShoppingCartController extends Controller
 		return response()->json($shoppingCarts->toArray());
 	}
 
-	public function sentPurchaseOrder($id)
+	public function sentOrderPurchase($id)
 	{
 		$cart = ShoppingCart::findOrFail($id);
 		Mail::to($cart->customer_email)
 		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new PurchaseOrder($cart));
+		->send(new OrderPurchase($cart));
+	}
+
+	public function sentOrderCancel($id)
+	{
+		$cart = ShoppingCart::findOrFail($id);
+		Mail::to($cart->customer_email)
+		->cc(Config::getValueByKey('address_received_mail'))
+		->send(new OrderCancel($cart));
+	}
+
+	public function sentOrderDelivered($id)
+	{
+		$cart = ShoppingCart::findOrFail($id);
+		Mail::to($cart->customer_email)
+		->cc(Config::getValueByKey('address_received_mail'))
+		->send(new OrderDelivered($cart));
 	}
 }

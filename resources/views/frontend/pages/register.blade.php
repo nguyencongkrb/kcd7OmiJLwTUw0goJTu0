@@ -109,7 +109,7 @@
 			</div>
 		</div>
 		<div class="form-group {{ $errors->has('User[birthday]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Ngày tháng năm sinh</label>
+			<label class="col-sm-4 control-label">Ngày sinh</label>
 			<div class="col-sm-8">
 				<div class="row">
 					<input type="text" class="form-control" id="birthday" name="User[birthday]" value="{{ old('User[birthday]') }}" placeholder="ngày/tháng/năm">

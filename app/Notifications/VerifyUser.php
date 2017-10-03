@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Config;
 
 class VerifyUser extends Notification
 {
@@ -45,10 +46,13 @@ class VerifyUser extends Notification
 		$url = route('create.verify', ['confirmationcode' => $this->user->confirmation_code]);
 
 		return (new MailMessage)
-					->line('Hoàn tất việc đăng ký bằng việc nhấp vào nút bên dưới!.')
-					->subject('Kích Hoạt Tài Khoản')
-					->action('Xác Nhận', $url)
-					->line('Cảm ởn bạn đã sử dụng website!');
+					->subject('Đăng ký thành viên')
+					//->subject('Kích Hoạt Tài Khoản')
+					->line('Chào mừng bạn đến với Cửa hàng Quà tặng '. Config::getValueByKey('site_name') .', Cửa Hàng dành riêng cho nhân viên SUN LIFE')
+					->line('Hệ thống đã nhận được thông báo bạn đăng ký tài khoản tại SUNMART.COM')
+					->line('Tên đăng nhập: ' . $this->user->email)
+					//->action('Xác Nhận', $url)
+					->line('Nếu có bất kỳ thắc mắc nào về quá trình mua hàng, xin vui lòng liên hệ. Trung tâm hỗ trợ khách hàng qua email: '. Config::getValueByKey('address_received_mail') .' hoặc HOTLINE: ' . Config::getValueByKey('hot_line'));
 	}
 
 	/**

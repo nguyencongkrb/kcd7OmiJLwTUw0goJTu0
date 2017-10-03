@@ -1,27 +1,13 @@
+@extends('frontend.emails.master')
 @inject('config', 'App\Config')
-<!DOCTYPE html>
-<html>
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-	<style type="text/css" rel="stylesheet" media="all">
-		/* Media Queries */
-		@media only screen and (max-width: 500px) {
-			.button {
-				width: 100% !important;
-			}
-		}
-	</style>
-</head>
-
+@section('content')
 <?php
 
 $style = [
 	/* Layout ------------------------------ */
 
-	'body' => 'margin: 0; padding: 0; width: 100%; background-color: #F2F4F6;',
+	'body' => 'margin: 0; padding: 0; width: 100%; background-color: #F2F4F6; font-family: Arial, Helvetica, sans-serif;',
 	'email-wrapper' => 'width: 100%; margin: 0; padding: 0; background-color: #F2F4F6;',
 
 	/* Masthead ----------------------- */
@@ -60,52 +46,34 @@ $style = [
 	'button--blue' => 'background-color: #3869D4;',
 
 	/* Purchase Order ------------------------------ */
-	'purchase-order' => 'margin-top: 0; margin-bottom: 10px; color: #74787E; font-size: 12px; line-height: 1.5em;border-collapse: collapse;',
+	'purchase-order' => 'margin-top: 0; margin-bottom: 10px; color: #74787E; font-size: 14px; line-height: 1.5em;border-collapse: collapse;',
+
+	'fontFamily' => 'font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;',
 ];
 ?>
 
-<?php $fontFamily = 'font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
+<table style="{{ $style['fontFamily'] }} {{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
+	<tr>
+		<td style="{{ $style['fontFamily'] }} {{ $style['email-body_cell'] }}">
+			<!-- Greeting -->
+			<h1 style="{{ $style['header-1'] }}">
+				Xin chào anh/chị {{ $cart->customer_name }}
+			</h1>
 
-<body style="{{ $style['body'] }}">
-	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td style="{{ $style['email-wrapper'] }}" align="center">
-				<table width="100%" cellpadding="0" cellspacing="0">
-					<!-- Logo -->
-					<tr>
-						<td style="{{ $style['email-masthead'] }}">
-							<a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
-								<img src="{{ url('/') }}/frontend/images/logo.png" alt="{{ $site_name = $config::getValueByKey('site_name') }}">
-							</a>
-						</td>
-					</tr>
+			<!-- Intro -->
+			<p style="{{ $style['paragraph'] }}">
+				Cửa Hàng Quà Tặng <strong>{{ $site_name = $config::getValueByKey('site_name') }}</strong> xin thông báo đơn hàng số: <strong>{{ $cart->code }}</strong> đặt ngày {{ $cart->created_at->format('d/m/Y') }} vào lúc {{ $cart->created_at->format('H:m') }} đã được giao thành công.
+			</p>
 
-					<!-- Email Body -->
-					<tr>
-						<td style="{{ $style['email-body'] }}" width="100%">
-							@yield('content')
-						</td>
-					</tr>
+			<p style="{{ $style['paragraph'] }}">
+				Mong quý khách tiếp tục ủng hộ Cửa Hàng Quà Tặng {{ $site_name }} trong những lần mua sắm tiếp theo.
+			</p>
 
-					<!-- Footer -->
-					<tr>
-						<td>
-							<table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
-								<tr>
-									<td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
-										<p style="{{ $style['paragraph-sub'] }}">
-											&copy; {{ date('Y') }}
-											<a style="{{ $style['anchor'] }}" href="{{ url('/') }}" target="_blank">{{ $site_name }}</a>.
-											All rights reserved.
-										</p>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-</body>
-</html>
+			<!-- Salutation -->
+			<p style="{{ $style['paragraph'] }}">
+				Chúc quý khách một ngày vui vẻ!
+			</p>
+		</td>
+	</tr>
+</table>
+@endsection

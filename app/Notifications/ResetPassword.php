@@ -45,13 +45,13 @@ class ResetPassword extends Notification
 	public function toMail($notifiable)
 	{
 		return (new MailMessage)
-			->line([
-				'Bạn nhận được email này vì chúng tôi đã nhận được yêu cầu khôi phục mật mã cho tài khoản của bạn.',
-				'Nhấn vào nút bên dưới để đặt lại mật mã của bạn:',
-			])
-			->subject('Khôi Phục Mật Mã')
-			->action('Tạo Mật Khẩu Mới', url($this->path, $this->token))
-			->line('Nếu bạn không yêu cầu khôi phục mật mã, bạn có thể bỏ qua thao tác này.');
+			->line('Cửa hàng Quà tặng chúng tôi đã nhận được thông tin yêu cầu phục hồi mật khẩu cho quý khách.')
+			->line('Xin Quý khách vui lòng nhấn vào nút bên dưới để tạo lại mật khẩu cho mình.')
+			->line('Lưu ý: mật khẩu bao gồm trên 6 ký tự (cả chữ và số)')
+			->subject('Tạo mật khẩu mới')
+			->action('Tạo Mật khẩu Mới', url($this->path, $this->token))
+			->line('Nếu bạn không yêu cầu khôi phục mật mã, bạn có thể bỏ qua thao tác này.')
+			->line('Chúc bạn mua sắm vui vẻ.');
 	}
 
 	/**

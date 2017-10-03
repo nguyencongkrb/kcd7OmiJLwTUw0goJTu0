@@ -314,7 +314,7 @@
 							<input type="radio" value="3" name="ShoppingCart[payment_method_id]">
 						</div>
 					</td>
-					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
+					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="{{ Auth::user()->hasRoles('Staffs') ? '' : 'pr-0' }}">
 						<div class="text-center payment-method" data-tab="payment-method-info-4">
 							<strong>Chuyển khoản</strong><br>(ATM / Ngân hàng)<br>
 							<img src="/frontend/images/bank.png" alt="bank"><br>

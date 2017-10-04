@@ -4,6 +4,12 @@
 		<a href="{{ $product->getLink() }}">
 			<div class="content-overlay"></div>
 			<img src="{{ $product->getFirstAttachment('custom', 360, 0) }}" alt="{{ $product->name }}" class="img-responsive">
+			@if($product->getSaleRatio() > 0)
+			<span class="stick"><span>{{ $product->getSaleRatio() }}%</span></span>
+			@endif
+			@if(count($product->productTypes()->where('id', 1)->get()) > 0)
+			<span class="stick"><span>NEW</span></span>
+			@endif
 			<div class="content-details fadeIn-bottom">
 				@if($product->inventory_quantity > 0)
 				<div class="col-xs-6 col-sm-6">

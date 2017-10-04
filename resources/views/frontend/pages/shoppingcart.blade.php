@@ -35,7 +35,7 @@
 			{{ number_format($item->product_price, 0, ',', '.') }} <small>VNĐ</small>
 		</td>
 		<td class="text-center">
-			<input type="number" value="{{ $item->quantity }}" class="form-control quantity text-right" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}">
+			<input type="number" value="{{ $item->quantity }}" min="1" max="{{ $item->product->inventory_quantity }}" data-toggle="tooltip" data-placement="top" title="Số lượng sản phẩm trong kho: {{ $item->product->inventory_quantity }}" class="form-control quantity text-right" data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}">
 		</td>
 		<td class="text-right">
 			<span class="item-amount">{{ number_format($item->quantity * $item->product_price, 0, ',', '.') }}</span> <small>VNĐ</small>
@@ -59,8 +59,9 @@
 	<div class="col-xs-6 col-sm-3 col-md-3 col-md-pull-9">
 		<a class="btn btn-default btn-block btn-shopping" href="/">Tiếp tục mua hàng</a>
 	</div>
-	<div class="col-xs-6 col-sm-3 col-md-3 col-md-offset-9">
-		<a class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng &amp; thanh toán <span class="glyphicon glyphicon-play hidden-xs"></span></a>
+	<div class="col-xs-6 col-sm-3 col-md-3 col-md-offset-9 text-center">
+		<span id="shoppingcart-notify" class="text-danger"></span><br>
+		<a id="btnDeliveryAndPayment" class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng &amp; thanh toán <span class="glyphicon glyphicon-play hidden-xs"></span></a>
 	</div>
 </div>
 @endsection

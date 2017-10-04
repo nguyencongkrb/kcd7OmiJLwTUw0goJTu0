@@ -56,7 +56,7 @@
 			<label class="col-sm-4 control-label">Số điện thoại</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại">
+					<input type="number" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại">
 					@if ($errors->has('User[mobile_phone]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
@@ -69,7 +69,7 @@
 			<label class="col-sm-4 control-label">Mật khẩu</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="password" class="form-control" id="password" name="User[password]" placeholder="Mật khẩu" required>
+					<input type="password" class="form-control" id="password" name="User[password]" placeholder="Mật khẩu" data-toggle="tooltip" data-placement="top" title="Mật khẩu tối thiểu 6 ký tự, bao gồm ký tự đặc biệt & không khoảng trắng" required>
 					@if ($errors->has('User[password]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[password]') }}</strong>
@@ -136,9 +136,9 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-4 col-sm-8">
-				<div class="row">
+				<div class="row text-center">
 					<button type="submit" class="btn btn-default btn-block pb-10">Đăng ký</button>
-					<span class="pull-right text-colored pt-10">
+					<span class="pt-10">
 						Bạn đã có tài khoản? <a href="{{ route('user.login') }}">Đăng nhập</a>
 					</span>
 				</div>

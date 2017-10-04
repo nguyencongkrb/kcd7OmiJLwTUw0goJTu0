@@ -48,7 +48,7 @@
 			<div class="form-group {{ $errors->has('User[mobile_phone]') ? 'has-error' : '' }}">
 				<label class="col-sm-3 control-label">Số điện thoại</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ $user->mobile_phone }}" placeholder="Số điện thoại">
+					<input type="number" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ $user->mobile_phone }}" placeholder="Số điện thoại">
 					@if ($errors->has('User[mobile_phone]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>

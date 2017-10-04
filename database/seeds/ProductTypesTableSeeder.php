@@ -17,7 +17,7 @@ class ProductTypesTableSeeder extends Seeder
 	{
 		$generator = \Faker\Factory::create('vi_VN');
 
-		$categories = ['Sản phẩm nổi bật'];
+		$categories = ['Sản phẩm mới'];
 
 		foreach ($categories as $key => $category) {
 			$entry = ProductType::create([

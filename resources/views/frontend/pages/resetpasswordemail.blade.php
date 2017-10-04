@@ -36,11 +36,11 @@
 			<div class="col-sm-12">
 				<div class="row">
 					<button type="submit" class="btn btn-default btn-block">Yêu cầu khôi phục mật khẩu</button>
+					<span class="pull-right pt-10">
+						<a href="{{ route('user.login') }}">Đăng nhập</a>
+					</span>
 				</div>
 			</div>
-		</div>
-		<div class="row text-right form-link">
-			<a href="{{ route('user.login') }}">Đăng nhập</a>
 		</div>
 	</form>
 </div>

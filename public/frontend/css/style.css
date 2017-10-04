@@ -74,16 +74,16 @@ header a, header a:hover{
 }
 .customer_service{
 	background: url('/frontend/images/icon_cskh.png') left center no-repeat;
-	background-size: 46px;
+	background-size: 40px;
 	
 }
 .chat_online{
 	background: url('/frontend/images/icon_chatonline.png') left center no-repeat;
-	background-size: 46px;
+	background-size: 40px;
 }
 .question_answer{
 	background: url('/frontend/images/icon_qa.png') left center no-repeat;
-	background-size: 46px;
+	background-size: 40px;
 	line-height: 45px;
 }
 
@@ -179,6 +179,21 @@ ul.categories>li:first-child>a:before, ul.categories>li.active>a:before, ul.cate
 }
 .products-item-thumbnail img{
 	width: 100%;
+}
+.products-item-thumbnail .stick{
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 70px 70px 0;
+	border-color: transparent #eaac00 transparent transparent;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.products-item-thumbnail .stick span{
+	line-height: 40px;
+	margin-left: 30px;
+	color: #003946;
 }
 .products-item-price{
 	font-size: 24px;
@@ -316,6 +331,8 @@ form button:not(.close){
 body.loginpage h1{
 	font-weight: bold;
 	color: #eaab00;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 body.loginpage h3{
 	color:#003946;
@@ -366,6 +383,9 @@ body.loginpage {
 	background-size: 70%;
 	/* Margin bottom by footer height */
 	margin-bottom: 202px;
+}
+body.loginpage.register {
+	margin-bottom: 0;
 }
 body.loginpage header{
 	background: #fff;
@@ -545,13 +565,17 @@ body.loginpage footer{
 	background-color: #eaab00;
 	border-color: #eaab00;
 	color: #fff;
-	margin-top: 0;
+	margin-top: 50px;
+	padding-bottom: 0;
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	padding-bottom: 0;
 	/* Set the fixed height of the footer here */
 	height: 202px;
+}
+body.loginpage.register footer{
+	position: relative;
+	margin-top: 50px;
 }
 footer .container{
 	padding-bottom: 15px;

@@ -95,12 +95,10 @@ class ShoppingCartController extends Controller
 			if(!is_null($request->input('ShoppingCart.shopping_cart_status_id')))
 				$cart->shopping_cart_status_id = $request->input('ShoppingCart.shopping_cart_status_id', 0);
 
-			// giảm invetory_quantity products khi xác nhận đơn hàng
-			if((int)$cart->shopping_cart_status_id == 3){
+			// tăng invetory_quantity products khi huỷ đơn hàng
+			if((int)$cart->shopping_cart_status_id == 1){
 				foreach($cart->cartDetails()->get() as $item){
-					if($item->product->inventory_quantity < $item->quantity)
-						throw new \Exception('Sản phẩm '. $item->product->name .' không đủ số lượng cung cấp cho đơn hàng này.');
-					$item->product->decrement('inventory_quantity', $item->quantity);
+					$item->product->increment('inventory_quantity', $item->quantity);
 				}
 			}
 

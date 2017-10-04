@@ -74,7 +74,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[customer_phone]" value="{{ Auth::user()->mobile_phone }}" placeholder="Di động" required>
+								<input type="number" class="form-control" name="ShoppingCart[customer_phone]" value="{{ Auth::user()->mobile_phone }}" placeholder="Di động" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,7 +133,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
+								<input type="number" class="form-control" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
 							</div>
 						</div>
 						<div class="form-group">
@@ -239,7 +239,7 @@
 					</td>
 					<td class="text-right">{{ number_format($item->product_price, 0, ',', '.') }}</td>
 					<td>
-						<input type="number" name="quantity" value="{{ $item->quantity }}" size="1" class="form-control quantity text-right"  data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"/>
+						<input type="number" value="{{ $item->quantity }}" min="1" max="{{ $item->product->inventory_quantity }}" data-toggle="tooltip" data-placement="top" title="Số lượng sản phẩm trong kho: {{ $item->product->inventory_quantity }}" size="1" class="form-control quantity text-right"  data-product_id="{{ $item->product_id }}" data-product_price="{{ $item->product_price }}" data-quantity="{{ $item->quantity }}"/>
 					</td>
 					<td class="text-right"><span class="item-amount">{{ number_format($item->quantity * $item->product_price, 0, ',', '.') }}</span></td>
 				</tr>
@@ -378,7 +378,8 @@
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9">
 		<!-- <a class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a> -->
-		<button type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
+		<span id="shoppingcart-notify" class="text-danger"></span><br>
+		<button id="btnConfirmShoppingCart" type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
 			Xác nhận mua hàng <span class="glyphicon glyphicon-play"></span>
 		</button>
 	</div>

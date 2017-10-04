@@ -6,7 +6,12 @@ ketnoimoi.site = {
 		var thisObj = ketnoimoi.site;
 		$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 
+		thisObj.calculateFormInfo();
+
 		thisObj.events();
+
+		if($('[data-toggle="tooltip"]').length)
+			$('[data-toggle="tooltip"]').tooltip()
 	},
 	events: function () {
 		var thisObj = ketnoimoi.site;
@@ -28,8 +33,6 @@ ketnoimoi.site = {
 
 			if ($(this).hasClass('go-payment'))
 				window.location = '/gio-hang.html';
-			else
-				window.location = '/';
 		});
 
 		// remove item in cart
@@ -43,13 +46,22 @@ ketnoimoi.site = {
 				
 				var totalAmount = thisObj.cart.getTotalAmount();
 				$('span.total-amount').text(numbro(totalAmount).format());
+
+				thisObj.calculateFormInfo();
 			};
 		});
 
 		// change item quantity in cart
 		$('input.quantity').change(function () {
+			var value = $.parseJSON($(this).val());
+			var max = $.parseJSON($(this).attr('max'));
+			var min = $.parseJSON($(this).attr('min'));
+			value = value < min ? min : value;
+			value = value > max ? max : value;
+			$(this).val(value);
+
 			var data = $(this).data();
-			data.quantity = $(this).val();
+			data.quantity = value;
 			thisObj.cart.updateQuantity(data);
 			$('span#cart-total').text(thisObj.cart.getTotalQuantity());
 			if (!parseInt(data.quantity)) {
@@ -121,6 +133,7 @@ ketnoimoi.site = {
 			$('.payment-method-info').addClass('hide');
 			$activeTab = $(this).data('tab');
 			$('#' + $activeTab).removeClass('hide');
+			thisObj.calculateFormInfo();
 		});
 
 		$('#btnApplyPromotionCode').click(function (argument) {
@@ -139,17 +152,22 @@ ketnoimoi.site = {
 						amount = $.parseJSON(data.cash_value)
 					}
 					if (amount > 0) {
-						thisObj.cart.applyPromotionCode({
+						var result = thisObj.cart.applyPromotionCode({
 							code: promotioncode,
 							amount: amount
 						});
 
-						var html = $('#promtion-template').html();
-						html = $.format(html, promotioncode, numbro(amount).format(), data.id)
-						$(html).insertBefore('#promtion-template');
+						if(result){
+							var html = $('#promtion-template').html();
+							html = $.format(html, promotioncode, numbro(amount).format(), data.id)
+							$(html).insertBefore('#promtion-template');
 
-						var totalAmount = thisObj.cart.getTotalAmountWithPromotion();
-						$('span.total-payment-amount').text(numbro(totalAmount).format());
+							var totalAmount = thisObj.cart.getTotalAmountWithPromotion();
+							$('span.total-payment-amount').text(numbro(totalAmount).format());
+						}
+						else{
+							alert('Mã thưởng đã tồn tại!');
+						}
 					}
 					else{
 						alert('Mã thưởng không hợp lệ!');
@@ -197,6 +215,7 @@ ketnoimoi.site = {
 			var totalAmountWithPromotion = thisObj.cart.getTotalAmountWithPromotion();
 			$('span.total-payment-amount').text(numbro(totalAmountWithPromotion).format());
 		}
+		thisObj.validatePurchase();
 	},
 	getPromotionCode: function (code, callback) {
 		$.ajax({
@@ -260,13 +279,22 @@ ketnoimoi.site = {
 		var thisObj = ketnoimoi.site;
 
 		if(thisObj.cart.getTotalAmount() < 100000){
-			alert('Đơn hàng phải có giá trị lớn hơn 100.000 VNĐ');
+			$('#shoppingcart-notify').text('Giá trị đơn hàng tối thiểu 100.000, bạn vui lòng đặt hàng lại');
+			$('#btnDeliveryAndPayment').addClass('disabled');
 			return false;
 		}
-
+		else{
+			$('#shoppingcart-notify').text('');
+			$('#btnDeliveryAndPayment').removeClass('disabled');
+		}
 		if(thisObj.cart.getTotalAmount() >= 5000000 && $('input[name="ShoppingCart[payment_method_id]"]:checked').val() == '1'){
-			alert('Đơn hàng lớn hơn 5.000.000 VNĐ, vui lòng sử dụng phương thức thanh toán khác.');
+			$('#shoppingcart-notify').text('Giá trị đơn hàng thanh toán COD tối đa: 5.000.000 VND/order. Bạn vui lòng thanh toán chuyển khoản');
+			$('#btnConfirmShoppingCart').attr('disabled', 'disabled');
 			return false;
+		}
+		else{
+			$('#shoppingcart-notify').text('');
+			$('#btnConfirmShoppingCart').removeAttr('disabled');
 		}
 
 		return thisObj.cart.purchase();
@@ -331,7 +359,7 @@ ketnoimoi.site = {
 					thisObj.data.push(_default);
 
 				Cookies.set('ShoppingCartData', thisObj.data, { path: '/' });
-				alert('Sản phẩm đã được thêm vào giỏ hàng');
+				//alert('Sản phẩm đã được thêm vào giỏ hàng');
 			}
 		},
 		updateQuantity: function(option){
@@ -437,7 +465,17 @@ ketnoimoi.site = {
 				amount: 0
 			};
 			$.extend(true, _default, promotiondata);
-			thisObj.promotionCodes.push(_default);
+			var exists = false;
+			$.each(thisObj.promotionCodes, function (index, item) {
+				if(item.code == _default.code){
+					exists = true;
+					return false
+				}
+			});
+			if(!exists)
+				thisObj.promotionCodes.push(_default);
+
+			return !exists;
 		},
 		removePromotionCode: function (promotioncode) {
 			var thisObj = ketnoimoi.site.cart;

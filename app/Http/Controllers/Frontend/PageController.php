@@ -460,6 +460,11 @@ class PageController extends Controller
 				$cartDetail->fill($value);
 				$cartDetail->product_price = $cartDetail->product->getLatestPrice();
 				array_push($cartDetails, $cartDetail);
+
+				// giảm invetory_quantity products
+				if($cartDetail->product->inventory_quantity < $cartDetail->quantity)
+					throw new \Exception('Sản phẩm '. $cartDetail->product->name .' không đủ số lượng cung cấp cho đơn hàng này.');
+				$cartDetail->product->decrement('inventory_quantity', $cartDetail->quantity);
 			}
 			$cart->cartDetails()->saveMany($cartDetails);
 
@@ -670,7 +675,9 @@ class PageController extends Controller
 		$user = Auth::user();
 		$user->password = Hash::make($password);
 		$user->save();
-		return redirect()->back()->with('status', 'Mật mã của bạn đã cập nhật thành công!');
+		//return redirect()->back()->with('status', 'Mật mã của bạn đã cập nhật thành công!');
+		Auth::logout();
+		return redirect()->route('home');
 	}
 
 	public function resetPassword()
@@ -725,9 +732,17 @@ class PageController extends Controller
 		if($cart->shopping_cart_status_id == 5)
 			abort(404);
 		
-		$cart->shopping_cart_status_id = $status_id;
-		$cart->updated_by = Auth::user()->id;
-		$cart->save();
+		DB::transaction(function () use ($cart, $status_id) {
+			$cart->shopping_cart_status_id = $status_id;
+			$cart->updated_by = Auth::user()->id;
+
+			// tăng invetory_quantity products khi huỷ đơn hàng
+			foreach($cart->cartDetails()->get() as $item){
+				$item->product->increment('inventory_quantity', $item->quantity);
+			}
+
+			$cart->save();
+		});
 
 		// send email notify
 		Mail::to($cart->customer_email)

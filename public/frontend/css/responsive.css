@@ -47,6 +47,13 @@
 	ul.categories>li:hover + li>a:before { 
 		content:"|";
 	}
+	.payment-method{
+		min-height: 225px;
+	}
+	#btnDeliveryAndPayment{
+		padding-right: 0;
+		padding-left: 0;
+	}
 	body.loginpage form input.verifycode{
 		margin-top: 5px;
 		margin-left: 0;

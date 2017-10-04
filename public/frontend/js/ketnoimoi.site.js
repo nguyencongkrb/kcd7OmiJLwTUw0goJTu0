@@ -278,7 +278,7 @@ ketnoimoi.site = {
 	validatePurchase: function (argument) {
 		var thisObj = ketnoimoi.site;
 
-		if(thisObj.cart.getTotalAmount() < 100000){
+		if(thisObj.cart.getTotalAmountWithPromotion() < 100000){
 			$('#shoppingcart-notify').text('Giá trị đơn hàng tối thiểu 100.000, bạn vui lòng đặt hàng lại');
 			$('#btnDeliveryAndPayment').addClass('disabled');
 			return false;
@@ -287,7 +287,7 @@ ketnoimoi.site = {
 			$('#shoppingcart-notify').text('');
 			$('#btnDeliveryAndPayment').removeClass('disabled');
 		}
-		if(thisObj.cart.getTotalAmount() >= 5000000 && $('input[name="ShoppingCart[payment_method_id]"]:checked').val() == '1'){
+		if(thisObj.cart.getTotalAmountWithPromotion() >= 5000000 && $('input[name="ShoppingCart[payment_method_id]"]:checked').val() == '1'){
 			$('#shoppingcart-notify').text('Giá trị đơn hàng thanh toán COD tối đa: 5.000.000 VND/order. Bạn vui lòng thanh toán chuyển khoản');
 			$('#btnConfirmShoppingCart').attr('disabled', 'disabled');
 			return false;
@@ -444,7 +444,7 @@ ketnoimoi.site = {
 				count -= parseInt(item.amount);
 			});
 
-			return count;
+			return count < 0 ? 0 : count;
 		},
 		getTotalQuantity: function(){
 			var thisObj = this;

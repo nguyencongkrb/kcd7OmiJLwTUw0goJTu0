@@ -378,7 +378,7 @@
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9">
 		<!-- <a class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a> -->
-		<span id="shoppingcart-notify" class="text-danger"></span><br>
+		<span id="shoppingcart-notify" class="text-danger"></span>
 		<button id="btnConfirmShoppingCart" type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
 			Xác nhận mua hàng <span class="glyphicon glyphicon-play"></span>
 		</button>

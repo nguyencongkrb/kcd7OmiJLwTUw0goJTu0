@@ -60,7 +60,7 @@
 		<a class="btn btn-default btn-block btn-shopping" href="/">Tiếp tục mua hàng</a>
 	</div>
 	<div class="col-xs-6 col-sm-3 col-md-3 col-md-offset-9 text-center">
-		<span id="shoppingcart-notify" class="text-danger"></span><br>
+		<span id="shoppingcart-notify" class="text-danger"></span>
 		<a id="btnDeliveryAndPayment" class="btn btn-default btn-block btn-shopping btn-arrow" href="{{ route('payment.info') }}">Giao hàng &amp; thanh toán <span class="glyphicon glyphicon-play hidden-xs"></span></a>
 	</div>
 </div>

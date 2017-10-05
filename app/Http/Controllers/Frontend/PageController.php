@@ -557,6 +557,7 @@ class PageController extends Controller
 			$user->password = Hash::make($password);
 			$user->confirmation_code = str_random(30);
 			$user->type = 0;	// normal user
+			$user->confirmed = 1;	// auto confirmed user
 			$user->active = 1;	// auto active user
 			$user->save();
 

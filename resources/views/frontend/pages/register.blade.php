@@ -27,7 +27,7 @@
 			@include('frontend.partials.errors')
 		</div>
 		<div class="form-group {{ $errors->has('User[first_name]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Tên đăng nhập</label>
+			<label class="col-sm-4 control-label">Họ tên</label>
 			<div class="col-sm-8">
 				<div class="row">
 					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User[first_name]') }}" placeholder="Họ tên" required>

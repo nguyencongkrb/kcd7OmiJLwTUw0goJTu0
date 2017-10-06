@@ -278,6 +278,19 @@ ketnoimoi.site = {
 	validatePurchase: function (argument) {
 		var thisObj = ketnoimoi.site;
 
+		$("#fromCheckout").validate({
+			lang: 'vi',
+			errorClass: 'text-danger',
+			rules: {
+				'ShoppingCart[customer_phone]': {
+					regex: /^(01[2689]|09)[0-9]{8}$/
+				},
+				'ShoppingCart[shipping_phone]': {
+					number: /^(01[2689]|09)[0-9]{8}$/
+				}
+			}
+		});
+
 		if(thisObj.cart.getTotalAmountWithPromotion() < 100000){
 			$('#shoppingcart-notify').text('Giá trị đơn hàng tối thiểu 100.000, bạn vui lòng đặt hàng lại');
 			$('#btnDeliveryAndPayment').addClass('disabled');

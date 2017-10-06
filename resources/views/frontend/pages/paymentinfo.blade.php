@@ -74,7 +74,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
 							<div class="col-sm-7">
-								<input type="number" class="form-control" name="ShoppingCart[customer_phone]" value="{{ Auth::user()->mobile_phone }}" placeholder="Di động" required>
+								<input type="text" class="form-control" id="ShoppingCart[customer_phone]" name="ShoppingCart[customer_phone]" value="{{ Auth::user()->mobile_phone }}" placeholder="Di động" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,7 +133,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
 							<div class="col-sm-7">
-								<input type="number" class="form-control" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
+								<input type="text" class="form-control" id="ShoppingCart[shipping_phone]" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
 							</div>
 						</div>
 						<div class="form-group">

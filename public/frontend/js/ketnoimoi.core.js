@@ -11,6 +11,10 @@ $.sortByProperty = function (property) {
 };
 //data.sort($.sortByProperty('priority'));
 
+$.validator.addMethod("regex", function(value, element, regexpr) {          
+	return this.optional(element) || regexpr.test(value);
+}, "Dữ liệu không đúng định dạng");
+
 
 $.format = function (text) {
 	//check if there are two arguments in the arguments list

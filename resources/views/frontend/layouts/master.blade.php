@@ -57,6 +57,10 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 	<script src="/frontend/vendor/numbro/languages.min.js"></script>
 	<script src="/frontend/vendor/moment/moment-with-locales.min.js"></script>
 	<script src="/frontend/vendor/cookie/js.cookie.js"></script>
+	<script src="/frontend/vendor/validate/jquery.validate.min.js"></script>
+	<script src="/frontend/vendor/validate/additional-methods.min.js"></script>
+	<script src="/frontend/vendor/validate/localization/messages_vi.min.js"></script>
+	
 
 	<script type="text/javascript">
 		numbro.culture('vi-VN');

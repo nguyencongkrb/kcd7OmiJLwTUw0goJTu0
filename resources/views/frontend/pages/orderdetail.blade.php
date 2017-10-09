@@ -104,7 +104,7 @@
 		</tr>
 		<tr>
 			<td class="text-nowrap">Thời gian giao hàng dự kiến</td>
-			<td class="text-center">{{ $cart->delivery_date }}</td>
+			<td class="text-center">{{ DateTime::createFromFormat('Y-m-d', $cart->delivery_date)->format('d/m/Y') }}</td>
 		</tr>
 		<tr>
 			<td class="text-nowrap">Phí giao hàng</td>

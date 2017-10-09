@@ -48,11 +48,15 @@ class VerifyUser extends Notification
 		return (new MailMessage)
 					->subject('Đăng ký thành viên')
 					//->subject('Kích Hoạt Tài Khoản')
-					->line('Chào mừng bạn đến với Cửa hàng Quà tặng '. Config::getValueByKey('site_name') .', Cửa Hàng dành riêng cho nhân viên SUN LIFE')
-					->line('Hệ thống đã nhận được thông báo bạn đăng ký tài khoản tại SUNMART.COM')
-					->line('Tên đăng nhập: ' . $this->user->email)
+					->greeting('Cửa hàng quà tặng <span style="color:#eaab00"><strong>'. Config::getValueByKey('site_name') .'</strong></span> Kính chào Anh/Chị')
+					->line('Chào mừng Anh/Chị đã đến với website http://quatangsunmart.com')
+					->line('Dưới đây là thông tin tài khoản chính thức của anh/chị:')
+					->line('<strong>Tên đăng nhập: ' . $this->user->email . '</strong>')
 					//->action('Xác Nhận', $url)
-					->line('Nếu có bất kỳ thắc mắc nào về quá trình mua hàng, xin vui lòng liên hệ. Trung tâm hỗ trợ khách hàng qua email: '. Config::getValueByKey('address_received_mail') .' hoặc HOTLINE: ' . Config::getValueByKey('hot_line'));
+					->line('Sau khi đăng nhập thành công, vui lòng thay đổi mật khẩu cá nhân để đảm bảo Chính sách bảo mật thông tin.')
+					->line('Mọi thắc mắc và cần sự hỗ trợ, xin vui lòng liên hệ Trung Tâm Chăm Sóc Khách Hàng <span style="color:#eaab00"><strong>' . Config::getValueByKey('hot_line') . '</strong></span> hoặc qua email: ' . Config::getValueByKey('address_received_mail') . '.')
+					->line('Chúc Anh/Chị có thời gian mua sắm thật thú vị!')
+					->line('Cảm ơn và chào trân trọng!');
 	}
 
 	/**

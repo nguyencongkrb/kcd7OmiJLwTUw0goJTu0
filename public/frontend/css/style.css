@@ -390,7 +390,7 @@ body.loginpage.register {
 body.loginpage header{
 	background: #fff;
 }
-body.loginpage form label{
+body.loginpage form label:not(.text-danger){
 	color: #003946;
 	padding-left: 0;
 }

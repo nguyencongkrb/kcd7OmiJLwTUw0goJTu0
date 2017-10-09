@@ -28,7 +28,9 @@
 			<a href="mailto:{{ $config->getValueByKey('address_received_mail') }}">{{ $config->getValueByKey('address_received_mail') }}</a>
 			<br>
 			<span class="glyphicon glyphicon-calendar"></span>
-			{{ $config->getValueByKey('opening_hours') }}
+			{{ $config->getValueByKey('opening_hours') }}<br>
+			<span class="glyphicon glyphicon-calendar"></span>
+			{{ $config->getValueByKey('opening_hours_2') }}
 		</p>
 	</div>
 	<div class="col-md-6">
@@ -39,31 +41,31 @@
 			{{ session('status') }}
 		</div>
 		@endif
-		<form class="form-horizontal" method="POST" action="{{ route('contact.create') }}">
+		<form class="form-horizontal" id="frmContact" method="POST" action="{{ route('contact.create') }}">
 		 {{ csrf_field() }}
 			<div class="form-group">
 				<label class="col-md-3 col-sm-3 control-label">Chủ đề</label>
 				<div class="col-md-9 col-sm-9">
-					<input type="text" name="Contact[subject]" class="form-control" required >
+					<input type="text" name="Contact[subject]" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 col-sm-3 control-label">Họ &amp; tên</label>
 				<div class="col-md-9 col-sm-9">
-					<input type="text" name="Contact[full_name]" class="form-control" required >
+					<input type="text" name="Contact[full_name]" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 col-sm-3 control-label">Email</label>
 				<div class="col-md-9 col-sm-9">
-					<input type="email" name="Contact[email]" class="form-control" required >
+					<input type="email" name="Contact[email]" class="form-control" required>
 				</div>
 				
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 col-sm-3 control-label">Điện thoại</label>
 				<div class="col-md-9 col-sm-9">
-					<input type="text" name="Contact[phone]" class="form-control" required >
+					<input type="text" id="Contact[phone]" name="Contact[phone]" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
@@ -87,4 +89,17 @@
 @endsection
 
 @section('customize.js')
+<script type="text/javascript">
+	$(document).ready(function (argument) {
+		$("#frmContact").validate({
+			lang: 'vi',
+			errorClass: 'text-danger',
+			rules: {
+				'Contact[phone]': {
+					regex: /^(01[2689]|09)[0-9]{8}$/
+				}
+			}
+		});
+	});
+</script>
 @endsection

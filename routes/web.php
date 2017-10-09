@@ -110,6 +110,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 // for multi language site
 Route::get('/locate/{locate}.html', '\App\Http\Controllers\Frontend\PageController@locate')->name('locate');
 
+Route::post('kiem-tra-nguoi-dung.html', '\App\Http\Controllers\Frontend\PageController@checkUserExists')->name('user.checkexists');
 Route::get('dang-ky.html', '\App\Http\Controllers\Frontend\PageController@register')->name('user.register');
 Route::post('dang-ky.html', '\App\Http\Controllers\Frontend\PageController@createUser')->name('user.create');
 Route::get('xac-nhan-dang-ky/{confirmationcode}', '\App\Http\Controllers\Frontend\PageController@createVerify')->name('create.verify');

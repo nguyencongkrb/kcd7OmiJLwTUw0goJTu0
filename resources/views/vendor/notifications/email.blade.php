@@ -88,14 +88,14 @@ $style = [
 											@if ($level == 'error')
 												Whoops!
 											@else
-												Cửa hàng Quà tặng {{ $site_name }} xin chào bạn!
+												{!! $greeting !!}
 											@endif
 										</h1>
 
 										<!-- Intro -->
 										@foreach ($introLines as $line)
 											<p style="{{ $style['paragraph'] }}">
-												{{ $line }}
+												{!! $line !!}
 											</p>
 										@endforeach
 
@@ -131,14 +131,9 @@ $style = [
 										<!-- Outro -->
 										@foreach ($outroLines as $line)
 											<p style="{{ $style['paragraph'] }}">
-												{{ $line }}
+												{!! $line !!}
 											</p>
 										@endforeach
-
-										<!-- Salutation -->
-										<p style="{{ $style['paragraph'] }}">
-											Xin cảm ơn!
-										</p>
 
 										<!-- Sub Copy -->
 										@if (isset($actionText))

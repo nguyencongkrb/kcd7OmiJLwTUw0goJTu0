@@ -14,7 +14,7 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<link rel="icon" type="image/png" href="/frontend/image/favicon.png" />
+	<link rel="icon" type="image/png" href="/frontend/images/favicon.png" />
 	{!! SEOMeta::generate() !!}
 	{!! OpenGraph::generate() !!}
 	<meta name="csrf-token" content="{{ csrf_token() }}">

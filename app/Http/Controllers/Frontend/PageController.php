@@ -529,6 +529,21 @@ class PageController extends Controller
 		return view('frontend.pages.register');
 	}
 
+	public function checkUserExists(PageRequest $request)
+	{
+		$email = $request->input('User.email', '');
+		$result = false;
+		if(!empty($email)){
+			$user = User::where('email', $email)->first();
+			if(is_null($user))
+				$result = true;
+		}
+		if ($request->ajax()) {
+			return response()->json(($result) ? 'true' : 'Email này đã được sử dụng.');
+		}
+		return ($result) ? 'true' : 'Email này đã được sử dụng.';
+	}
+
 	public function createUser(PageRequest $request)
 	{
 		$password = $request->input('User.password');
@@ -566,7 +581,9 @@ class PageController extends Controller
 
 		Notification::send($user, new VerifyUser($user));
 
-		return redirect()->back()->with('status', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản với email bạn nhận được.');
+		//return redirect()->back()->with('status', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản với email bạn nhận được.');
+		Auth::login($user);
+		return redirect()->route('home');
 	}
 
 	public function createVerify($confirmationcode)

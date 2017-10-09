@@ -95,7 +95,12 @@ class ConfigsTableSeeder extends Seeder
 		Config::create([
 			'key' => 'opening_hours',
 			'text' => 'Giờ hoạt động',
-			'value' => 'Mo-Su'
+			'value' => '8:30 - 17:30 (Thứ 2 - Thứ 6)'
+		]);
+		Config::create([
+			'key' => 'opening_hours_2',
+			'text' => 'Giờ hoạt động',
+			'value' => '8:30 - 12:00 (Thứ 7)'
 		]);
 		Config::create([
 			'key' => 'currencies_accepted',

@@ -4,7 +4,7 @@ if(typeof ketnoimoi == 'undefined')
 ketnoimoi.site = {
 	init: function () {
 		var thisObj = ketnoimoi.site;
-		$('span#cart-total').text(thisObj.cart.getTotalQuantity());
+		$('span#cart-total').text(thisObj.cart.getTotalProducts());
 
 		thisObj.calculateFormInfo();
 
@@ -29,7 +29,7 @@ ketnoimoi.site = {
 			}
 
 			thisObj.cart.addToCart(data);
-			$('span#cart-total').text(thisObj.cart.getTotalQuantity());
+			$('span#cart-total').text(thisObj.cart.getTotalProducts());
 
 			if ($(this).hasClass('go-payment'))
 				window.location = '/gio-hang.html';
@@ -41,7 +41,7 @@ ketnoimoi.site = {
 				var data = $(this).data();
 				data.quantity = 0;
 				thisObj.cart.updateQuantity(data);
-				$('span#cart-total').text(thisObj.cart.getTotalQuantity());
+				$('span#cart-total').text(thisObj.cart.getTotalProducts());
 				$(this).parents('tr').remove();
 				
 				var totalAmount = thisObj.cart.getTotalAmount();
@@ -63,7 +63,7 @@ ketnoimoi.site = {
 			var data = $(this).data();
 			data.quantity = value;
 			thisObj.cart.updateQuantity(data);
-			$('span#cart-total').text(thisObj.cart.getTotalQuantity());
+			$('span#cart-total').text(thisObj.cart.getTotalProducts());
 			if (!parseInt(data.quantity)) {
 				$(this).parents('tr').remove();
 			}
@@ -278,18 +278,20 @@ ketnoimoi.site = {
 	validatePurchase: function (argument) {
 		var thisObj = ketnoimoi.site;
 
-		$("#fromCheckout").validate({
-			lang: 'vi',
-			errorClass: 'text-danger',
-			rules: {
-				'ShoppingCart[customer_phone]': {
-					regex: /^(01[2689]|09)[0-9]{8}$/
-				},
-				'ShoppingCart[shipping_phone]': {
-					number: /^(01[2689]|09)[0-9]{8}$/
+		if($("#fromCheckout").length){
+			$("#fromCheckout").validate({
+				lang: 'vi',
+				errorClass: 'text-danger',
+				rules: {
+					'ShoppingCart[customer_phone]': {
+						regex: /^(01[2689]|09)[0-9]{8}$/
+					},
+					'ShoppingCart[shipping_phone]': {
+						number: /^(01[2689]|09)[0-9]{8}$/
+					}
 				}
-			}
-		});
+			});
+		}
 
 		if(thisObj.cart.getTotalAmountWithPromotion() < 100000){
 			$('#shoppingcart-notify').text('Giá trị đơn hàng tối thiểu 100.000, bạn vui lòng đặt hàng lại');
@@ -372,7 +374,7 @@ ketnoimoi.site = {
 					thisObj.data.push(_default);
 
 				Cookies.set('ShoppingCartData', thisObj.data, { path: '/' });
-				//alert('Sản phẩm đã được thêm vào giỏ hàng');
+				alert('Sản phẩm đã được thêm vào giỏ hàng');
 			}
 		},
 		updateQuantity: function(option){
@@ -466,6 +468,10 @@ ketnoimoi.site = {
 				count += parseInt(item.quantity);
 			});
 			return count;
+		},
+		getTotalProducts: function(){
+			var thisObj = this;
+			return thisObj.data.length;
 		},
 		clearShoppingCart: function(){
 			var thisObj = this;

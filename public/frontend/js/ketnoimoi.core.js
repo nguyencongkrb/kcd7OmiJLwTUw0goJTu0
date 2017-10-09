@@ -13,7 +13,11 @@ $.sortByProperty = function (property) {
 
 $.validator.addMethod("regex", function(value, element, regexpr) {          
 	return this.optional(element) || regexpr.test(value);
-}, "Dữ liệu không đúng định dạng");
+}, "Dữ liệu không đúng định dạng.");
+
+$.validator.addMethod("captcha", function(value, element, referctrl) {   
+	return eval($(referctrl).val()) == $(element).val();
+}, "Dữ liệu không chính xác.");
 
 
 $.format = function (text) {

@@ -8,7 +8,7 @@
 
 @section('body')
 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-6">
-	<form class="form-horizontal" method="POST" action="{{ route('user.register') }}">
+	<form class="form-horizontal" id="frmRegister" method="POST" action="{{ route('user.register') }}">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-4">
 				<div class="row">
@@ -27,7 +27,7 @@
 			@include('frontend.partials.errors')
 		</div>
 		<div class="form-group {{ $errors->has('User[first_name]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Họ tên</label>
+			<label class="col-sm-4 control-label">Họ tên <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
 					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User[first_name]') }}" placeholder="Họ tên" required>
@@ -40,10 +40,10 @@
 			</div>
 		</div>
 		<div class="form-group {{ $errors->has('User[email]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Email</label>
+			<label class="col-sm-4 control-label">Email <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="email" class="form-control" id="email" name="User[email]" value="{{ old('User[email]') }}" placeholder="Email" required>
+					<input type="email" class="form-control" id="User[email]" name="User[email]" value="{{ old('User[email]') }}" placeholder="Email" required>
 					@if ($errors->has('User[email]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[email]') }}</strong>
@@ -56,7 +56,7 @@
 			<label class="col-sm-4 control-label">Số điện thoại</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="number" class="form-control" id="mobile_phone" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại">
+					<input type="text" class="form-control" id="User[mobile_phone]" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại">
 					@if ($errors->has('User[mobile_phone]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
@@ -66,10 +66,10 @@
 			</div>
 		</div>
 		<div class="form-group {{ $errors->has('User[password]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Mật khẩu</label>
+			<label class="col-sm-4 control-label">Mật khẩu <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="password" class="form-control" id="password" name="User[password]" placeholder="Mật khẩu" data-toggle="tooltip" data-placement="top" title="Mật khẩu tối thiểu 6 ký tự, bao gồm ký tự đặc biệt & không khoảng trắng" required>
+					<input type="password" class="form-control" id="User[password]" name="User[password]" placeholder="Mật khẩu" data-toggle="tooltip" data-placement="top" title="Mật khẩu tối thiểu 6 ký tự, bao gồm ký tự đặc biệt & không khoảng trắng" required>
 					@if ($errors->has('User[password]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[password]') }}</strong>
@@ -79,10 +79,10 @@
 			</div>
 		</div>
 		<div class="form-group {{ $errors->has('User[password_confirmation]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Nhắc lại mật khẩu</label>
+			<label class="col-sm-4 control-label">Nhắc lại mật khẩu <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="password" class="form-control" id="password_confirmation" name="User[password_confirmation]" placeholder="Nhắc lại mật khẩu" required>
+					<input type="password" class="form-control" id="User[password_confirmation]" name="User[password_confirmation]" placeholder="Nhắc lại mật khẩu" required>
 					@if ($errors->has('User[password_confirmation]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[password_confirmation]') }}</strong>
@@ -112,7 +112,7 @@
 			<label class="col-sm-4 control-label">Ngày sinh</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="birthday" name="User[birthday]" value="{{ old('User[birthday]') }}" placeholder="ngày/tháng/năm">
+					<input type="text" class="form-control" id="User[birthday]" name="User[birthday]" value="{{ old('User[birthday]') }}" placeholder="dd/mm/yyyy">
 					@if ($errors->has('User[birthday]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[birthday]') }}</strong>
@@ -151,4 +151,32 @@
 @endsection
 
 @section('customize.js')
+<script type="text/javascript">
+	$(document).ready(function (argument) {
+		$("#frmRegister").validate({
+			lang: 'vi',
+			errorClass: 'text-danger',
+			rules: {
+				'User[email]': {
+					remote: {
+						url: "/kiem-tra-nguoi-dung.html",
+						type: "post"
+					}
+				},
+				'User[mobile_phone]': {
+					regex: /^(01[2689]|09)[0-9]{8}$/
+				},
+				'User[password]': {
+					regex: /((?=.*\S)(?=.*[~!@#$%^&*()]).{6,60})$/
+				},
+				// 'User[password_confirmation]': {
+				// 	equalTo: '#User[password]'
+				// },
+				'User[birthday]': {
+					regex: /^\d{2}?\/\d{2}?\/\d{4}$/
+				}
+			}
+		});
+	});
+</script>
 @endsection

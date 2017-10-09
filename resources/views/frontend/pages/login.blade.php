@@ -8,7 +8,7 @@
 
 @section('body')
 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-6">
-	<form class="form-horizontal" method="POST" action="{{ url('/login') }}">
+	<form class="form-horizontal" id="frmLogin" method="POST" action="{{ url('/login') }}">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-4">
 				<div class="row">
@@ -54,12 +54,12 @@
 			<label class="col-sm-4 control-label">Mã xác thực</label>
 			<div class="col-xs-12 col-sm-4">
 				<div class="row">
-					<input type="text" class="form-control text-center" readonly value="8 + 3 =">
+					<input type="text" class="form-control text-center" id="refer" readonly value="{{ rand(1, 9) }} + {{ rand(1, 9) }}">
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-4">
 				<div class="row" style="overflow: hidden;">
-					<input type="text" class="form-control verifycode" placeholder="nhập mã xác thực" required>
+					<input type="text" class="form-control verifycode" id="captcha" name="captcha" placeholder="nhập mã xác thực" required>
 				</div>
 			</div>
 		</div>
@@ -84,4 +84,17 @@
 @endsection
 
 @section('customize.js')
+<script type="text/javascript">
+	$(document).ready(function (argument) {
+		$("#frmLogin").validate({
+			lang: 'vi',
+			errorClass: 'text-danger',
+			rules: {
+				'captcha': {
+					captcha: '#refer',
+				}
+			}
+		});
+	});
+</script>
 @endsection

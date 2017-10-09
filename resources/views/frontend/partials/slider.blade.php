@@ -5,7 +5,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12">
 	<div class="owl-carousel owl-theme">
 	@foreach($sliders as $slider)
-		<div class="item"><a href="{{ $slider->link }}"><img src="{{ $slider->getFirstAttachment('custom', 1140, 520) }}" alt="{{ $slider->name }}"></a></div>
+		<div class="item"><a href="{{ !empty($slider->link) ? $slider->link : 'javascript:void();' }}"><img src="{{ $slider->getFirstAttachment('custom', 1140, 520) }}" alt="{{ $slider->name }}"></a></div>
 		@endforeach
 	</div>
 	</div>

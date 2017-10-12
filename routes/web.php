@@ -146,6 +146,8 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::get('kiem-tra-don-hang.html', 'PageController@orderCheck')->name('order.check');
 	Route::get('chi-tiet-don-hang.html', 'PageController@orderDetail')->name('order.detail');
 	Route::get('updateorderstatus/{cart_id}/{status_id}', 'PageController@changeOrderStatus')->name('order.updatestatus');
+
+	Route::post('createcomment', 'PageController@createComment')->name('comment.create');
 	
 	Route::get('tim-kiem.html', 'PageController@search')->name('search');
 

@@ -125,7 +125,7 @@
 			<label class="col-sm-4 control-label">Địa chỉ</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="address" name="User[address]" value="{{ old('User[address]') }}" placeholder="Địa chỉ">
+					<input type="text" class="form-control" id="address" name="User[address]" value="{{ old('User[address]') }}" placeholder="Địa chỉ" required>
 					@if ($errors->has('User[address]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[address]') }}</strong>
@@ -174,6 +174,31 @@
 				// },
 				'User[birthday]': {
 					regex: /^\d{2}?\/\d{2}?\/\d{4}$/
+				}
+			},
+			messages: {
+				'User[first_name]': {
+					required: 'Vui lòng nhập họ tên của bạn.'
+				},
+				'User[email]': {
+					required: 'Vui lòng nhập email đăng ký tài khoản.',
+					email: "Vui lòng nhập đúng định dạng email name@domain.com."
+				},
+				'User[mobile_phone]': {
+					regex: 'Vui lòng nhập số điện thoại đúng định đạng.'
+				},
+				'User[password]': {
+					required: 'Vui lòng nhập mật khẩu.',
+					regex: 'Vui lòng mật khẩu theo định dạng đã gợi ý.'
+				},
+				'User[password_confirmation]': {
+					required: 'Vui lòng xác nhận lại mật khẩu.',
+				},
+				'User[birthday]': {
+					regex: 'Vui lòng nhập ngày sinh theo định dạng dd/mm/yyyy.'
+				},
+				'User[address]': {
+					regex: 'Vui lòng nhập đầy đủ địa chỉ.'
 				}
 			}
 		});

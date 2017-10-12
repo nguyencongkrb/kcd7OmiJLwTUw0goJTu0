@@ -47,6 +47,9 @@
 	ul.categories>li:hover + li>a:before { 
 		content:"|";
 	}
+	.product-description .nav-tabs>li>a{
+		font-size: 16px;
+	}
 	.payment-method{
 		min-height: 225px;
 	}

@@ -29,7 +29,7 @@
 			<br>
 			<span class="glyphicon glyphicon-calendar"></span>
 			{{ $config->getValueByKey('opening_hours') }}<br>
-			<span class="glyphicon glyphicon-calendar"></span>
+			<span class="glyphicon glyphicon-calendar" style="color: #fff;"></span>
 			{{ $config->getValueByKey('opening_hours_2') }}
 		</p>
 	</div>
@@ -97,6 +97,25 @@
 			rules: {
 				'Contact[phone]': {
 					regex: /^(01[2689]|09)[0-9]{8}$/
+				}
+			},
+			messages: {
+				'Contact[subject]': {
+					required: 'Vui lòng nhập chủ đề liên hệ.'
+				},
+				'Contact[full_name]': {
+					required: 'Vui lòng nhập họ tên.'
+				},
+				'Contact[email]': {
+					required: 'Vui lòng nhập email liên hệ.',
+					email: "Vui lòng nhập đúng email."
+				},
+				'Contact[phone]': {
+					regex: 'Vui lòng nhập số điện thoại đúng định đạng.'
+				},
+				
+				'Contact[content]': {
+					required: 'Vui lòng nhập nội dung.',
 				}
 			}
 		});

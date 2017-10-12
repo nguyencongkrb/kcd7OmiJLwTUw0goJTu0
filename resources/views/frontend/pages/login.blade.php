@@ -90,8 +90,13 @@
 			lang: 'vi',
 			errorClass: 'text-danger',
 			rules: {
-				'captcha': {
+				captcha: {
 					captcha: '#refer',
+				}
+			},
+			messages: {
+				captcha: {
+					captcha: 'Mã xác thực không đúng.'
 				}
 			}
 		});

@@ -11,7 +11,7 @@
 	</div>
 	<div id="bx-pager" class="product-thumbnail-list">
 		@foreach($product->getVisibleAttachments() as $item)
-		<a data-slide-index="{{ $loop->index }}" href=""><img src="{{ $item->getLink('custom', 84, 0) }}" /></a>
+		<a data-slide-index="{{ $loop->index }}" href=""><img src="{{ $item->getLink('custom', 83, 0) }}" /></a>
 		@endforeach
 	</div>
 </div>
@@ -60,22 +60,32 @@
 <div class="col-xs-12 col-sm-12 col-md-8 product-review">
 	<strong>Xin vui lòng chia sẻ đánh giá của bạn về sản phẩm này</strong><br>
 	<br>
-	<form>
+	<form role="form" method="POST" id="frmComment" action="{{ route('comment.create') }}">
 		<span>Nhận xét về sản phẩm này</span><br><br>
-		<img src="/frontend/images/start.png" alt=""><br><br>
+		{{ csrf_field() }}
+		<input type="hidden" name="Comment[commentable_id]" value="{{ $product->id }}">
+		<input type="hidden" name="Comment[commentable_type]" value="App\product">
+		<select id="comment_vote" name="Comment[vote]">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4" selected>4</option>
+			<option value="5">5</option>
+		</select>
+		<br>
 		<div class="form-group">
 			<label>Tiêu đề đánh giá (tuỳ chọn)</label>
-			<input type="text" class="form-control" placeholder="Nhập tiêu đề đánh giá tại đây">
+			<input type="text" class="form-control" id="Comment[title]" name="Comment[title]" placeholder="Nhập tiêu đề đánh giá tại đây" maxlength="50">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Mô tả đánh giá</label>
-			<textarea class="form-control" placeholder="Nhập mô tả tại đây"></textarea>
+			<textarea class="form-control" id="Comment[content]" name="Comment[content]" placeholder="Nhập mô tả tại đây" maxlength="250" required></textarea>
 			<span class="help-block text-right">Nhận xét của <strong>{{ Auth::user()->getFullname() }}</strong></span>
 		</div>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 text-right">
-					<button type="reset" class="btn btn-default">Gửi nhận xét</button>
+					<button type="submit" class="btn btn-default">Gửi nhận xét</button>
 				</div>
 			</div>
 		</div>
@@ -85,58 +95,86 @@
 		<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-4">
 			<div class="row">
-				<img src="/frontend/images/start2.png" alt=""><br><br>
-				<strong style="font-size: 24px;">4.1</strong> trên 5<br>
-				10 đánh giá 9 nhận xét
+				<select id="comment_vote_avg" data-current-rating="{{ $vote_avg = $product->comments()->where('published', 1)->avg('vote') }}" autocomplete="off">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+				<br>
+				<strong style="font-size: 24px;">{{ number_format($vote_avg, 1, ',', '.') }}</strong> trên 5<br>
+				{{ $product->comments_count }} đánh giá {{ $product->comments_count }} nhận xét
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-8">
 			<div class="row">
+				@php $product->comments_count = $product->comments_count == 0 ? 1 : $product->comments_count @endphp
 				<div class="clearfix">
 					<span class="pull-left">5 sao</span>
-					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
-						<div style="width: 30%; height: 100%; background: #faca51">
+					<div class="percent-container">
+						<div class="inner" style="width: {{ ($fivestar = $product->comments()->where('published', 1)->where('vote', 5)->count()) / $product->comments_count * 100 }}%;">
 
 						</div>
 					</div>
-					<span class="pull-">14</span>
+					<span class="pull-left">{{ $fivestar }}</span>
 				</div>
 				<div class="clearfix">
 					<span class="pull-left">4 sao</span>
-					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
-						<div style="width: 30%; height: 100%; background: #faca51">
+					<div class="percent-container">
+						<div class="inner" style="width: {{ ($fourstar = $product->comments()->where('published', 1)->where('vote', 4)->count()) / $product->comments_count * 100 }}%;">
 
 						</div>
 					</div>
-					<span class="pull-">9</span>
+					<span class="pull-left">{{ $fourstar }}</span>
 				</div>
 				<div class="clearfix">
 					<span class="pull-left">3 sao</span>
-					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
-						<div style="width: 40%; height: 100%; background: #faca51">
+					<div class="percent-container">
+						<div class="inner" style="width: {{ ($threestar = $product->comments()->where('published', 1)->where('vote', 3)->count()) / $product->comments_count * 100 }}%;">
 
 						</div>
 					</div>
-					<span class="pull-">6</span>
+					<span class="pull-left">{{ $threestar }}</span>
 				</div>
 				<div class="clearfix">
 					<span class="pull-left">2 sao</span>
-					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
-						<div style="width: 67%; height: 100%; background: #faca51">
+					<div class="percent-container">
+						<div class="inner" style="width: {{ ($twostar = $product->comments()->where('published', 1)->where('vote', 2)->count()) / $product->comments_count * 100 }}%;">
 
 						</div>
 					</div>
-					<span class="pull-">3</span>
+					<span class="pull-left">{{ $twostar }}</span>
 				</div>
 				<div class="clearfix">
 					<span class="pull-left">1 sao</span>
-					<div style="background: #f1f1f1; width: 150px; height: 12px; float: left; margin: 5px 10px;">
-						<div style="width: 15%; height: 100%; background: #faca51">
+					<div class="percent-container">
+						<div class="inner" style="width: {{ ($onestar = $product->comments()->where('published', 1)->where('vote', 1)->count()) / $product->comments_count * 100 }}%;">
 
 						</div>
 					</div>
-					<span class="pull-">5</span>
+					<span class="pull-left">{{ $onestar }}</span>
 				</div>
+			</div>
+		</div>
+		<div class="product-reviews clearfix">
+			@foreach($product->comments()->where('published', 1)->orderby('id', 'desc')->get() as $comment)
+			<div class="clearfix">
+				<hr>
+				@for ($i = 0; $i < $comment->vote; $i++)
+				<span class="glyphicon glyphicon-star text-colored"></span> 
+				@endfor
+				<strong>{{ empty($comment->title) ? 'Không tiêu đề' : $comment->title }}</strong>
+				<p>{{ $comment->content }}</p>
+				<small class="pull-right">Nhận xét của <strong>{{ $comment->userCreated->getFullname() }}</strong></small>
+			</div>
+			@endforeach
+			<div class="clearfix hide" id="comment-template">
+				<hr>
+				{0}
+				<strong>{1}</strong>
+				<p>{2}</p>
+				<small class="pull-right">Nhận xét của <strong>{{ Auth::user()->getFullname() }}</strong></small>
 			</div>
 		</div>
 	</div>

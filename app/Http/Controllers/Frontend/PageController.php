@@ -42,6 +42,7 @@ use App\InvoiceInfo;
 use App\PromotionCode;
 use App\DeliveryFee;
 use App\AreaInfo;
+use App\Comment;
 
 // to return raw query
 //DB::enableQueryLog();
@@ -160,7 +161,11 @@ class PageController extends Controller
 		if ($category == null) {
 			abort(404);
 		}
-		$product = $category->products()->where('key', $key)->where('published', 1)->first();
+		$product = $category->products()->withCount([
+			'comments' => function ($query) {
+    			$query->where('published', 1);
+			}
+		])->where('key', $key)->where('published', 1)->first();
 		if ($product == null) {
 			abort(404);
 		}
@@ -982,6 +987,25 @@ class PageController extends Controller
 		$province = Province::findOrFail($province_id);
 
 		return response()->json($province->districts()->orderBy('name')->get()->toArray());
+	}
+
+	public function createComment(PageRequest $request)
+	{
+
+		$comment = new Comment;
+
+		$comment->title = strip_tags($request->input('Comment.title', ''));
+		$comment->content = strip_tags($request->input('Comment.content', ''));
+		$comment->vote = strip_tags($request->input('Comment.vote', 0));
+		$comment->published = 1;
+		$comment->commentable_id = strip_tags($request->input('Comment.commentable_id', 0));
+		$comment->commentable_type = strip_tags($request->input('Comment.commentable_type', 0));
+		$comment->created_by = Auth::user()->id;
+ 
+		//save data comment
+		$comment->save();
+
+		return response()->json($comment->toArray());
 	}
 }
 

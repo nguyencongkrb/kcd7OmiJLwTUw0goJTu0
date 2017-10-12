@@ -25,7 +25,7 @@
 		</div>
 		@endif
 		<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-			<input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn!" required>
+			<input type="email" class="form-control" id="email" name="email" placeholder="Nhập email hoặc số điện thoại của bạn!" required>
 			@if ($errors->has('email'))
 			<span class="help-block">
 				<strong>{{ $errors->first('email') }}</strong>

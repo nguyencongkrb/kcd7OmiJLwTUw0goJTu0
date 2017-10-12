@@ -124,6 +124,11 @@ class Product extends BaseModel
 		return $this->sale_ratio;
 	}
 
+	public function comments()
+	{
+		return $this->morphMany('App\Comment', 'commentable');
+	}
+
 	public function getJSONLD(){
 		return '{
 		  "@context": "http://schema.org",
@@ -143,7 +148,7 @@ class Product extends BaseModel
 			"seller": {
 				"@type": "Organization",
 				"name": "'. Config::getValueByKey('site_name') .'"
-    		}
+			}
 		  },
 		  "review": []
 		}';

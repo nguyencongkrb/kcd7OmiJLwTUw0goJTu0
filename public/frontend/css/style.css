@@ -23,7 +23,10 @@ input, textarea{
 	background-color: #eaab00;
 	border-color: #eaab00;
 }
-
+form label.text-danger{
+	font-size: 12px;
+	font-style: italic;
+}
 
 header{
 	border-bottom: solid 5px #eaab00;
@@ -309,6 +312,17 @@ h1.article-title{
 }
 .product-review-summary{
 	color: #737373;
+}
+.percent-container{
+	background: #f1f1f1;
+	width: 150px;
+	height: 12px;
+	float: left;
+	margin: 5px 10px;
+}
+.percent-container .inner{
+	height: 100%;
+	background: #faca51;
 }
 
 form input, form textarea{
@@ -688,3 +702,27 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
 	background: #eaab00;
 	border-color: #eaab00;
 }
+
+/* star rating */
+.br-theme-bootstrap-stars .br-widget a{
+	background: #f1f1f1 !important;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	color: #fff;
+	text-align: center;
+	line-height: 25px !important;
+}
+.br-theme-bootstrap-stars .br-widget a:after,
+.br-theme-bootstrap-stars .br-widget a.br-active:after,
+.br-theme-bootstrap-stars .br-widget a.br-selected:after{
+	color: #fff !important; 
+}
+.br-theme-bootstrap-stars .br-widget a.br-active,
+.br-theme-bootstrap-stars .br-widget a.br-selected {
+	background: #faca51 !important;
+}
+
+
+

@@ -190,8 +190,8 @@ ketnoimoi.site = {
 		}
 
 		// calculate delivery fee & time
-		$('#express-delivery-fee').html('--');
-		$('#delivery-time').html('--/--/----');
+		//$('#express-delivery-fee').html('--');
+		//$('#delivery-time').html('--/--/----');
 		if (delivery_province) {
 			thisObj.calculateDeliveryDate(delivery_province, function (data) {
 				var delivery_method = $('input[name="ShoppingCart[delivery_method_id]"]:checked').val() || 0;

@@ -28,10 +28,10 @@ ketnoimoi.site = {
 				data.quantity = $('#input-quantity').val();
 			}
 
-			thisObj.cart.addToCart(data);
+			thisObj.cart.addToCart(data, !$(this).hasClass('go-payment'));
 			$('span#cart-total').text(thisObj.cart.getTotalProducts());
 
-			if ($(this).hasClass('go-payment'))
+			if($(this).hasClass('go-payment'))
 				window.location = '/gio-hang.html';
 		});
 
@@ -348,7 +348,7 @@ ketnoimoi.site = {
 	cart: {
 		data: Cookies.getJSON('ShoppingCartData') || [],
 		promotionCodes: [],
-		addToCart: function(option){
+		addToCart: function(option, notify){
 			var thisObj = ketnoimoi.site.cart;
 			var _default = {
 				product_id: 0,
@@ -374,7 +374,8 @@ ketnoimoi.site = {
 					thisObj.data.push(_default);
 
 				Cookies.set('ShoppingCartData', thisObj.data, { path: '/' });
-				alert('Sản phẩm đã được thêm vào giỏ hàng');
+				if(notify)
+					alert('Sản phẩm đã được thêm vào giỏ hàng');
 			}
 		},
 		updateQuantity: function(option){

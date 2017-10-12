@@ -30,10 +30,10 @@ $style = [
 	'email-masthead_name' => 'font-size: 16px; font-weight: bold; color: #2F3133; text-decoration: none; text-shadow: 0 1px 0 white;',
 
 	'email-body' => 'width: 100%; margin: 0; padding: 0; border-top: 1px solid #eaab00; border-bottom: 1px solid #eaab00; background-color: #FFF;',
-	'email-body_inner' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0;',
+	'email-body_inner' => 'width: auto; max-width: 100%; margin: 0 auto; padding: 0;',
 	'email-body_cell' => 'padding: 0 35px 35px 35px;',
 
-	'email-footer' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0; text-align: center;',
+	'email-footer' => 'width: auto; max-width: 100%; margin: 0 auto; padding: 0; text-align: center;',
 	'email-footer_cell' => 'color: #AEAEAE; padding: 35px; text-align: center;',
 
 	/* Body ------------------------------ */
@@ -81,7 +81,7 @@ $style = [
 					<!-- Email Body -->
 					<tr>
 						<td style="{{ $style['email-body'] }}" width="100%">
-							<table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
+							<table style="{{ $style['email-body_inner'] }}" align="center" width="100%" cellpadding="0" cellspacing="0">
 								<tr>
 									<td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
 										<!-- Greeting -->
@@ -144,7 +144,7 @@ $style = [
 					<!-- Footer -->
 					<tr>
 						<td>
-							<table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
+							<table style="{{ $style['email-footer'] }}" align="center" width="100%" cellpadding="0" cellspacing="0">
 								<tr>
 									<td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
 										<p style="{{ $style['paragraph-sub'] }}">

@@ -51,7 +51,7 @@ class VerifyUser extends Notification
 		return (new MailMessage)
 					->subject('Đăng ký thành viên')
 					->line('<span style="'.$center.'background:#f9df9c;padding: 10px 5px;">Chào mừng <strong>'. $this->user->getFullname() .'</strong> đến với<br>
-						<strong>'.Config::getValueByKey('site_name').' - <a style="'.$anchor.'" href="'.url('/').'">'. preg_replace('/^https?:\/\//', '', url('/')).'</a></strong><br>
+						<strong style="color: #eaab00;">'.Config::getValueByKey('site_name').'</strong><strong> - <a style="'.$anchor.'" href="'.url('/').'">'. preg_replace('/^https?:\/\//', '', url('/')).'</a></strong><br>
 						Cửa hàng quà tặng trực tuyến dành cho Tư vấn Tài chính Sun Life Việt Nam
 						</span>')
 					->line('<span style="'.$center.'border-top: solid 1px #eaab00;"></span>')

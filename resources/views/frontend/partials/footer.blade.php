@@ -75,7 +75,7 @@
 		</div>
 	</div>
 	@endif
-	<div class="row register-trade">
+	<div class="register-trade">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-6">

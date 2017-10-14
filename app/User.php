@@ -83,4 +83,14 @@ class User extends Authenticatable
 	{
 		return $this->hasMany('App\ShoppingCart', 'customer_id');
 	}
+
+	public function province()
+    {
+        return $this->belongsTo('App\Province', 'province_id');
+    }
+
+	public function district()
+	{
+		return $this->belongsTo('App\District', 'district_id');
+	}
 }

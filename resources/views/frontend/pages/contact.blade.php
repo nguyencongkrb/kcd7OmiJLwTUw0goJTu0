@@ -44,32 +44,32 @@
 		<form class="form-horizontal" id="frmContact" method="POST" action="{{ route('contact.create') }}">
 		 {{ csrf_field() }}
 			<div class="form-group">
-				<label class="col-md-3 col-sm-3 control-label">Chủ đề</label>
+				<label class="col-md-3 col-sm-3 control-label">Chủ đề <em class="text-danger">*</em></label>
 				<div class="col-md-9 col-sm-9">
 					<input type="text" name="Contact[subject]" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 col-sm-3 control-label">Họ &amp; tên</label>
+				<label class="col-md-3 col-sm-3 control-label">Họ &amp; tên <em class="text-danger">*</em></label>
 				<div class="col-md-9 col-sm-9">
-					<input type="text" name="Contact[full_name]" class="form-control" required>
+					<input type="text" name="Contact[full_name]" value="{{ Auth::user()->getFullname() }}" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 col-sm-3 control-label">Email</label>
+				<label class="col-md-3 col-sm-3 control-label">Email <em class="text-danger">*</em></label>
 				<div class="col-md-9 col-sm-9">
-					<input type="email" name="Contact[email]" class="form-control" required>
+					<input type="email" name="Contact[email]" class="form-control" value="{{ Auth::user()->email }}" required>
 				</div>
 				
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 col-sm-3 control-label">Điện thoại</label>
+				<label class="col-md-3 col-sm-3 control-label">Điện thoại <em class="text-danger">*</em></label>
 				<div class="col-md-9 col-sm-9">
-					<input type="text" id="Contact[phone]" name="Contact[phone]" class="form-control" required>
+					<input type="text" id="Contact[phone]" name="Contact[phone]" value="{{ Auth::user()->mobile_phone }}" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 col-sm-3 control-label">Nội dung</label>
+				<label class="col-md-3 col-sm-3 control-label">Nội dung <em class="text-danger">*</em></label>
 				<div class="col-md-9 col-sm-9">
 					<textarea name="Contact[content]" rows="5" class="form-control" required></textarea>
 				</div>

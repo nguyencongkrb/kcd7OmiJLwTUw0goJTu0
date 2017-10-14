@@ -15,12 +15,12 @@
 		<form action="{{ url('/login') }}" method="post">
 			{{ csrf_field() }}
 
-			<div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
-				<input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" autofocus required>
+			<div class="form-group has-feedback{{ $errors->has('username') ? ' has-error' : '' }}">
+				<input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" value="{{ old('username') }}" autofocus required>
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-				@if ($errors->has('email'))
+				@if ($errors->has('username'))
 				<span class="help-block">
-					<strong>{{ $errors->first('email') }}</strong>
+					<strong>{{ $errors->first('username') }}</strong>
 				</span>
 				@endif
 			</div>

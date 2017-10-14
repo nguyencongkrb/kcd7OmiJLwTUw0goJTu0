@@ -6,7 +6,9 @@ ketnoimoi.site = {
 		var thisObj = ketnoimoi.site;
 		$('span#cart-total').text(thisObj.cart.getTotalProducts());
 
-		thisObj.calculateFormInfo();
+		if(location.pathname == '/gio-hang.html' || location.pathname == '/thong-tin-thanh-toan.html'){
+			thisObj.calculateFormInfo();
+		}
 
 		thisObj.events();
 
@@ -81,14 +83,19 @@ ketnoimoi.site = {
 			var province = $(this).val();
 			var subcontrol = $(this).attr('sub-control');
 			subcontrol = $('#' + subcontrol);
-			thisObj.getDistricts(province, function (data) {
-				var html = '<option value="">Quận/Huyện</option>';
-				$.each(data, function (index, item) {
-					html += $.format('<option value="{0}">{1}</option>', item.id, item.name);
+			if(province != ''){
+				thisObj.getDistricts(province, function (data) {
+					var html = '<option value="">Quận/Huyện</option>';
+					$.each(data, function (index, item) {
+						html += $.format('<option value="{0}">{1}</option>', item.id, item.name);
+					});
+					subcontrol.html(html);
+					subcontrol.val('');
 				});
-				subcontrol.html(html);
-				subcontrol.val('');
-			});
+			}
+			else{
+				subcontrol.html('<option value="">Quận/Huyện</option>');
+			}
 
 			thisObj.calculateFormInfo();
 		});
@@ -190,8 +197,11 @@ ketnoimoi.site = {
 		}
 
 		// calculate delivery fee & time
-		//$('#express-delivery-fee').html('--');
-		//$('#delivery-time').html('--/--/----');
+		if(delivery_province == ''){
+			$('#express-delivery-fee').html('--');
+			$('#delivery-time').html('--/--/----');
+			$('#express-delivery-fee-pay').html('0');
+		}
 		if (delivery_province) {
 			thisObj.calculateDeliveryDate(delivery_province, function (data) {
 				var delivery_method = $('input[name="ShoppingCart[delivery_method_id]"]:checked').val() || 0;
@@ -374,8 +384,9 @@ ketnoimoi.site = {
 					thisObj.data.push(_default);
 
 				Cookies.set('ShoppingCartData', thisObj.data, { path: '/' });
-				if(notify)
+				if(notify){
 					alert('Sản phẩm đã được thêm vào giỏ hàng');
+				}
 			}
 		},
 		updateQuantity: function(option){

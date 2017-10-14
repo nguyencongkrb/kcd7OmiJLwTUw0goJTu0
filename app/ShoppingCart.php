@@ -32,9 +32,9 @@ class ShoppingCart extends BaseModel
 	}
 
 	public function customerProvince()
-    {
-        return $this->belongsTo('App\Province', 'province_id');
-    }
+	{
+		return $this->belongsTo('App\Province', 'province_id');
+	}
 
 	public function customerDistrict()
 	{
@@ -81,7 +81,7 @@ class ShoppingCart extends BaseModel
 	}
 
 	public function getTotalPaymentAmountAttribute()
-    {
-        return $this->attributes['total_payment_amount'] = $this->getTotalPaymentAmount();
-    }
+	{
+		return $this->attributes['total_payment_amount'] = $this->getTotalPaymentAmount();
+	}
 }

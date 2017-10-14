@@ -23,9 +23,13 @@ class CreateUsersTable extends Migration
 			$table->string('mobile_phone', 20);
 			$table->string('home_phone', 20);
 			$table->string('address', 250);
+			$table->integer('province_id')->nullable();
+			$table->integer('district_id')->nullable();
 			$table->string('website', 250);
 			$table->string('facebook', 250);
-			$table->string('email')->unique();
+			$table->string('username')->unique();
+			//$table->string('email')->unique();
+			$table->string('email')->nullable();
 			$table->string('password');
 			$table->rememberToken();
 			$table->boolean('type')->default(0);	// 0 nornal user, 1 admin group user

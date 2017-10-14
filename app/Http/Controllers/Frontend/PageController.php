@@ -361,6 +361,7 @@ class PageController extends Controller
 		if (isset($_COOKIE['ShoppingCartData'])) {
 			$this->setMetadata('Thông tin thanh toán', 'payment.info');
 			$provinces = Province::orderBy('name')->get();
+			$districts = District::where('province_id', Auth()->user()->province_id)->orderBy('name')->get();
 
 			$cart = new ShoppingCart;
 			$cartDetails = [];
@@ -370,7 +371,7 @@ class PageController extends Controller
 				array_push($cartDetails, $cartDetail);
 			}
 			$cart->cartDetails = $cartDetails;
-			return view('frontend.pages.paymentinfo', compact('cart', 'provinces'));
+			return view('frontend.pages.paymentinfo', compact('cart', 'provinces', 'districts'));
 		}
 		return redirect()->route('shopping.cart');
 	}
@@ -401,6 +402,24 @@ class PageController extends Controller
 			$weight += $cartDetail->quantity * $cartDetail->product->weight;
 		}
 		return response()->json(['fee' => $province->getDeliveryFee($weight), 'standard_delivery_days' => $province->getStandardDeliveryTime()->format('d/m/Y'), 'express_delivery_days' => $province->getExpressDeliveryTime()->format('d/m/Y')]);
+	}
+
+	public function purchaseConfirm()
+	{		
+		if (isset($_COOKIE['ShoppingCartData'])) {
+			$this->setMetadata('Xác  nhận đơn hàng', 'purchase.confirm');
+
+			$cart = new ShoppingCart;
+			$cartDetails = [];
+			foreach (json_decode($_COOKIE['ShoppingCartData'], true) as $key => $value) {
+				$cartDetail = new ShoppingCartDetail;
+				$cartDetail->fill($value);
+				array_push($cartDetails, $cartDetail);
+			}
+			$cart->cartDetails = $cartDetails;
+			return view('frontend.pages.purchase', compact('cart'));
+		}
+		return redirect()->route('shopping.cart');
 	}
 
 	public function purchase(PageRequest $request)
@@ -500,9 +519,11 @@ class PageController extends Controller
 			->withCookie(Cookie::forget('ShoppingCartData'));
 		}
 		else{
-			Mail::to($cart->customer_email)
-			->cc(Config::getValueByKey('address_received_mail'))
-			->send(new OrderPurchase($cart));
+			if(!empty($cart->customer_email)){
+				Mail::to($cart->customer_email)
+				->cc(Config::getValueByKey('address_received_mail'))
+				->send(new OrderPurchase($cart));
+			}
 
 			return redirect()->route('purchase.success')
 			->withCookie(Cookie::forget('ShoppingCartData'))
@@ -530,23 +551,44 @@ class PageController extends Controller
 		}
 
 		$this->setMetadata('Đăng ký', 'user.register');
+		$provinces = Province::orderBy('name')->get();
 
-		return view('frontend.pages.register');
+		return view('frontend.pages.register', compact('provinces'));
 	}
 
 	public function checkUserExists(PageRequest $request)
 	{
+		$result = null;
+		$username = $request->input('User.username', '');
 		$email = $request->input('User.email', '');
-		$result = false;
+
+		// check username
+		if(!empty($username)){
+			$user = User::where('username', $username)->first();
+			if(is_null($user) || $username == Auth::user()->username){
+				$result = 'true';
+			}
+			else{
+				$result = 'Tên đăng nhập đã có trên hệ thống, vui lòng đặt tên đăng nhập khác.';
+			}
+		}
+
+		// check email
 		if(!empty($email)){
 			$user = User::where('email', $email)->first();
-			if(is_null($user))
-				$result = true;
+			if(is_null($user) || $email == Auth::user()->email){
+				$result = 'true';
+			}
+			else{
+				$result = 'Email này đã được sử dụng.';
+			}
 		}
+
+
 		if ($request->ajax()) {
-			return response()->json(($result) ? 'true' : 'Email này đã được sử dụng.');
+			return response()->json($result);
 		}
-		return ($result) ? 'true' : 'Email này đã được sử dụng.';
+		return $result;
 	}
 
 	public function createUser(PageRequest $request)
@@ -571,8 +613,13 @@ class PageController extends Controller
 			$user->mobile_phone = strip_tags($request->input('User.mobile_phone', ''));
 			$user->home_phone = strip_tags($request->input('User.home_phone', ''));
 			$user->address = strip_tags($request->input('User.address', ''));
+			$user->province_id = $request->input('User.province_id');
+			$user->district_id = $request->input('User.district_id');
+			$user->province_id = empty($user->province_id) ? 0 : $user->province_id;
+			$user->district_id = empty($user->district_id) ? 0 : $user->district_id;
 			$user->website = strip_tags($request->input('User.website', ''));
 			$user->facebook = strip_tags($request->input('User.facebook', ''));
+			$user->username = strip_tags($request->input('User.username', ''));
 			$user->email = strip_tags($request->input('User.email', ''));
 			$user->password = Hash::make($password);
 			$user->confirmation_code = str_random(30);
@@ -634,11 +681,12 @@ class PageController extends Controller
 		//	return redirect()->route('home');
 		//}
 
-		$user = Auth::user();
-
 		$this->setMetadata('Thông tin tài khoản', 'user.profile');
+		$user = Auth::user();
+		$provinces = Province::orderBy('name')->get();
+		$districts = District::where('province_id', $user->province_id)->orderBy('name')->get();
 
-		return view('frontend.pages.profile', compact('user'));
+		return view('frontend.pages.profile', compact('user', 'provinces', 'districts'));
 	}
 
 	public function updateProfile(PageRequest $request)
@@ -652,8 +700,8 @@ class PageController extends Controller
 			$user->last_name = strip_tags($request->input('User.last_name', ''));
 			$user->first_name = strip_tags($request->input('User.first_name', ''));
 			$user->birthday = strip_tags($request->input('User.birthday', ''));
-			if ($user->birthday == null) {
-				$user->birthday = null;
+			if (empty($user->birthday)) {
+				$user->birthday = NULL;
 			}
 			else{
 				$user->birthday = DateTime::createFromFormat('d/m/Y', $user->birthday);
@@ -666,6 +714,10 @@ class PageController extends Controller
 			$user->mobile_phone = strip_tags($request->input('User.mobile_phone', ''));
 			$user->home_phone = strip_tags($request->input('User.home_phone', ''));
 			$user->address = strip_tags($request->input('User.address', ''));
+			$user->province_id = $request->input('User.province_id');
+			$user->district_id = $request->input('User.district_id');
+			$user->province_id = empty($user->province_id) ? 0 : $user->province_id;
+			$user->district_id = empty($user->district_id) ? 0 : $user->district_id;
 			$user->website = strip_tags($request->input('User.website', ''));
 			$user->facebook = strip_tags($request->input('User.facebook', ''));
 			$user->save();
@@ -768,9 +820,11 @@ class PageController extends Controller
 		});
 
 		// send email notify
-		Mail::to($cart->customer_email)
-		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new OrderCancel($cart));
+		if(!empty($cart->customer_email)){
+			Mail::to($cart->customer_email)
+			->cc(Config::getValueByKey('address_received_mail'))
+			->send(new OrderCancel($cart));
+		}
 
 		return redirect()->route('order.history')->with('status', 'Trạng thái đơn hàng đã được cập nhật.');
 	}
@@ -950,9 +1004,11 @@ class PageController extends Controller
 						$order->payment_status = 1;
 						$order->save();
 
-						Mail::to($order->customer_email)
-						->cc(Config::getValueByKey('address_received_mail'))
-						->send(new OrderPurchase($order));
+						if(!empty($order->customer_email)){
+							Mail::to($order->customer_email)
+							->cc(Config::getValueByKey('address_received_mail'))
+							->send(new OrderPurchase($order));
+						}
 
 						return redirect()->route('purchase.success')
 						->withCookie(Cookie::forget('ShoppingCartData'))
@@ -991,7 +1047,6 @@ class PageController extends Controller
 
 	public function createComment(PageRequest $request)
 	{
-
 		$comment = new Comment;
 
 		$comment->title = strip_tags($request->input('Comment.title', ''));
@@ -1005,7 +1060,28 @@ class PageController extends Controller
 		//save data comment
 		$comment->save();
 
-		return response()->json($comment->toArray());
+		//return response()->json($comment->toArray());
+		return \Redirect::to(\URL::previous() . "#product-review-container")->with('status', 'Cảm ơn nhận xét của bạn về sản phẩm!');
+	}
+
+	public function sentSMS()
+	{
+		// $phoneNumber = '0909247179';
+		// $smsMessage = 'Test sms';
+
+		// $sms_Url = env('SMS_Url', '');
+		// $sms_Username = env('SMS_Username', '');
+		// $sms_Password = env('SMS_Password', '');
+
+		// $fullUrl = $sms_Url . '?clientNo='.$sms_Username.'&clientPass='.$sms_Password.'&senderName=Sunmart&phoneNumber='.$phoneNumber.'&smsMessage='.$smsMessage.'&smsGUID=0&serviceType=0'; 
+
+		// return $fullUrl;
+
+		// $client = new \GuzzleHttp\Client();
+
+		// $client->request('GET', $sms_Url);
+		// echo $res->getStatusCode(); // 200
+		// echo $res->getBody();
 	}
 }
 

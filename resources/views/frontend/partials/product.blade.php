@@ -57,10 +57,16 @@
 		</div>
 	</div>
 </div>
-<div class="col-xs-12 col-sm-12 col-md-8 product-review">
+<div id="product-review-container" class="col-xs-12 col-sm-12 col-md-8 product-review">
 	<strong>Xin vui lòng chia sẻ đánh giá của bạn về sản phẩm này</strong><br>
 	<br>
 	<form role="form" method="POST" id="frmComment" action="{{ route('comment.create') }}">
+		@if(session('status'))
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ session('status') }}
+		</div>
+		@endif
 		<span>Nhận xét về sản phẩm này</span><br><br>
 		{{ csrf_field() }}
 		<input type="hidden" name="Comment[commentable_id]" value="{{ $product->id }}">

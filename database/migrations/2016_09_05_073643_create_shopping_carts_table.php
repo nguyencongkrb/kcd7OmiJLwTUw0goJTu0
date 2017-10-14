@@ -17,7 +17,7 @@ class CreateShoppingCartsTable extends Migration
 			$table->increments('id');
 			$table->string('code', 15)->index();
 			$table->string('customer_name', 50);
-			$table->string('customer_email', 50)->index();
+			$table->string('customer_email', 50)->nullable();
 			$table->string('customer_phone', 20)->index();
 			$table->string('customer_address', 250);
 			$table->integer('province_id');

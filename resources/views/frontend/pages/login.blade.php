@@ -24,20 +24,20 @@
 			{{ session('status') }}
 		</div>
 		@endif
-		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+		<div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
 			<label class="col-sm-4 control-label">Tên đăng nhập</label>
 			<div class="col-xs-12 col-sm-8">
 				<div class="row">
-					<input type="text" id="email" name="email" class="form-control" required>
-					@if ($errors->has('email'))
+					<input type="text" id="username" name="username" class="form-control" required>
+					@if ($errors->has('username'))
 					<span class="help-block">
-						<strong>{{ $errors->first('email') }}</strong>
+						<strong>{{ $errors->first('username') }}</strong>
 					</span>
 					@endif
 				</div>
 			</div>
 		</div>
-		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+		<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 			<label class="col-sm-4 control-label">Mật khẩu</label>
 			<div class="col-xs-12 col-sm-8">
 				<div class="row">

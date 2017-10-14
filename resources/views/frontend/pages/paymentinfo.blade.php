@@ -38,13 +38,13 @@
 				<tr>
 					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Họ và tên <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Họ và tên <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[customer_name]" value="{{ Auth::user()->getFullname() }}" placeholder="Họ và tên" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Địa chỉ người đặt hàng <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Địa chỉ người đặt hàng <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[customer_address]" value="{{ Auth::user()->address }}" placeholder="Địa chỉ người đặt hàng" required>
 							</div>
@@ -57,7 +57,7 @@
 										<select class="form-control province" name="ShoppingCart[province_id]" sub-control="shoppingcart_district" required>
 											<option value="">Tỉnh/Thành phố</option>
 											@foreach($provinces as $province)
-											<option value="{{ $province->id }}">{{ $province->name }}</option>
+											<option value="{{ $province->id }}" {{ Auth::user()->province_id == $province->id ? 'selected' : null }}>{{ $province->name }}</option>
 											@endforeach
 										</select>
 									</div>
@@ -66,13 +66,16 @@
 									<div class="row">
 										<select class="form-control" name="ShoppingCart[district_id]" id="shoppingcart_district" required>
 											<option value="">Quận/Huyện</option>
+											@foreach($districts as $district)
+											<option value="{{ $district->id }}" {{ Auth::user()->district_id == $district->id ? 'selected' : null }}>{{ $district->name }}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Di động <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" id="ShoppingCart[customer_phone]" name="ShoppingCart[customer_phone]" value="{{ Auth::user()->mobile_phone }}" placeholder="Di động" required>
 							</div>
@@ -80,7 +83,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Email</label>
 							<div class="col-sm-7">
-								<input type="email" class="form-control" name="ShoppingCart[customer_email]" value="{{ Auth::user()->email }}" placeholder="Email" required>
+								<input type="email" class="form-control" name="ShoppingCart[customer_email]" value="{{ Auth::user()->email }}" placeholder="Email">
 							</div>
 						</div>
 						<div class="form-group">
@@ -97,13 +100,13 @@
 				<tr class="shipping-form">
 					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Họ và tên người nhận <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Họ và tên người nhận <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[shipping_name]" value="{{ old('ShoppingCart[shipping_name]') }}" placeholder="Họ và tên">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Địa chỉ người nhận hàng <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Địa chỉ người nhận hàng <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[shipping_address]" value="{{ old('ShoppingCart[shipping_address]') }}" placeholder="Địa chỉ người nhận hàng">
 							</div>
@@ -116,7 +119,7 @@
 										<select class="form-control province" name="ShoppingCart[shipping_province_id]" sub-control="shoppingcart_shipping_district_id">
 											<option value="">Tỉnh/Thành phố</option>
 											@foreach($provinces as $province)
-											<option value="{{ $province->id }}">{{ $province->name }}</option>
+											<option value="{{ $province->id }}" {{ Auth::user()->province_id == $province->id ? 'selected' : null }}>{{ $province->name }}</option>
 											@endforeach
 										</select>
 									</div>
@@ -125,13 +128,16 @@
 									<div class="row">
 										<select class="form-control" name="ShoppingCart[shipping_district_id]" id="shoppingcart_shipping_district_id">
 											<option value="">Quận/Huyện</option>
+											@foreach($districts as $district)
+											<option value="{{ $district->id }}" {{ Auth::user()->district_id == $district->id ? 'selected' : null }}>{{ $district->name }}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Di động <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Di động <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" id="ShoppingCart[shipping_phone]" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
 							</div>
@@ -202,19 +208,19 @@
 				<tr class="invoice-form">
 					<td colspan="2" class="pl-0 pr-0">
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Tên công ty <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Tên công ty <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_name]" value="{{ old('ShoppingCart[invoiceInfo[company_name]]') }}" placeholder="Tên công ty">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Địa chỉ <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Địa chỉ <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_address]" value="{{ old('ShoppingCart[invoiceInfo][company_address]') }}" placeholder="Địa chỉ">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">Mã số thuế <em>(*)</em></label>
+							<label class="col-sm-5 control-label text-right">Mã số thuế <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][tax_code]" value="{{ old('ShoppingCart[invoiceInfo][tax_code]') }}" placeholder="Mã số thuế">
 							</div>

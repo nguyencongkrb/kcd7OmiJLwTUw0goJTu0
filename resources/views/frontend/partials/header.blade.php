@@ -4,7 +4,7 @@
 	<div id="topbar">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-4 pull-right text-right">
+				<div class="col-xs-12 col-sm-12 col-md-8 pull-right text-right">
 					<ul class="list-inline">
 						<li>
 							<a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>

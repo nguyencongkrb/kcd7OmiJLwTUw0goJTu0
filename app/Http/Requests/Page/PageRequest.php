@@ -21,11 +21,11 @@ class PageRequest extends FormRequest
 	{
 		return [
 			'User.email.unique' => 'Email đã được sử dụng, bạn vui lòng thử lại.',
+			'User.mobile_phone.required' => 'Vui lòng nhập số điện thoại.',
 			'User.birthday.date_format' => 'Ngày sinh không đúng định dạng.',
 			'User.password.min' => 'Mật khẩu không được ít hơn 6 ký tự.',
 			'User.password.max' => 'Mật khẩu không được nhiều hơn 60 ký tự.',
 			'User.password.confirmed' => 'Xác nhận mật khẩu không khớp.',
-			
 		];
 	}
 
@@ -49,8 +49,9 @@ class PageRequest extends FormRequest
 					//'User.last_name' => 'required',
 				'User.first_name' => 'required|userinput',
 				'User.birthday' => 'date_format:"d/m/Y"',
-				'User.email' => is_null($this->user()) ? 'required|email|unique:users,email' : 'required|email|unique:users,email,' . $this->user()->id,
-				'User.mobile_phone' => 'max:20',
+				//'User.email' => is_null($this->user()) ? 'required|email|unique:users,email' : 'required|email|unique:users,email,' . $this->user()->id,
+				'User.email' => 'email',
+				'User.mobile_phone' => 'required|max:20',
 				'User.password'  =>'required|min:6|max:60|confirmed',
 				'User.password_confirmation'=>'required|max:60'
 			];
@@ -60,8 +61,9 @@ class PageRequest extends FormRequest
 					//'User.last_name' => 'required',
 				'User.first_name' => 'required|userinput',
 				'User.birthday' => 'date_format:"d/m/Y"',
-				'User.email' => is_null($this->user()) ? 'required|email|unique:users,email' : 'required|email|unique:users,email,' . $this->user()->id,
-				'User.mobile_phone' => 'max:20',
+				//'User.email' => is_null($this->user()) ? 'required|email|unique:users,email' : 'required|email|unique:users,email,' . $this->user()->id,
+				'User.email' => 'email',
+				'User.mobile_phone' => 'required|max:20',
 			];
 			break;
 			case 'user.updatepassword':
@@ -74,7 +76,7 @@ class PageRequest extends FormRequest
 			case 'purchase':
 			$result = [
 				'ShoppingCart.customer_name'  => 'required|max:50|userinput',
-				'ShoppingCart.customer_email'  => 'required|email|max:50',
+				'ShoppingCart.customer_email'  => 'email|max:50',
 				'ShoppingCart.customer_phone'=> 'required|max:20',
 				'ShoppingCart.customer_address'=> 'required|max:250|userinput',
 				'ShoppingCart.province_id'=> 'required|integer|exists:provinces,id',

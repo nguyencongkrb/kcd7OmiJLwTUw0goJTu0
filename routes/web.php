@@ -117,22 +117,24 @@ Route::get('xac-nhan-dang-ky/{confirmationcode}', '\App\Http\Controllers\Fronten
 Route::get('dang-nhap.html', '\App\Http\Controllers\Frontend\PageController@login')->name('user.login');
 Route::get('khoi-phuc-mat-ma.html', '\App\Http\Controllers\Frontend\PageController@resetPassword')->name('user.resetpassword');
 Route::get('tao-mat-mat-moi/{token}', '\App\Http\Controllers\Frontend\PageController@resetPasswordForm')->name('user.resetpasswordform');
+Route::get('province/{province}/districts', '\App\Http\Controllers\Frontend\PageController@getDistrict')->name('province.districts');
 
 Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 {
+	Route::get('/testsms', 'PageController@sentSMS')->name('testsms');
+
 	Route::get('/', 'PageController@index')->name('home');
 
 	Route::get('lien-he.html', 'PageController@contact')->name('contact');
 	Route::post('lien-he.html', 'PageController@createContact')->name('contact.create');
 
-
-	Route::get('province/{province}/districts', 'PageController@getDistrict')->name('province.districts');
 	Route::get('deliverydetail/{province}', 'PageController@deliveryDetail')->name('delivery.detail');
 	Route::get('promotioncodes/{code}', 'PageController@promotionCodeDetail')->name('promotioncode.detail');
 
 	Route::get('gio-hang.html', 'PageController@shoppingCart')->name('shopping.cart');
 	Route::get('thong-tin-thanh-toan.html', 'PageController@paymentInfo')->name('payment.info');
-	Route::post('thong-tin-thanh-toan.html', 'PageController@purchase')->name('purchase');
+	Route::get('xac-nhan-don-hang.html', 'PageController@purchaseConfirm')->name('purchase.confirm');
+	Route::post('thanh-toan.html', 'PageController@purchase')->name('purchase');
 	Route::get('/paymentprocess/{code}', 'PageController@paymentProcess')->name('payment.process');
 	Route::get('/paymentinfo', 'PageController@getInfoPayment')->name('payment.process.info');
 	Route::get('mua-hang-thanh-cong.html', 'PageController@purchaseSuccess')->name('purchase.success');

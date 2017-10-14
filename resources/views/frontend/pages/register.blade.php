@@ -26,40 +26,14 @@
 			@endif
 			@include('frontend.partials.errors')
 		</div>
-		<div class="form-group {{ $errors->has('User[first_name]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Họ tên <em class="text-danger">*</em></label>
+		<div class="form-group {{ $errors->has('User[username]') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Tên đăng nhập <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User[first_name]') }}" placeholder="Họ tên" required>
-					@if ($errors->has('User[first_name]'))
+					<input type="text" class="form-control" id="username" name="User[username]" value="{{ old('User[username]') }}" placeholder="Tên đăng nhập" data-toggle="tooltip" data-placement="top" title="Vui lòng đặt tên tài khoản gồm số và ký tự, không có khoảng trắng và không có dấu" maxlength="50" required>
+					@if ($errors->has('User[username]'))
 					<span class="help-block">
-						<strong>{{ $errors->first('User[first_name]') }}</strong>
-					</span>
-					@endif
-				</div>
-			</div>
-		</div>
-		<div class="form-group {{ $errors->has('User[email]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Email <em class="text-danger">*</em></label>
-			<div class="col-sm-8">
-				<div class="row">
-					<input type="email" class="form-control" id="User[email]" name="User[email]" value="{{ old('User[email]') }}" placeholder="Email" required>
-					@if ($errors->has('User[email]'))
-					<span class="help-block">
-						<strong>{{ $errors->first('User[email]') }}</strong>
-					</span>
-					@endif
-				</div>
-			</div>
-		</div>
-		<div class="form-group {{ $errors->has('User[mobile_phone]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Số điện thoại</label>
-			<div class="col-sm-8">
-				<div class="row">
-					<input type="text" class="form-control" id="User[mobile_phone]" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại">
-					@if ($errors->has('User[mobile_phone]'))
-					<span class="help-block">
-						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
+						<strong>{{ $errors->first('User[username]') }}</strong>
 					</span>
 					@endif
 				</div>
@@ -91,38 +65,47 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group {{ $errors->has('User[gender]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Giới tính</label>
+		<div class="form-group {{ $errors->has('User[first_name]') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Họ tên <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<select id="gender" name="User[gender]" class="form-control">
-						<option value="">Giới tính</option>
-						<option value="0">Nữ</option>
-						<option value="1">Nam</option>
-					</select>
-					@if ($errors->has('User[gender]'))
+					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User[first_name]') }}" placeholder="Họ tên" required>
+					@if ($errors->has('User[first_name]'))
 					<span class="help-block">
-						<strong>{{ $errors->first('User[gender]') }}</strong>
+						<strong>{{ $errors->first('User[first_name]') }}</strong>
 					</span>
 					@endif
 				</div>
 			</div>
 		</div>
-		<div class="form-group {{ $errors->has('User[birthday]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Ngày sinh</label>
+		<div class="form-group {{ $errors->has('User[mobile_phone]') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Số điện thoại <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="User[birthday]" name="User[birthday]" value="{{ old('User[birthday]') }}" placeholder="dd/mm/yyyy">
-					@if ($errors->has('User[birthday]'))
+					<input type="text" class="form-control" id="User[mobile_phone]" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại" required>
+					@if ($errors->has('User[mobile_phone]'))
 					<span class="help-block">
-						<strong>{{ $errors->first('User[birthday]') }}</strong>
+						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+		</div>
+		<div class="form-group {{ $errors->has('User[email]') ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Email</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<input type="email" class="form-control" id="User[email]" name="User[email]" value="{{ old('User[email]') }}" placeholder="Email">
+					@if ($errors->has('User[email]'))
+					<span class="help-block">
+						<strong>{{ $errors->first('User[email]') }}</strong>
 					</span>
 					@endif
 				</div>
 			</div>
 		</div>
 		<div class="form-group {{ $errors->has('User[address]') ? 'has-error' : '' }}">
-			<label class="col-sm-4 control-label">Địa chỉ</label>
+			<label class="col-sm-4 control-label">Địa chỉ <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
 					<input type="text" class="form-control" id="address" name="User[address]" value="{{ old('User[address]') }}" placeholder="Địa chỉ" required>
@@ -131,6 +114,30 @@
 						<strong>{{ $errors->first('User[address]') }}</strong>
 					</span>
 					@endif
+				</div>
+			</div>
+		</div>
+		<div class="form-group {{ ($errors->has('User[province_id]') || $errors->has('User[district_id]')) ? 'has-error' : '' }}">
+			<label class="col-sm-4 control-label">Tỉnh / Huyện <em class="text-danger">*</em></label>
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="row">
+							<select class="form-control province" name="User[province_id]" sub-control="register_district" required>
+								<option value="">Tỉnh/Thành phố</option>
+								@foreach($provinces as $province)
+								<option value="{{ $province->id }}">{{ $province->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-5 pull-right">
+						<div class="row">
+							<select class="form-control" name="User[district_id]" id="register_district" required>
+								<option value="">Quận/Huyện</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -157,6 +164,13 @@
 			lang: 'vi',
 			errorClass: 'text-danger',
 			rules: {
+				'User[username]': {
+					regex: /[a-zA-Z0-9_-]+/,
+					remote: {
+						url: "/kiem-tra-nguoi-dung.html",
+						type: "post"
+					}
+				},
 				'User[email]': {
 					remote: {
 						url: "/kiem-tra-nguoi-dung.html",
@@ -167,7 +181,7 @@
 					regex: /^(01[2689]|09)[0-9]{8}$/
 				},
 				'User[password]': {
-					regex: /((?=.*\S)(?=.*[~!@#$%^&*()]).{6,60})$/
+					regex: /\S{6,60}/
 				},
 				// 'User[password_confirmation]': {
 				// 	equalTo: '#User[password]'
@@ -177,12 +191,15 @@
 				}
 			},
 			messages: {
+				'User[username]': {
+					required: 'Vui lòng nhập tên đăng nhập của bạn.'
+				},
 				'User[first_name]': {
 					required: 'Vui lòng nhập họ tên của bạn.'
 				},
 				'User[email]': {
 					required: 'Vui lòng nhập email đăng ký tài khoản.',
-					email: "Vui lòng nhập đúng định dạng email name@domain.com."
+					email: "Vui lòng nhập đúng định dạng email."
 				},
 				'User[mobile_phone]': {
 					regex: 'Vui lòng nhập số điện thoại đúng định đạng.'

@@ -77,6 +77,7 @@ class UserController extends Controller
 			$user->website = $request->input('User.website', '');
 			$user->facebook = $request->input('User.facebook', '');
 			$user->email = $request->input('User.email', '');
+			$user->username = $user->email;
 			$user->password = Hash::make(str_random(23));
 			$user->confirmation_code = str_random(30);
 			$user->type = 1;	// admin group user
@@ -153,6 +154,7 @@ class UserController extends Controller
 			$user->website = $request->input('User.website', '');
 			$user->facebook = $request->input('User.facebook', '');
 			$user->email = $request->input('User.email', '');
+			$user->username = $user->email;
 			$user->save();
 
 			if($user->id != Auth::user()->id){
@@ -267,7 +269,7 @@ class UserController extends Controller
 					try {
 						$user = new User;
 						$user->first_name = $row['ho_ten'];
-						$user->email = $row['email'];
+						$user->username = $row['username'];
 						$user->password = Hash::make($row['password']);
 
 						$user->last_name = '';
@@ -289,7 +291,7 @@ class UserController extends Controller
 							$user->roles()->attach([5]);	// nhân viên
 						}
 					} catch (Exception $e) {
-						$errorcodes = $errorcodes . ', ' . $row['email'];
+						$errorcodes = $errorcodes . ', ' . $row['username'];
 					}
 				}
 			});

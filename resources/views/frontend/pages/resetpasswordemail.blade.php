@@ -9,7 +9,7 @@
 @section('body')
 
 <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-8">
-	<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
+	<form id="frmResetPassword" class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="row">
@@ -25,7 +25,7 @@
 		</div>
 		@endif
 		<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-			<input type="email" class="form-control" id="email" name="email" placeholder="Nhập email hoặc số điện thoại của bạn!" required>
+			<input type="text" class="form-control" id="email" name="email" placeholder="Nhập email hoặc số điện thoại của bạn!" required>
 			@if ($errors->has('email'))
 			<span class="help-block">
 				<strong>{{ $errors->first('email') }}</strong>
@@ -49,4 +49,22 @@
 @endsection
 
 @section('customize.js')
+<script type="text/javascript">
+	$(document).ready(function (argument) {
+		$("#frmResetPassword").validate({
+			lang: 'vi',
+			errorClass: 'text-danger',
+			rules: {
+				'email': {
+					regex: /(^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$)|(^(01[2689]|09)[0-9]{8}$)/
+				}
+			},
+			messages: {
+				'email': {
+					regex: 'Vui lòng nhập email hoặc số điện thoại đúng định đạng.'
+				}
+			}
+		});
+	});
+</script>
 @endsection

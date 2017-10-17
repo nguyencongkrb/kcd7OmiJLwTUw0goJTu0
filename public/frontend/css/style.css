@@ -204,6 +204,9 @@ ul.categories>li:first-child>a:before, ul.categories>li.active>a:before, ul.cate
 	color: #58595b;
 	padding: 0 10px;
 }
+.products-item-price del{
+	font-size: 18px;
+}
 .products-item-price small{
 	font-size: 12px;
 	font-weight: normal;
@@ -244,6 +247,9 @@ h1.article-title{
 	font-size: 24px;
 	font-weight: bold;
 	margin: 20px 0;
+}
+.product-price del{
+	font-size: 18px;
 }
 .product-price small{
 	color:#003946;

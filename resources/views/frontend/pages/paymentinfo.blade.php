@@ -15,7 +15,7 @@
 	<li><span>3</span>Xác nhận</li>
 	<li><span>4</span>Hoàn tất</li>
 </ul>
-<form class="form-horizontal" id="fromCheckout" method="POST" action="{{ route('purchase') }}">
+<form class="form-horizontal" id="fromCheckout" method="POST" action="{{ route('purchase.confirm') }}">
 	{{ csrf_field() }}
 	<div class="row">
 		@if($errors->any())
@@ -102,13 +102,13 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Họ và tên người nhận <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[shipping_name]" value="{{ old('ShoppingCart[shipping_name]') }}" placeholder="Họ và tên">
+								<input type="text" class="form-control" name="ShoppingCart[shipping_name]" value="{{ old('ShoppingCart.shipping_name') }}" placeholder="Họ và tên">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Địa chỉ người nhận hàng <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[shipping_address]" value="{{ old('ShoppingCart[shipping_address]') }}" placeholder="Địa chỉ người nhận hàng">
+								<input type="text" class="form-control" name="ShoppingCart[shipping_address]" value="{{ old('ShoppingCart.shipping_address') }}" placeholder="Địa chỉ người nhận hàng">
 							</div>
 						</div>
 						<div class="form-group">
@@ -139,13 +139,13 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Di động <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" id="ShoppingCart[shipping_phone]" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart[shipping_phone]') }}" placeholder="Di động">
+								<input type="text" class="form-control" id="ShoppingCart[shipping_phone]" name="ShoppingCart[shipping_phone]" value="{{ old('ShoppingCart.shipping_phone') }}" placeholder="Di động">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Email</label>
 							<div class="col-sm-7">
-								<input type="email" class="form-control" name="ShoppingCart[shipping_email]" value="{{ old('ShoppingCart[shipping_email]') }}" placeholder="Email">
+								<input type="email" class="form-control" name="ShoppingCart[shipping_email]" value="{{ old('ShoppingCart.shipping_email') }}" placeholder="Email">
 							</div>
 						</div>
 					</td>
@@ -155,7 +155,7 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Ghi chú</label>
 							<div class="col-sm-7">
-								<textarea class="form-control" name="ShoppingCart[customer_note]" value="{{ old('ShoppingCart[customer_note]') }}" rows="3"></textarea>
+								<textarea class="form-control" name="ShoppingCart[customer_note]" value="{{ old('ShoppingCartcustomer_note') }}" rows="3"></textarea>
 							</div>
 							<div class="col-sm-12 text-right">
 								<em><small>Vui lòng ghi chính xác/chi tiết về địa chỉ giao hàng<br>Chúng tôi sẽ liên lạc với bạn theo thông tin trên để xác nhận giao hàng</small></em>
@@ -210,19 +210,19 @@
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Tên công ty <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_name]" value="{{ old('ShoppingCart[invoiceInfo[company_name]]') }}" placeholder="Tên công ty">
+								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_name]" value="{{ old('ShoppingCart.invoiceInfo.company_name') }}" placeholder="Tên công ty">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Địa chỉ <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_address]" value="{{ old('ShoppingCart[invoiceInfo][company_address]') }}" placeholder="Địa chỉ">
+								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][company_address]" value="{{ old('ShoppingCart.invoiceInfo.company_address') }}" placeholder="Địa chỉ">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-5 control-label text-right">Mã số thuế <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][tax_code]" value="{{ old('ShoppingCart[invoiceInfo][tax_code]') }}" placeholder="Mã số thuế">
+								<input type="text" class="form-control" name="ShoppingCart[invoiceInfo][tax_code]" value="{{ old('ShoppingCart.invoiceInfo.tax_code') }}" placeholder="Mã số thuế">
 							</div>
 						</div>
 					</td>
@@ -261,7 +261,8 @@
 					<span id="express-delivery-fee-pay">0</span> VNĐ
 					<input type="hidden" name="ShoppingCart[shipping_fee]" value="0">
 				</div>
-				<div id="promtion-template" class="hide">
+				<div id="promotion-template" class="hide">
+					<input type="hidden" name="ShoppingCart[promotionCodeTotalAmount]" value="0">
 					<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10 promotion-code-{0}">
 						<span class="glyphicon glyphicon-remove remove-promotion-code" onclick="return ketnoimoi.site.removePromotionCode('{0}');" title="Xoá mã thưởng"></span> Mã thưởng: {0}
 					</div>
@@ -385,7 +386,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-9">
 		<!-- <a class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">Xác nhận<br>mua hàng <span class="glyphicon glyphicon-play glyphicon-lg"></span></a> -->
 		<span id="shoppingcart-notify" class="text-danger"></span>
-		<button id="btnConfirmShoppingCart" type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow" id="button-confirm">
+		<button id="btnConfirmShoppingCart" type="submit" onclick="return ketnoimoi.site.validatePurchase();" class="btn btn-default btn-block btn-shopping btn-arrow">
 			Xác nhận mua hàng <span class="glyphicon glyphicon-play"></span>
 		</button>
 	</div>

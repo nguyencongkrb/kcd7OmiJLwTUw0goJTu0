@@ -63,6 +63,12 @@
 				'email': {
 					regex: 'Vui lòng nhập email hoặc số điện thoại đúng định đạng.'
 				}
+			},
+			submitHandler: function(form) {
+				if(/^(01[2689]|09)[0-9]{8}$/.test($('#email').val())){
+					$(form).attr('action', '/tao-mat-mat-moi-qua-dien-thoai');
+				}
+				$('#frmResetPassword')[0].submit();
 			}
 		});
 	});

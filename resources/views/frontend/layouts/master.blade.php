@@ -1,10 +1,10 @@
 @inject('config', '\App\Config')
 @inject('bannerCategoty', '\App\BannerCategory')
 @php
-$linkgb = '';
+$linkbg = '';
 $bg = $bannerCategoty::findByKey('banner-dang-nhap')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->first();
 if($bg)
-$linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
+$linkbg = $bg->getFirstAttachment('custom', 1920, 1280);
 @endphp
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@ $linkgb = $bg->getFirstAttachment('custom', 1920, 1280);
 
 	{!! $config->getValuebyKey('embed_script_head') !!}
 </head>
-<body class="{{ Auth::guest() ? 'loginpage' : '' }} {{ Route::currentRouteName() == 'user.register' ? 'register' : null }}" style="background-image: url('{{ Auth::guest() ? $linkgb : '' }}')">
+<body class="{{ Auth::guest() ? 'loginpage' : '' }} {{ Route::currentRouteName() == 'user.register' ? 'register' : null }}" style="background-image: url('{{ Auth::guest() ? $linkbg : null }}')">
 	@include('frontend.partials.header')
 	<section>
 		<div class="container">

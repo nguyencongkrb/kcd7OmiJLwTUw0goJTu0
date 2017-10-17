@@ -74,8 +74,9 @@ class PageController extends Controller
 			abort(404);
 		}
 
-		$site_title = $category->name;
 		$site_name = Config::getValueByKey('site_name');
+
+		$site_title = $category->name . ' | ' . $site_name;
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
 		SEOMeta::setDescription($category->meta_description);
@@ -171,8 +172,8 @@ class PageController extends Controller
 		}
 
 		// metadata
-		$site_title = $product->name;
 		$site_name = Config::getValueByKey('site_name');
+		$site_title = $product->name . ' | ' . $site_name;
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
 		SEOMeta::setDescription($product->meta_description);
@@ -218,7 +219,7 @@ class PageController extends Controller
 			abort(404);
 
 		$limit = Config::getValueByKey('rows_per_page_article');
-		$site_title = $category->name . ' | ' . Config::getValueByKey('site_title');;
+		$site_title = $category->name . ' | ' . Config::getValueByKey('site_title');
 		$site_name = Config::getValueByKey('site_name');
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
@@ -265,7 +266,7 @@ class PageController extends Controller
 		}
 
 		// metadata
-		$site_title = $article->name . ' | ' . Config::getValueByKey('site_title');;
+		$site_title = $article->name . ' | ' . Config::getValueByKey('site_title');
 		$site_name = Config::getValueByKey('site_name');
 		$facebook_page = Config::getValueByKey('facebook_page');
 		SEOMeta::setTitle($site_title);
@@ -404,7 +405,12 @@ class PageController extends Controller
 		return response()->json(['fee' => $province->getDeliveryFee($weight), 'standard_delivery_days' => $province->getStandardDeliveryTime()->format('d/m/Y'), 'express_delivery_days' => $province->getExpressDeliveryTime()->format('d/m/Y')]);
 	}
 
-	public function purchaseConfirm()
+	public function getPurchaseConfirm($value='')
+	{
+		return redirect()->route('payment.info');
+	}
+
+	public function purchaseConfirm(PageRequest $request)
 	{		
 		if (isset($_COOKIE['ShoppingCartData'])) {
 			$this->setMetadata('Xác  nhận đơn hàng', 'purchase.confirm');
@@ -417,6 +423,42 @@ class PageController extends Controller
 				array_push($cartDetails, $cartDetail);
 			}
 			$cart->cartDetails = $cartDetails;
+
+			$cart->customer_name = $request->input('ShoppingCart.customer_name', '');
+			$cart->customer_phone = $request->input('ShoppingCart.customer_phone', '');
+			$cart->customer_email = $request->input('ShoppingCart.customer_email', '');
+			$cart->customer_address = $request->input('ShoppingCart.customer_address', '');
+			$cart->province_id = $request->input('ShoppingCart.province_id');
+			$cart->district_id = $request->input('ShoppingCart.district_id');
+			$cart->shipping_address_same_order = $request->input('ShoppingCart.shipping_address_same_order', 1);
+			if(!$cart->shipping_address_same_order){
+				$cart->shipping_name = $request->input('ShoppingCart.shipping_name', '');
+				$cart->shipping_phone = $request->input('ShoppingCart.shipping_phone', '');
+				$cart->shipping_email = $request->input('ShoppingCart.shipping_email', '');
+				$cart->shipping_address = $request->input('ShoppingCart.shipping_address', '');
+				$cart->shipping_province_id = $request->input('ShoppingCart.shipping_province_id');
+				$cart->shipping_district_id = $request->input('ShoppingCart.shipping_district_id');
+			}
+			$cart->delivery_method_id = (bool)$request->input('ShoppingCart.delivery_method_id');
+			$cart->payment_method_id = $request->input('ShoppingCart.payment_method_id');
+			$cart->shipping_fee = $request->input('ShoppingCart.shipping_fee');
+			if($cart->delivery_method_id){
+				if($cart->shipping_address_same_order){
+					$cart->delivery_date = Province::findOrFail($cart->province_id)->getExpressDeliveryTime();
+				}
+				else{
+					$cart->delivery_date = Province::findOrFail($cart->shipping_province_id)->getExpressDeliveryTime();
+				}
+			}
+			else{
+				if($cart->shipping_address_same_order){
+					$cart->delivery_date = Province::findOrFail($cart->province_id)->getStandardDeliveryTime();
+				}
+				else{
+					$cart->delivery_date = Province::findOrFail($cart->shipping_province_id)->getStandardDeliveryTime();
+				}
+			}
+
 			return view('frontend.pages.purchase', compact('cart'));
 		}
 		return redirect()->route('shopping.cart');
@@ -503,6 +545,7 @@ class PageController extends Controller
 			// sync promotionCodes
 			$promotionCodes =  $request->input('ShoppingCart.promotionCodes', []);
 			$promotionCodes = array_diff($promotionCodes, array('{2}'));
+
 			if (count($promotionCodes) > 0) {
 				// validate promotionCodes
 				$ids = PromotionCode::whereIn('id', $promotionCodes)->whereColumn('quantity', '>', 'quantity_used')->whereDate('effective_date', '<=', Carbon::now())->whereDate('expiry_date', '>=', Carbon::now())->pluck('id');
@@ -519,11 +562,7 @@ class PageController extends Controller
 			->withCookie(Cookie::forget('ShoppingCartData'));
 		}
 		else{
-			if(!empty($cart->customer_email)){
-				Mail::to($cart->customer_email)
-				->cc(Config::getValueByKey('address_received_mail'))
-				->send(new OrderPurchase($cart));
-			}
+			$cart->sentNotify();
 
 			return redirect()->route('purchase.success')
 			->withCookie(Cookie::forget('ShoppingCartData'))
@@ -565,7 +604,7 @@ class PageController extends Controller
 		// check username
 		if(!empty($username)){
 			$user = User::where('username', $username)->first();
-			if(is_null($user) || $username == Auth::user()->username){
+			if(is_null($user) || (Auth::check() && $username == Auth::user()->username)){
 				$result = 'true';
 			}
 			else{
@@ -576,7 +615,7 @@ class PageController extends Controller
 		// check email
 		if(!empty($email)){
 			$user = User::where('email', $email)->first();
-			if(is_null($user) || $email == Auth::user()->email){
+			if(is_null($user) || (Auth::check() && $email == Auth::user()->email)){
 				$result = 'true';
 			}
 			else{
@@ -712,6 +751,7 @@ class PageController extends Controller
 			}
 			$user->job_title = strip_tags($request->input('User.job_title', ''));
 			$user->mobile_phone = strip_tags($request->input('User.mobile_phone', ''));
+			$user->email = strip_tags($request->input('User.email', ''));
 			$user->home_phone = strip_tags($request->input('User.home_phone', ''));
 			$user->address = strip_tags($request->input('User.address', ''));
 			$user->province_id = $request->input('User.province_id');
@@ -778,6 +818,25 @@ class PageController extends Controller
 		);
 	}
 
+	public function resetPasswordPhone(Request $request)
+	{
+		if (Auth::check()) {
+			return redirect()->route('home');
+		}
+
+		// find user by phone
+		$user = User::where('mobile_phone', $request->email)->orderBy('id', 'desc')->first();
+		if($user){
+			$password = rand(100000 , 999999);
+			$user->password = Hash::make($password);
+			$user->save();
+			$user->sentPasswordWithSMS($password);
+
+			return redirect()->back()->with('status', 'Chúng tôi đã gửi mật khẩu mới cho bạn qua điện thoại!');
+		}
+		return redirect()->back()->with('status', 'Rất tiếc! Chúng tôi không tìm thấy người dùng khớp với số điện thoại của bạn.');
+	}
+
 	public function orderHistory()
 	{
 
@@ -792,8 +851,6 @@ class PageController extends Controller
 	{
 		$code = trim($request->input('code', ''));
 		$cart = ShoppingCart::where('code', $code)->first();
-		if(is_null($cart))
-			abort(404);
 		$this->setMetadata('Đơn hàng: ' . $code, 'order.check');
 		return view('frontend.pages.orderdetail', compact('cart'));
 	}
@@ -819,12 +876,7 @@ class PageController extends Controller
 			$cart->save();
 		});
 
-		// send email notify
-		if(!empty($cart->customer_email)){
-			Mail::to($cart->customer_email)
-			->cc(Config::getValueByKey('address_received_mail'))
-			->send(new OrderCancel($cart));
-		}
+		$cart->sentNotify();
 
 		return redirect()->route('order.history')->with('status', 'Trạng thái đơn hàng đã được cập nhật.');
 	}
@@ -1003,12 +1055,7 @@ class PageController extends Controller
 						
 						$order->payment_status = 1;
 						$order->save();
-
-						if(!empty($order->customer_email)){
-							Mail::to($order->customer_email)
-							->cc(Config::getValueByKey('address_received_mail'))
-							->send(new OrderPurchase($order));
-						}
+						$order->sentNotify();
 
 						return redirect()->route('purchase.success')
 						->withCookie(Cookie::forget('ShoppingCartData'))
@@ -1062,26 +1109,6 @@ class PageController extends Controller
 
 		//return response()->json($comment->toArray());
 		return \Redirect::to(\URL::previous() . "#product-review-container")->with('status', 'Cảm ơn nhận xét của bạn về sản phẩm!');
-	}
-
-	public function sentSMS()
-	{
-		// $phoneNumber = '0909247179';
-		// $smsMessage = 'Test sms';
-
-		// $sms_Url = env('SMS_Url', '');
-		// $sms_Username = env('SMS_Username', '');
-		// $sms_Password = env('SMS_Password', '');
-
-		// $fullUrl = $sms_Url . '?clientNo='.$sms_Username.'&clientPass='.$sms_Password.'&senderName=Sunmart&phoneNumber='.$phoneNumber.'&smsMessage='.$smsMessage.'&smsGUID=0&serviceType=0'; 
-
-		// return $fullUrl;
-
-		// $client = new \GuzzleHttp\Client();
-
-		// $client->request('GET', $sms_Url);
-		// echo $res->getStatusCode(); // 200
-		// echo $res->getBody();
 	}
 }
 

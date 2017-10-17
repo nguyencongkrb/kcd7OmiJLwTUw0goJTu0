@@ -68,7 +68,7 @@ $style = [
 				<ul>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Mã đơn hàng:</span><strong>{{ $cart->code }}</strong></li>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Ngày đặt:</span><strong>{{ $cart->created_at->format('d/m/Y') }}</strong></li>
-					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Giờ đặt:</span><strong>{{ $cart->created_at->format('H:m') }}</strong></li>
+					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Giờ đặt:</span><strong>{{ $cart->created_at->format('H:i') }}</strong></li>
 				</ul>
 			</p>
 			<p style="{{ $style['paragraph'] }}">

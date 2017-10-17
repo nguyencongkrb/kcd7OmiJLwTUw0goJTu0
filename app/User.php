@@ -93,4 +93,25 @@ class User extends Authenticatable
 	{
 		return $this->belongsTo('App\District', 'district_id');
 	}
+
+	public function sentPasswordWithSMS($password)
+	{
+		$site_name = Config::getValueByKey('site_name');
+		$phoneNumber = $this->mobile_phone;
+		$smsMessage = 'Qua tang '.$site_name.' nhan duoc yeu cau thay doi mat khau cua ban. User:'.$this->username.' PW: '.$password.'. Vui long dang nhap lai va thay doi mat khau.';
+
+		if (!empty($phoneNumber) && !empty($smsMessage)) {
+			$sms_Url = env('SMS_Url', '');
+			$sms_Username = env('SMS_Username', '');
+			$sms_Password = env('SMS_Password', '');
+
+			$fullUrl = $sms_Url . '?clientNo='.$sms_Username.'&clientPass='.$sms_Password.'&senderName=Sunmart&phoneNumber='.$phoneNumber.'&smsMessage='.$smsMessage.'&smsGUID=0&serviceType=0'; 
+
+			//return $fullUrl;
+
+			$client = new \GuzzleHttp\Client();
+			$res = $client->request('GET', $fullUrl);
+			return $res->getStatusCode(); // 200
+		}
+	}
 }

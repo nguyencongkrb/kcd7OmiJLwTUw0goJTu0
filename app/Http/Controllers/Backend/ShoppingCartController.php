@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,9 +12,6 @@ use Datetime;
 use App\Config;
 use App\ShoppingCart;
 use App\Http\Requests\ShoppingCartRequest;
-use App\Mail\OrderPurchase;
-use App\Mail\OrderCancel;
-use App\Mail\OrderDelivered;
 
 class ShoppingCartController extends Controller
 {
@@ -106,12 +102,13 @@ class ShoppingCartController extends Controller
 			$cart->save();
 		});
 
-		if((int)$request->input('ShoppingCart.shopping_cart_status_id') == 1){	// huỷ đơn hàng
-			$this->sentOrderCancel($cart->id);
-		}
-		elseif ((int)$request->input('ShoppingCart.shopping_cart_status_id') == 5) {	// đã giao hàng
-			$this->sentOrderDelivered($cart->id);
-		}
+		// if((int)$request->input('ShoppingCart.shopping_cart_status_id') == 1){	// huỷ đơn hàng
+		// 	$this->sentOrderCancel($cart->id);
+		// }
+		// elseif ((int)$request->input('ShoppingCart.shopping_cart_status_id') == 5) {	// đã giao hàng
+		// 	$this->sentOrderDelivered($cart->id);
+		// }
+		$cart->sentNotify();
 	}
 
 	/**
@@ -160,29 +157,5 @@ class ShoppingCartController extends Controller
 
 		$shoppingCarts = $query->get();
 		return response()->json($shoppingCarts->toArray());
-	}
-
-	public function sentOrderPurchase($id)
-	{
-		$cart = ShoppingCart::findOrFail($id);
-		Mail::to($cart->customer_email)
-		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new OrderPurchase($cart));
-	}
-
-	public function sentOrderCancel($id)
-	{
-		$cart = ShoppingCart::findOrFail($id);
-		Mail::to($cart->customer_email)
-		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new OrderCancel($cart));
-	}
-
-	public function sentOrderDelivered($id)
-	{
-		$cart = ShoppingCart::findOrFail($id);
-		Mail::to($cart->customer_email)
-		->cc(Config::getValueByKey('address_received_mail'))
-		->send(new OrderDelivered($cart));
 	}
 }

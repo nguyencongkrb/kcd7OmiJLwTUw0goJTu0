@@ -28,6 +28,9 @@
 		<a href="{{ $product->getLink() }}">{{ $product->name }} - <span class="text-uppercase">{{ $product->code }}</span></a>
 	</div>
 	<div class="products-item-price">
+		@if($product->price > $product->getLatestPrice())
+		<del>{{ number_format($product->price, 0, ',', '.') }} <small>VNĐ</small></del>
+		@endif
 		{{ number_format($product->getLatestPrice(), 0, ',', '.') }} <small>VNĐ</small>
 		@if($product->inventory_quantity == 0)
 		<small class="label label-danger">Đã hết hàng</small>

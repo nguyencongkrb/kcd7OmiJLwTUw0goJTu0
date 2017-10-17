@@ -18,6 +18,9 @@
 <div class="col-xs-12 col-sm-12 col-md-6">
 	<div class="product-price">
 		{{ number_format($product->getLatestPrice(), 0, ',', '.') }} <small>VNĐ</small>
+		@if($product->price > $product->getLatestPrice())
+		<del>{{ number_format($product->price, 0, ',', '.') }} <small>VNĐ</small></del>
+		@endif
 	</div>
 	@if($product->inventory_quantity == 0)
 	<small class="label label-danger">Đã hết hàng</small>

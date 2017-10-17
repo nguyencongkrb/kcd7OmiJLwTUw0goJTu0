@@ -72,7 +72,7 @@ $style = [
 				<ul>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Mã đơn hàng:</span><strong>{{ $cart->code }}</strong></li>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Ngày đặt:</span><strong>{{ $cart->created_at->format('d/m/Y') }}</strong></li>
-					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Giờ đặt:</span><strong>{{ $cart->created_at->format('H:m') }}</strong></li>
+					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Giờ đặt:</span><strong>{{ $cart->created_at->format('H:i') }}</strong></li>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Người nhận:</span><strong>{{ $cart->shipping_address_same_order ? $cart->customer_name : $cart->shipping_name }}</strong></li>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Điện thoại:</span><strong>{{ $cart->shipping_address_same_order ? $cart->customer_phone : $cart->shipping_phone }}</strong></li>
 					<li style="{{ $style['purchase-order-list'] }}"><span style="{{ $style['purchase-order-list-span'] }}">Địa chỉ nhận hàng:</span><strong>{{ $cart->shipping_address_same_order ? $cart->customer_address.', '.$cart->customerDistrict->name.', '.$cart->customerProvince->name : $cart->shipping_address.', '.$cart->shippingDistrict->name.', '.$cart->shippingProvince->name }}</strong></li>

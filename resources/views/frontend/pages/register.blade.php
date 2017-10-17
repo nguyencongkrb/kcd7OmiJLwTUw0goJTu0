@@ -30,7 +30,7 @@
 			<label class="col-sm-4 control-label">Tên đăng nhập <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="username" name="User[username]" value="{{ old('User[username]') }}" placeholder="Tên đăng nhập" data-toggle="tooltip" data-placement="top" title="Vui lòng đặt tên tài khoản gồm số và ký tự, không có khoảng trắng và không có dấu" maxlength="50" required>
+					<input type="text" class="form-control" id="username" name="User[username]" value="{{ old('User.username') }}" placeholder="Tên đăng nhập" data-toggle="tooltip" data-placement="top" title="Vui lòng đặt tên tài khoản gồm số và ký tự, không có khoảng trắng và không có dấu" maxlength="50" required>
 					@if ($errors->has('User[username]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[username]') }}</strong>
@@ -69,7 +69,7 @@
 			<label class="col-sm-4 control-label">Họ tên <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User[first_name]') }}" placeholder="Họ tên" required>
+					<input type="text" class="form-control" id="first_name" name="User[first_name]" value="{{ old('User.first_name') }}" placeholder="Họ tên" required>
 					@if ($errors->has('User[first_name]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[first_name]') }}</strong>
@@ -82,7 +82,7 @@
 			<label class="col-sm-4 control-label">Số điện thoại <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="User[mobile_phone]" name="User[mobile_phone]" value="{{ old('User[mobile_phone]') }}" placeholder="Số điện thoại" required>
+					<input type="text" class="form-control" id="User[mobile_phone]" name="User[mobile_phone]" value="{{ old('User.mobile_phone') }}" placeholder="Số điện thoại" required>
 					@if ($errors->has('User[mobile_phone]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[mobile_phone]') }}</strong>
@@ -95,7 +95,7 @@
 			<label class="col-sm-4 control-label">Email</label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="email" class="form-control" id="User[email]" name="User[email]" value="{{ old('User[email]') }}" placeholder="Email">
+					<input type="email" class="form-control" id="User[email]" name="User[email]" value="{{ old('User.email') }}" placeholder="Email">
 					@if ($errors->has('User[email]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[email]') }}</strong>
@@ -108,7 +108,7 @@
 			<label class="col-sm-4 control-label">Địa chỉ <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<input type="text" class="form-control" id="address" name="User[address]" value="{{ old('User[address]') }}" placeholder="Địa chỉ" required>
+					<input type="text" class="form-control" id="address" name="User[address]" value="{{ old('User.address') }}" placeholder="Địa chỉ" required>
 					@if ($errors->has('User[address]'))
 					<span class="help-block">
 						<strong>{{ $errors->first('User[address]') }}</strong>
@@ -165,7 +165,7 @@
 			errorClass: 'text-danger',
 			rules: {
 				'User[username]': {
-					regex: /[a-zA-Z0-9_-]+/,
+					regex: /^[a-zA-Z0-9_-]+$/,
 					remote: {
 						url: "/kiem-tra-nguoi-dung.html",
 						type: "post"

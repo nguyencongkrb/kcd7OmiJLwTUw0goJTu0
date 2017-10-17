@@ -22,7 +22,7 @@ class PaymentMethodsTableSeeder extends Seeder
 			'name' => 'Thẻ ATM nội địa'
 		]);
 		PaymentMethod::create([
-			'name' => 'Chuyển Khoản'
+			'name' => 'Chuyển khoản'
 		]);
 		PaymentMethod::create([
 			'name' => 'Thanh toán sau'

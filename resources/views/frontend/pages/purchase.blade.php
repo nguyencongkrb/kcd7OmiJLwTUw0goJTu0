@@ -9,6 +9,7 @@
 @endsection
 
 @section('body')
+
 <ul class="list-inline checkout-step">
 	<li><span>1</span>Giỏ hàng</li>
 	<li><span>2</span>Thanh toán</li>
@@ -16,17 +17,17 @@
 	<li><span>4</span>Hoàn tất</li>
 </ul>
 
-<form class="form-horizontal" id="fromCheckout" method="POST" action="{{ route('purchase') }}">
+<form class="form-horizontal" method="POST" action="{{ route('purchase') }}">
 	{{ csrf_field() }}
 	<div class="row">
 		@if($errors->any())
 		<ul>
-			@foreach ($errors->all() as $error)
+			@foreach($errors->all() as $error)
 			<li>{{ $error }}</li>
 			@endforeach
 		</ul>
 		@endif
-		@if (session('status'))
+		@if(session('status'))
 		<div class="alert alert-success">
 			{{ session('status') }}
 		</div>
@@ -63,16 +64,22 @@
 							<strong>{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</strong> VNĐ
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Phí giao hàng nhanh</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
-						<div class="row">
-							0 VNĐ
-						</div>
-					</div>
 					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Tổng giá trị chiết khấu</div>
 					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
-							0 VNĐ
+							- 0 VNĐ
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Phí giao hàng nhanh</div>
+					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+						<div class="row">
+							{{ number_format($cart->shipping_fee, 0, ',', '.') }} VNĐ
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Tổng mã thuưởng</div>
+					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+						<div class="row">
+							- {{ number_format(Request::input('ShoppingCart.promotionCodeTotalAmount', 0), 0, ',', '.') }} VNĐ
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-6 col-sm-offset-2 col-md-4 col-md-offset-5 text-right pt-10">
@@ -81,7 +88,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-4 col-md-3 text-right pt-10">
 						<div class="row">
-							<strong>{{ number_format($cart->getTotalPaymentAmount(), 0, ',', '.') }}</strong> VNĐ
+							<strong>{{ number_format($cart->getTotalPaymentAmount() - Request::input('ShoppingCart.promotionCodeTotalAmount', 0), 0, ',', '.') }}</strong> VNĐ
 						</div>
 					</div>
 				</div>
@@ -98,37 +105,64 @@
 				<tr>
 					<td class="head" colspan="2">Thông tin giao hàng <a  href="{{ route('payment.info') }}" class="pull-right"><small>Thay đổi</small></a></th>
 					</tr>
+					@if($cart->shipping_address_same_order)
 					<tr>
 						<td class="no-border">Họ tên</td>
-						<td class="no-border">Lê Uy Minh</td>
+						<td class="no-border">{{ $cart->customer_name }}</td>
 					</tr>
 					<tr>
 						<td class="no-border">Địa chỉ</td>
-						<td class="no-border">11 Trần Não</td>
+						<td class="no-border">{{ $cart->customer_address }}</td>
 					</tr>
 					<tr>
 						<td class="no-border">Tỉnh/TP</td>
-						<td class="no-border">Hồ Chí Minh</td>
+						<td class="no-border">{{ $cart->customerProvince->name }}</td>
 					</tr>
 					<tr>
 						<td class="no-border">Quyện/Huyện</td>
-						<td class="no-border">Quận 2</td>
+						<td class="no-border">{{ $cart->customerDistrict->name }}</td>
 					</tr>
 					<tr>
 						<td class="no-border">Điện thoại</td>
-						<td class="no-border">0909 24 7179</td>
+						<td class="no-border">{{ $cart->customer_phone }}</td>
 					</tr>
 					<tr>
 						<td class="no-border">Email</td>
-						<td class="no-border">email@gmail.com</td>
+						<td class="no-border">{{ $cart->customer_email }}</td>
 					</tr>
+					@else
+					<tr>
+						<td class="no-border">Họ tên</td>
+						<td class="no-border">{{ $cart->shipping_name }}</td>
+					</tr>
+					<tr>
+						<td class="no-border">Địa chỉ</td>
+						<td class="no-border">{{ $cart->shipping_address }}</td>
+					</tr>
+					<tr>
+						<td class="no-border">Tỉnh/TP</td>
+						<td class="no-border">{{ $cart->shippingProvince->name }}</td>
+					</tr>
+					<tr>
+						<td class="no-border">Quyện/Huyện</td>
+						<td class="no-border">{{ $cart->shippingDistrict->name }}</td>
+					</tr>
+					<tr>
+						<td class="no-border">Điện thoại</td>
+						<td class="no-border">{{ $cart->shipping_phone }}</td>
+					</tr>
+					<tr>
+						<td class="no-border">Email</td>
+						<td class="no-border">{{ $cart->shipping_email }}</td>
+					</tr>
+					@endif
 				</table>
 
 				<table class="table table-condensed table-bordered shoppingcart">
 					<tr>
 						<td class="head">Thời gian giao hàng dự kiến</td>
 						<td class="text-center">
-							10/12/2017
+							{{ $cart->delivery_date->format('d/m/Y') }}
 						</td>
 					</tr>
 				</table>
@@ -138,27 +172,63 @@
 						<td class="head">Phương thức thanh toán<a  href="{{ route('payment.info') }}" class="pull-right"><small>Thay đổi</small></a></td>
 					</tr>
 					<tr>
-						<td class="no-border">Thanh toán khi nhận hàng</td>
+						<td class="no-border {{ $cart->payment_method_id == 1 ? null : 'text-muted' }}">Thanh toán khi nhận hàng</td>
 					</tr>
 					<tr>
-						<td class="no-border text-muted">Thẻ tín dụng</td>
+						<td class="no-border {{ $cart->payment_method_id == 2 ? null : 'text-muted' }}">Thẻ tín dụng</td>
 					</tr>
 					<tr>
-						<td class="no-border text-muted">Thẻ ATM nội địa (Internet Banking)</td>
+						<td class="no-border {{ $cart->payment_method_id == 3 ? null : 'text-muted' }}">Thẻ ATM nội địa (Internet Banking)</td>
 					</tr>
 					<tr>
-						<td class="no-border text-muted">Chuyển khoản (ATM/Ngân hàng)</td>
+						<td class="no-border {{ $cart->payment_method_id == 4 ? null : 'text-muted' }}">Chuyển khoản (ATM/Ngân hàng)</td>
 					</tr>
+					@if(Auth::user()->hasRoles('Staffs'))
+					<tr>
+						<td class="no-border {{ $cart->payment_method_id == 5 ? null : 'text-muted' }}">Thanh toán sau</td>
+					</tr>
+					@endif
 				</table>
 			</div>
 		</div>
 
 		<div class="row">				
 			<div class="col-xs-12 col-sm-4 col-sm-offset-8 col-md-2 col-md-offset-10">
-				<a class="btn btn-default btn-block btn-shopping btn-arrow">Giao hàng <span class="glyphicon glyphicon-play"></span></a>
+				<button type="submit" class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">
+			Giao hàng <span class="glyphicon glyphicon-play"></span>
+		</button>
 			</div>
 		</div>
 	</div>
+
+	<input type="hidden" name="ShoppingCart[customer_name]" value="{{ Request::input('ShoppingCart.customer_name') }}">
+	<input type="hidden" name="ShoppingCart[customer_email]" value="{{ Request::input('ShoppingCart.customer_email') }}">
+	<input type="hidden" name="ShoppingCart[customer_phone]" value="{{ Request::input('ShoppingCart.customer_phone') }}">
+	<input type="hidden" name="ShoppingCart[customer_address]" value="{{ Request::input('ShoppingCart.customer_address') }}">
+	<input type="hidden" name="ShoppingCart[province_id]" value="{{ Request::input('ShoppingCart.province_id') }}">
+	<input type="hidden" name="ShoppingCart[district_id]" value="{{ Request::input('ShoppingCart.district_id') }}">
+
+	<input type="hidden" name="ShoppingCart[shipping_address_same_order]" value="{{ Request::input('ShoppingCart.shipping_address_same_order', 1) }}">
+	<input type="hidden" name="ShoppingCart[shipping_name]" value="{{ Request::input('ShoppingCart.shipping_name') }}">
+	<input type="hidden" name="ShoppingCart[shipping_email]" value="{{ Request::input('ShoppingCart.shipping_email') }}">
+	<input type="hidden" name="ShoppingCart[shipping_phone]" value="{{ Request::input('ShoppingCart.shipping_phone') }}">
+	<input type="hidden" name="ShoppingCart[shipping_address]" value="{{ Request::input('ShoppingCart.shipping_address') }}">
+	<input type="hidden" name="ShoppingCart[shipping_province_id]" value="{{ Request::input('ShoppingCart.shipping_province_id') }}">
+	<input type="hidden" name="ShoppingCart[shipping_district_id]" value="{{ Request::input('ShoppingCart.shipping_district_id') }}">
+	
+	<input type="hidden" name="ShoppingCart[customer_note]" value="{{ Request::input('ShoppingCart.customer_note') }}">
+	<input type="hidden" name="ShoppingCart[payment_method_id]" value="{{ Request::input('ShoppingCart.payment_method_id') }}">
+	<input type="hidden" name="ShoppingCart[invoiceInfo][company_name]" value="{{ Request::input('ShoppingCart.invoiceInfo.company_name') }}">
+	<input type="hidden" name="ShoppingCart[invoiceInfo][company_address]" value="{{ Request::input('ShoppingCart.invoiceInfo.company_address') }}">
+	<input type="hidden" name="ShoppingCart[invoiceInfo][tax_code]" value="{{ Request::input('ShoppingCart.invoiceInfo.tax_code') }}">
+	<input type="hidden" name="ShoppingCart[delivery_method_id]" value="{{ Request::input('ShoppingCart.delivery_method_id') }}">
+	<input type="hidden" name="ShoppingCart[invoice_export]" value="{{ Request::input('ShoppingCart.invoice_export') }}">
+	<input type="hidden" name="ShoppingCart[shipping_fee]" value="{{ Request::input('ShoppingCart.shipping_fee') }}">
+	@foreach(Request::input('ShoppingCart.promotionCodes', []) as $item)
+	<input type="hidden" name="ShoppingCart[promotionCodes][]" value="{{ $item }}">
+	@endforeach
+
+
 </form>
 @endsection
 

@@ -122,6 +122,9 @@
 			lang: 'vi',
 			errorClass: 'text-danger',
 			rules: {
+				'User[first_name]': {
+					regex: /^[a-zA-Z ]+$/
+				},
 				'User[email]': {
 					remote: {
 						url: "/kiem-tra-nguoi-dung.html",
@@ -137,7 +140,8 @@
 			},
 			messages: {
 				'User[first_name]': {
-					required: 'Vui lòng nhập họ tên của bạn.'
+					required: 'Vui lòng nhập họ tên của bạn.',
+					regex: 'Họ tên chỉ được phép chức các ký tự a-z, A-Z và khoảng trắng.'
 				},
 				'User[email]': {
 					required: 'Vui lòng nhập email.',

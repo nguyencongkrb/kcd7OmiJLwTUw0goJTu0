@@ -851,6 +851,10 @@ class PageController extends Controller
 	{
 		$code = trim($request->input('code', ''));
 		$cart = ShoppingCart::where('code', $code)->first();
+		if(is_null($cart)){
+			return redirect()->back()->with('status_error', 'Rất tiếc! Đơn hàng bạn tìm kiếm không tồn tại.');
+		}
+
 		$this->setMetadata('Đơn hàng: ' . $code, 'order.check');
 		return view('frontend.pages.orderdetail', compact('cart'));
 	}

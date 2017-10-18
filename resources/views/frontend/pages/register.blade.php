@@ -121,7 +121,7 @@
 			<label class="col-sm-4 control-label">Tỉnh / Huyện <em class="text-danger">*</em></label>
 			<div class="col-sm-8">
 				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<div class="row">
 							<select class="form-control province" name="User[province_id]" sub-control="register_district" required>
 								<option value="">Tỉnh/Thành phố</option>
@@ -131,7 +131,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-5 pull-right">
+					<div class="col-xs-12 col-md-6 pull-right">
 						<div class="row">
 							<select class="form-control" name="User[district_id]" id="register_district" required>
 								<option value="">Quận/Huyện</option>
@@ -171,6 +171,9 @@
 						type: "post"
 					}
 				},
+				'User[first_name]': {
+					regex: /^[a-zA-Z ]+$/
+				},
 				'User[email]': {
 					remote: {
 						url: "/kiem-tra-nguoi-dung.html",
@@ -195,7 +198,8 @@
 					required: 'Vui lòng nhập tên đăng nhập của bạn.'
 				},
 				'User[first_name]': {
-					required: 'Vui lòng nhập họ tên của bạn.'
+					required: 'Vui lòng nhập họ tên của bạn.',
+					regex: 'Họ tên chỉ được phép chức các ký tự a-z, A-Z và khoảng trắng.'
 				},
 				'User[email]': {
 					required: 'Vui lòng nhập email đăng ký tài khoản.',

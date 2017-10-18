@@ -15,7 +15,7 @@
 	<li class="active"><span>4</span>Hoàn tất</li>
 </ul>
 <br><br><br>
-<p class="text-center" style="font-size: 18px;">Xin cảm ơn bạn đã đặt hàng tại <span class="text-colored">Sunmart-online.com</span></p>
+<p class="text-center" style="font-size: 18px;">Xin cảm ơn bạn đã đặt hàng tại <strong><span class="text-colored">{{ $config::getValueByKey('site_name') }}</span></strong></p>
 <br>
 <p class="text-center" style="font-size: 18px;">Đơn hàng của bạn có mã số là: <strong class="text-nowrap">
 	@if (session('status'))

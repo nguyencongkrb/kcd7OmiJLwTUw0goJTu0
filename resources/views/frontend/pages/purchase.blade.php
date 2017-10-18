@@ -172,20 +172,20 @@
 						<td class="head">Phương thức thanh toán<a  href="{{ route('payment.info') }}" class="pull-right"><small>Thay đổi</small></a></td>
 					</tr>
 					<tr>
-						<td class="no-border {{ $cart->payment_method_id == 1 ? null : 'text-muted' }}">Thanh toán khi nhận hàng</td>
+						<td class="no-border {{ $cart->payment_method_id == 1 ? null : 'text-ccc' }}">Thanh toán khi nhận hàng</td>
 					</tr>
 					<tr>
-						<td class="no-border {{ $cart->payment_method_id == 2 ? null : 'text-muted' }}">Thẻ tín dụng</td>
+						<td class="no-border {{ $cart->payment_method_id == 2 ? null : 'text-ccc' }}">Thẻ tín dụng</td>
 					</tr>
 					<tr>
-						<td class="no-border {{ $cart->payment_method_id == 3 ? null : 'text-muted' }}">Thẻ ATM nội địa (Internet Banking)</td>
+						<td class="no-border {{ $cart->payment_method_id == 3 ? null : 'text-ccc' }}">Thẻ ATM nội địa (Internet Banking)</td>
 					</tr>
 					<tr>
-						<td class="no-border {{ $cart->payment_method_id == 4 ? null : 'text-muted' }}">Chuyển khoản (ATM/Ngân hàng)</td>
+						<td class="no-border {{ $cart->payment_method_id == 4 ? null : 'text-ccc' }}">Chuyển khoản (ATM/Ngân hàng)</td>
 					</tr>
 					@if(Auth::user()->hasRoles('Staffs'))
 					<tr>
-						<td class="no-border {{ $cart->payment_method_id == 5 ? null : 'text-muted' }}">Thanh toán sau</td>
+						<td class="no-border {{ $cart->payment_method_id == 5 ? null : 'text-ccc' }}">Thanh toán sau</td>
 					</tr>
 					@endif
 				</table>
@@ -195,7 +195,7 @@
 		<div class="row">				
 			<div class="col-xs-12 col-sm-4 col-sm-offset-8 col-md-2 col-md-offset-10">
 				<button type="submit" class="btn btn-default btn-block btn-shopping btn-arrow" onclick="return ketnoimoi.site.cart.purchase();">
-			Giao hàng <span class="glyphicon glyphicon-play"></span>
+			Hoàn tất <span class="glyphicon glyphicon-play"></span>
 		</button>
 			</div>
 		</div>

@@ -97,6 +97,10 @@
 	footer .register-trade{
 		padding: 15px 0;
 	}
+	.content-overlay,
+	.content-details{
+		display: none;
+	}
 }
 @media (min-width: 768px) {
 	table.shoppingcart input.quantity{

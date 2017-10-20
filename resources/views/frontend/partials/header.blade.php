@@ -60,13 +60,13 @@
 		</div>
 	</nav>
 	<div class="container hidden-md hidden-lg">
-		<div class="list-group">
-			<a href="/" class="list-group-item {{ Route::currentRouteName() == 'home' ? 'active' : null }}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a>
-			<a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'gioi-thieu']) }}" class="list-group-item {{ Request::is('ve-chung-toi/gioi-thieu.html') ? 'active' : null }}"><span class="glyphicon glyphicon-star"></span> Giới thiệu</a>
-			<a href="{{ route('articles', ['categorykey' => 'kien-thuc-qua-tang']) }}" class="list-group-item {{ Request::is('kien-thuc-qua-tang*') ? 'active' : null }}"><span class="glyphicon glyphicon-star"></span> Kiến thức quà tặng</a>
-			<a href="{{ route('articles', ['categorykey' => 'khuyen-mai']) }}" class="list-group-item {{ Request::is('khuyen-mai*') ? 'active' : null }}"><span class="glyphicon glyphicon-star"></span> Khuyến mãi</a>
-			<a href="{{ route('contact') }}" class="list-group-item {{ Request::is('lien-he.html') ? 'active' : null }}"><span class="glyphicon glyphicon-star"></span> Liên hệ</a>
-			<a href="{{ route('order.check') }}" class="list-group-item {{ Request::is('kiem-tra-don-hang.html') ? 'active' : null }}"><span class="glyphicon glyphicon-star"></span> Kiểm tra đơn hàng</a>
+		<div class="list-group text-uppercase">
+			<a href="/" class="list-group-item {{ Route::currentRouteName() == 'home' ? 'active' : null }}">Trang chủ</a>
+			<a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'gioi-thieu']) }}" class="list-group-item {{ Request::is('ve-chung-toi/gioi-thieu.html') ? 'active' : null }}">Giới thiệu</a>
+			<a href="{{ route('articles', ['categorykey' => 'kien-thuc-qua-tang']) }}" class="list-group-item {{ Request::is('kien-thuc-qua-tang*') ? 'active' : null }}">Kiến thức quà tặng</a>
+			<a href="{{ route('articles', ['categorykey' => 'khuyen-mai']) }}" class="list-group-item {{ Request::is('khuyen-mai*') ? 'active' : null }}">Khuyến mãi</a>
+			<a href="{{ route('contact') }}" class="list-group-item {{ Request::is('lien-he.html') ? 'active' : null }}">Liên hệ</a>
+			<a href="{{ route('order.check') }}" class="list-group-item {{ Request::is('kiem-tra-don-hang.html') ? 'active' : null }}">Kiểm tra đơn hàng</a>
 		</div>
 	</div>
 	@endif

@@ -11,7 +11,7 @@
 @endsection
 
 @section('body')
-<div class="col-sm-4 col-md-4 col-md-offset-4">
+<div class="col-sm-12 col-md-4 col-md-offset-4">
 	<h1 class="article-title">Trạng thái đơn hàng</h1>
 	<form role="form" id="frmCheckOrder" method="GET" action="{{ route('order.detail') }}">
 		@if(session('status_error'))

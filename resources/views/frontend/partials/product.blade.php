@@ -31,11 +31,11 @@
 	</div>
 	<div class="product-action">
 		<div class="row">
-			<div class="col-xs-6 col-sm-12 col-md-4">
+			<div class="col-xs-6 col-sm-6 col-md-4">
 				<button class="btn btn-default btn-block add-to-cart quick-add-to-cart go-payment" type="button" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}" {{ $product->inventory_quantity == 0 ? 'disabled' : null }}>Mua ngay</button>
 				<a href="{{ route('article', ['categorykey' => 'huong-dan', 'key' => 'phuong-thuc-dat-hang']) }}"><span>(Xem phương thức mua hàng)</span></a>
 			</div>
-			<div class="col-xs-6 col-sm-12 col-md-4 text-center">
+			<div class="col-xs-6 col-sm-6 col-md-4 text-center">
 				<button class="btn btn-default goshoppingcart btn-block add-to-cart quick-add-to-cart" type="button" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}" {{ $product->inventory_quantity == 0 ? 'disabled' : null }}>
 					<img src="/frontend/images/icon_shoppingcart2.png" alt="Thêm vào giỏ hàng">
 				</button>

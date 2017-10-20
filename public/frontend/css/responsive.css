@@ -17,7 +17,7 @@
 	.support{
 		margin-top: 0;
 		margin-bottom: 10px;
-		width: 100%;
+		width: 90%;
 	}
 	.support a{
 		text-align: left;
@@ -47,8 +47,18 @@
 	ul.categories>li:hover + li>a:before { 
 		content:"|";
 	}
+	.product-description{
+		padding-top: 20px;
+	}
 	.product-description .nav-tabs>li>a{
-		font-size: 16px;
+		font-size: 14px;
+		padding: 10px;
+	}
+	.product-description .tab-pane{
+		padding: 35px 0;
+	}
+	.product-review{
+		padding: 23px 15px;
 	}
 	.payment-method{
 		min-height: 225px;
@@ -56,6 +66,10 @@
 	#btnDeliveryAndPayment{
 		padding-right: 0;
 		padding-left: 0;
+	}
+	span.payment-method-sub{
+		display: block;
+		min-height: 170px;
 	}
 	body.loginpage form input.verifycode{
 		margin-top: 5px;

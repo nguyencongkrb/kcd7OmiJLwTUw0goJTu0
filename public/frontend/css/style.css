@@ -272,7 +272,7 @@ h1.article-title{
 .product-action button{
 	border: none;
 	border-radius: 0;
-	padding: 0 35px;
+	padding: 0;
 	text-transform: uppercase;
 	font-size: 18px;
 	color: #003946;
@@ -404,8 +404,8 @@ body.loginpage {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;*/
-	background: url('/frontend/images/bg_login.jpg');
+	background-size: cover;
+	background: url('/frontend/images/bg_login.jpg');*/
 	background-repeat: no-repeat;
 	background-position: left center;
 	background-size: 70%;

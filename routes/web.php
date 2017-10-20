@@ -163,13 +163,13 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::get('san-pham.html', 'PageController@products')->name('allproducts');
 
 	// products producer
-	Route::get('nha-san-xuat/{key}', 'PageController@producer')->name('producer');
+	//Route::get('nha-san-xuat/{key}', 'PageController@producer')->name('producer');
 
 	// articles category
-	Route::get('{key}', 'PageController@articles')->name('articles');
+	//Route::get('{key}', 'PageController@articles')->name('articles');
 
 	// article detail
-	Route::get('{categorykey}/{key}.html', 'PageController@article')->name('article');
+	//Route::get('{categorykey}/{key}.html', 'PageController@article')->name('article');
 });
-//Route::get('{key}', '\App\Http\Controllers\Frontend\PageController@articles')->name('articles');
-//Route::get('{categorykey}/{key}.html', '\App\Http\Controllers\Frontend\PageController@articles')->name('article');
+Route::get('{key}', '\App\Http\Controllers\Frontend\PageController@articles')->name('articles');
+Route::get('{categorykey}/{key}.html', '\App\Http\Controllers\Frontend\PageController@article')->name('article');

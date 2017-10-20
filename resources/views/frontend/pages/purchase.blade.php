@@ -58,35 +58,38 @@
 			</table>
 			<div class="col-xs-12 col-sm-9 col-sm-push-3 col-md-9 col-md-push-3">
 				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Trị giá hàng hoá</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Trị giá hàng hoá</div>
+					<div class="col-xs-4 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
 							<strong>{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</strong> VNĐ
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Tổng giá trị chiết khấu</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+					<div class="clearfix"></div>
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Tổng giá trị chiết khấu</div>
+					<div class="col-xs-4 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
 							- 0 VNĐ
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Phí giao hàng nhanh</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+					<div class="clearfix"></div>
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Phí giao hàng nhanh</div>
+					<div class="col-xs-4 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
 							{{ number_format($cart->shipping_fee, 0, ',', '.') }} VNĐ
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pt-10">Tổng mã thuưởng</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pt-10">
+					<div class="clearfix"></div>
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Tổng mã thuưởng</div>
+					<div class="col-xs-4 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
 							- {{ number_format(Request::input('ShoppingCart.promotionCodeTotalAmount', 0), 0, ',', '.') }} VNĐ
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-sm-offset-2 col-md-4 col-md-offset-5 text-right pt-10">
+					<div class="col-xs-8 col-sm-6 col-sm-offset-2 col-md-4 col-md-offset-5 text-right pt-10">
 						<strong>Trị giá đơn hàng</strong><br>
 						<small>(Đã bao gồm VAT)</small>
 					</div>
-					<div class="col-xs-6 col-sm-4 col-md-3 text-right pt-10">
+					<div class="col-xs-4 col-sm-4 col-md-3 text-right pt-10">
 						<div class="row">
 							<strong>{{ number_format($cart->getTotalPaymentAmount() - Request::input('ShoppingCart.promotionCodeTotalAmount', 0), 0, ',', '.') }}</strong> VNĐ
 						</div>

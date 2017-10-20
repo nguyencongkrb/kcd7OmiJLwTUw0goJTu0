@@ -81,10 +81,9 @@
 				<div class="col-xs-12 col-sm-12 col-md-6">
 					CÔNG TY TNHH THƯƠNG MẠI ĐẦU TƯ ÁNH SAO<br>
 					GIẤY CNĐKKD: 0311416956 - Ngày cấp: 15/12/2011.<br>
-					Copyright &copy; 2017 AS Group. All Rights Reserved.
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 text-center">
-					<br><br>
+				<div class="col-xs-12 col-sm-12 col-md-6">
+					Copyright &copy; 2017 AS Group. All Rights Reserved.<br>
 					Online: <strong>513</strong> - Truy cập: <strong>1003</strong> - Tổng truy cập: <strong>34237</strong>
 				</div>
 			</div>

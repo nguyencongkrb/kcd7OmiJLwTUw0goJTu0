@@ -50,7 +50,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">&nbsp;</label>
+							<label class="col-sm-5 control-label text-right">Tỉnh/Huyện <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<div class="col-md-6">
 									<div class="row">
@@ -112,7 +112,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right">&nbsp;</label>
+							<label class="col-sm-5 control-label text-right">Tỉnh/Huyện <em class="text-danger">*</em></label>
 							<div class="col-sm-7">
 								<div class="col-md-6">
 									<div class="row">
@@ -252,21 +252,23 @@
 				@endforeach
 			</table>
 			<div class="row">
-				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Trị giá hàng hoá</div>
-				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10"><strong><span class="total-amount">{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</span></strong> VNĐ</div>
-				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Chiết khấu theo chương trình</div>
-				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10">0 VNĐ</div>
-				<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10">Phí giao hàng nhanh</div>
-				<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10">
+				<div class="col-xs-8 col-sm-6 col-md-9 text-right pb-10">Trị giá hàng hoá</div>
+				<div class="col-xs-4 col-sm-6 col-md-3 text-right pb-10"><strong><span class="total-amount">{{ number_format($cart->getTotalAmount(), 0, ',', '.') }}</span></strong> VNĐ</div>
+				<div class="col-xs-8 col-sm-6 col-md-9 text-right pb-10">Chiết khấu theo chương trình</div>
+				<div class="col-xs-4 col-sm-6 col-md-3 text-right pb-10">0 VNĐ</div>
+				<div class="clearfix"></div>
+				<div class="col-xs-8 col-sm-6 col-md-9 text-right pb-10">Phí giao hàng nhanh</div>
+				<div class="col-xs-4 col-sm-6 col-md-3 text-right pb-10">
 					<span id="express-delivery-fee-pay">0</span> VNĐ
 					<input type="hidden" name="ShoppingCart[shipping_fee]" value="0">
 				</div>
+				<div class="clearfix"></div>
 				<div id="promotion-template" class="hide">
 					<input type="hidden" name="ShoppingCart[promotionCodeTotalAmount]" value="0">
-					<div class="col-xs-6 col-sm-6 col-md-9 text-right pb-10 promotion-code-{0}">
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pb-10 promotion-code-{0}">
 						<span class="glyphicon glyphicon-remove remove-promotion-code" onclick="return ketnoimoi.site.removePromotionCode('{0}');" title="Xoá mã thưởng"></span> Mã thưởng: {0}
 					</div>
-					<div class="col-xs-6 col-sm-6 col-md-3 text-right pb-10 promotion-code-{0}">
+					<div class="col-xs-4 col-sm-6 col-md-3 text-right pb-10 promotion-code-{0}">
 						- {1} VNĐ
 						<input type="hidden" name="ShoppingCart[promotionCodes][]" value="{2}">
 					</div>
@@ -302,37 +304,47 @@
 				<tr>
 					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="pl-0">
 						<div class="text-center payment-method active" data-tab="payment-method-info-1">
-							<strong>Thanh toán<br>khi nhận hàng</strong><br>
-							<img src="/frontend/images/cash.png" alt="cod"><br>
+							<span class="payment-method-sub">
+								<strong>Thanh toán<br>khi nhận hàng</strong><br>
+								<img src="/frontend/images/cash.png" alt="cod"><br>
+							</span>
 							<input type="radio" value="1" name="ShoppingCart[payment_method_id]" checked>
 						</div>
 					</td>
 					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
 						<div class="text-center payment-method" data-tab="payment-method-info-2">
-							<strong>Thẻ tín dụng</strong><br><br>
-							<img src="/frontend/images/credit.png" alt="credit"><br>
+							<span class="payment-method-sub">
+								<strong>Thẻ tín dụng</strong><br><br>
+								<img src="/frontend/images/credit.png" alt="credit"><br>
+							</span>
 							<input type="radio" value="2" name="ShoppingCart[payment_method_id]">
 						</div>
 					</td>
 					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;">
 						<div class="text-center payment-method" data-tab="payment-method-info-3">
-							<strong>Thẻ ATM nội địa</strong><br>(Internet banking)
-							<img src="/frontend/images/atm.png" alt="atm"><br>
+							<span class="payment-method-sub">
+								<strong>Thẻ ATM nội địa</strong><br>(Internet banking)
+								<img src="/frontend/images/atm.png" alt="atm"><br>
+							</span>
 							<input type="radio" value="3" name="ShoppingCart[payment_method_id]">
 						</div>
 					</td>
 					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="{{ Auth::user()->hasRoles('Staffs') ? '' : 'pr-0' }}">
 						<div class="text-center payment-method" data-tab="payment-method-info-4">
-							<strong>Chuyển khoản</strong><br>(ATM / Ngân hàng)<br>
-							<img src="/frontend/images/bank.png" alt="bank"><br>
+							<span class="payment-method-sub">
+								<strong>Chuyển khoản</strong><br>(ATM / Ngân hàng)<br>
+								<img src="/frontend/images/bank.png" alt="bank"><br>
+							</span>
 							<input type="radio" value="4" name="ShoppingCart[payment_method_id]">
 						</div>
 					</td>
 					@if(Auth::user()->hasRoles('Staffs'))
 					<td style="width: {{ Auth::user()->hasRoles('Staffs') ? 20 : 25 }}%; vertical-align: top;" class="pr-0">
 						<div class="text-center payment-method" data-tab="payment-method-info-5">
-							<strong>Thanh toán sau</strong><br>(Dành cho nhân viên)<br>
-							<img src="/frontend/images/nhanvien.png" alt="nhanvien"><br>
+							<span class="payment-method-sub">
+								<strong>Thanh toán sau</strong><br>(Dành cho nhân viên)<br>
+								<img src="/frontend/images/nhanvien.png" alt="nhanvien"><br>
+							</span>
 							<input type="radio" value="5" name="ShoppingCart[payment_method_id]">
 						</div>
 					</td>

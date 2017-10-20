@@ -3,7 +3,7 @@
 @php
 $linkbg = '';
 $bg = $bannerCategoty::findByKey('banner-dang-nhap')->first()->banners()->where('published', 1)->orderBy('id', 'desc')->first();
-if($bg)
+if($bg && Route::currentRouteName() != 'article')
 $linkbg = $bg->getFirstAttachment('custom', 1920, 1280);
 @endphp
 

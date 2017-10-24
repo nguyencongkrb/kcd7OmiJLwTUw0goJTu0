@@ -8,3 +8,11 @@
 #modalEntry .modal-dialog{
 	width: 80%;
 }
+.invoice{
+	margin-bottom: 0;
+}
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}

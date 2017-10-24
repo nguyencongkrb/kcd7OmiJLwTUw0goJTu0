@@ -221,16 +221,14 @@
 			
 			<!-- Main content -->
 			<section class="content">
-
 				@yield('content')
-
 			</section>
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
 
 		<!-- Main Footer -->
-		<footer class="main-footer">
+		<footer class="main-footer no-print">
 			<!-- To the right -->
 			<div class="pull-right hidden-xs">
 				Phát triển bởi <a href="http://ketnoimoi.com" target="_blank">ketnoimoi.com</a>

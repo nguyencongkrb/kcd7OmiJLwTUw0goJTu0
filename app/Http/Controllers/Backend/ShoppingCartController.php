@@ -54,7 +54,8 @@ class ShoppingCartController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		$cart = ShoppingCart::findOrFail($id);
+		return view('backend.shoppingcarts.show', compact('cart'));
 	}
 
 	/**
@@ -130,14 +131,14 @@ class ShoppingCartController extends Controller
 		$status = $request->input('status', 0);
 		$payment_status = $request->input('payment_status', '');
 
-		$query = ShoppingCart::with('status', 'paymentMethod');
+		$query = ShoppingCart::with('status', 'paymentMethod', 'userCreated');
 
 		if ($fromDate != '') {
-			$query->where('created_at', '>=', DateTime::createFromFormat('d/m/Y', $fromDate));
+			$query->where('created_at', '>=', DateTime::createFromFormat('d/m/Y H:i:s', $fromDate.' 00:00:00'));
 		}
 
 		if ($toDate != '') {
-			$query->where('created_at', '<=', DateTime::createFromFormat('d/m/Y', $toDate));
+			$query->where('created_at', '<=', DateTime::createFromFormat('d/m/Y H:i:s', $toDate.' 23:59:59'));
 		}
 
 		if ($status > 0) {

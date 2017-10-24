@@ -90,6 +90,21 @@
 		<li class="{{ Request::is('backend/tag*') ? 'active' : null }} hide"><a href="{{ route('tags.index') }}"><i class="fa fa-tags" aria-hidden="true"></i> <span>Tag</span></a></li>
 		<li class="{{ Request::is('backend/testimonials*') ? 'active' : null }} hide"><a href="{{ route('testimonials.index') }}"><i class="fa fa-comments" aria-hidden="true"></i> <span>Nhận xét khách hàng</span></a></li>
 		<li class="{{ Request::is('backend/additionalvalues*') ? 'active' : null }} hide"><a href="{{ route('additionalvalues.index') }}"><i class="fa fa-object-group" aria-hidden="true"></i> <span>Giá trị bổ sung</span></a></li>
+		<li class="treeview {{ Request::is('backend/reports*') ? 'active' : null }}">
+			<a href="#"><i class="fa fa-pie-chart" aria-hidden="true"></i> <span>Thống kê</span>
+				<span class="pull-right-container">
+					<i class="fa fa-angle-left pull-right" aria-hidden="true"></i>
+				</span>
+			</a>
+			<ul class="treeview-menu">
+				<li class="{{ Route::currentRouteName() == 'reports.sales' ? 'active' : null }}"><a href="{{ route('reports.sales') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Mua hàng</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbycategory' ? 'active' : null }} hide"><a href="{{ route('reports.salesbycategory') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo danh mục</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbyproduct' ? 'active' : null }}"><a href="{{ route('reports.salesbyproduct') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo sản phẩm</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbypaymentmethod' ? 'active' : null }}"><a href="{{ route('reports.salesbypaymentmethod') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Phương thức thanh toán</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbyprovince' ? 'active' : null }}"><a href="{{ route('reports.salesbyprovince') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Tỉnh thành</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.inventory' ? 'active' : null }}"><a href="{{ route('reports.inventory') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Tồn kho</a></li>
+			</ul>
+		</li>
 		@can('create', App\User::class)
 		<li class="treeview {{ Request::is('backend/user*') ? 'active' : null }}">
 			<a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span>Người dùng</span>

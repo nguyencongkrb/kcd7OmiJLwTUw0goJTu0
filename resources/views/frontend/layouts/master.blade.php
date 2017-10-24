@@ -13,6 +13,7 @@ $linkbg = $bg->getFirstAttachment('custom', 1920, 1280);
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<link rel="icon" type="image/png" href="/frontend/images/favicon.png" />
 	{!! SEOMeta::generate() !!}

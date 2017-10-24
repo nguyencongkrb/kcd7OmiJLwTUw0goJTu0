@@ -9,7 +9,7 @@ class PaymentMethod extends Model
 	protected $fillable = ['name'];
 	public $timestamps = false;
 
-	public function shoppingcarts()
+	public function shoppingCarts()
 	{
 		return $this->hasMany('App\ShoppingCart');
 	}

@@ -67,7 +67,7 @@ ketnoimoi.shoppingcarts.index = {
 				className: 'text-center',
 				render: function (data, type, row) {
 					if (type === 'display') {
-						return $.format('<a href="/chi-tiet-don-hang.html?code={0}" target="_blank">{0}</a>', data);
+						return $.format('<a href="/backend/shoppingcarts/{0}">{1}</a>', row.id, data);
 					}
 					return data;
 				}
@@ -81,6 +81,9 @@ ketnoimoi.shoppingcarts.index = {
 					}
 					return data;
 				}
+			},
+			{ 
+				data: 'user_created.username'
 			},
 			{ 
 				data: 'customer_name'

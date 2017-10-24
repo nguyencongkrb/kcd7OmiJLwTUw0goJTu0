@@ -106,7 +106,7 @@ class PageController extends Controller
 		OpenGraph::addProperty('image:height', 628);
 
 		$limit = Config::getValueByKey('rows_per_page_product');
-		$products = $category->products()->where('published', 1)->orderBy('id', 'desc')->paginate($limit);
+		$products = $category->products()->where('published', 1)->orderBy('priority', 'desc')->paginate($limit);
 
 		return view('frontend.pages.products', compact('category', 'products'));
 	}
@@ -151,7 +151,7 @@ class PageController extends Controller
 		*/
 
 		$limit = Config::getValueByKey('rows_per_page_product');
-		$products = $producer->products()->where('published', 1)->orderBy('id', 'desc')->paginate($limit);
+		$products = $producer->products()->where('published', 1)->orderBy('priority', 'desc')->paginate($limit);
 
 		return view('frontend.pages.products', compact('producer', 'products'));
 	}
@@ -204,7 +204,7 @@ class PageController extends Controller
 		// end metadata
 
 		// related products
-		$relatedProducts = $product->relatedProducts()->where('published', 1)->take(6)->get();
+		$relatedProducts = $product->relatedProducts()->where('published', 1)->orderBy('priority', 'desc')->take(6)->get();
 
 		return view('frontend.pages.product',compact('product', 'relatedProducts'));
 		
@@ -336,7 +336,7 @@ class PageController extends Controller
 			$query->orderBy($orderBy[0], $orderBy[1]);
 		}
 
-		$products = $query->orderBy('id', 'desc')->orderBy('id', 'desc')->paginate($limit);
+		$products = $query->orderBy('id', 'desc')->orderBy('priority', 'desc')->paginate($limit);
 		return view('frontend.pages.search', compact('products'));
 	}
 

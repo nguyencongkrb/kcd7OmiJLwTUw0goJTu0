@@ -104,6 +104,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 
 	Route::post('shoppingcartstatuses/filter', 'ShoppingCartStatusController@filter')->name('shoppingcartstatuses.filter');
 	Route::resource('shoppingcartstatuses', 'ShoppingCartStatusController');
+
+	Route::get('reports/sales', 'ReportController@sales')->name('reports.sales');
+	Route::get('reports/salesbycategory', 'ReportController@salesByCategory')->name('reports.salesbycategory');
+	Route::get('reports/salesbyproduct', 'ReportController@salesByProduct')->name('reports.salesbyproduct');
+	Route::get('reports/salesbypaymentmethod', 'ReportController@salesByPaymentMethod')->name('reports.salesbypaymentmethod');
+	Route::get('reports/salesbyprovince', 'ReportController@salesByProvince')->name('reports.salesbyprovince');
+	Route::get('reports/inventory', 'ReportController@inventory')->name('reports.inventory');
+	Route::resource('reports', 'ReportController');
 });
 
 

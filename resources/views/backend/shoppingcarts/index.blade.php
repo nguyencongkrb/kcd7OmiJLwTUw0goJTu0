@@ -66,6 +66,7 @@
 								<th>#</th>
 								<th>Mã đơn hàng</th>
 								<th class="text-center">Ngày đặt</th>
+								<th>User đặt hàng</th>
 								<th>Họ tên</th>
 								<th>Số điện thoại</th>
 								<th class="text-right">Thành tiền</th>
@@ -103,13 +104,13 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+</div>
+@endsection
 
-	@endsection
+@section('plugins.js')
 
-	@section('plugins.js')
+@endsection
 
-	@endsection
-
-	@section('javascript.customize')
-	<script src="/backend/js/shoppingcarts/ketnoimoi.shoppingcarts.index.js" type="text/javascript"></script>
-	@endsection
+@section('javascript.customize')
+<script src="/backend/js/shoppingcarts/ketnoimoi.shoppingcarts.index.js" type="text/javascript"></script>
+@endsection

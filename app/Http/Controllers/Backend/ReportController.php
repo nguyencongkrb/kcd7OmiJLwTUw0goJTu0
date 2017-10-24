@@ -11,6 +11,7 @@ use App\PaymentMethod;
 use App\Province;
 use DB;
 use DateTime;
+use Excel;
 use App\Http\Requests\ReportRequest;
 
 class ReportController extends Controller
@@ -129,6 +130,18 @@ class ReportController extends Controller
 		//tong doanh thu
 		$totalPaidAmount = $orders->where('shopping_cart_status_id', '<>', 1)->where('payment_status', 1)->sum('total_payment_amount');
 
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke mua hang', function($excel) use($totalOrder, $totalOrderCancel, $avgProduct, $avgAmount, $totalAmount, $totalPaidAmount) {
+				// Set the title
+				$excel->setTitle('Thong ke mua hang');
+				$excel->sheet('Thong ke mua hang', function($sheet) use($totalOrder, $totalOrderCancel, $avgProduct, $avgAmount, $totalAmount, $totalPaidAmount) {
+					$sheet->loadView('backend.reports.salesexport', compact('totalOrder', 'totalOrderCancel', 'avgProduct', 'avgAmount', 'totalAmount', 'totalPaidAmount'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return view('backend.reports.sales', compact('totalOrder', 'totalOrderCancel', 'totalAmount', 'avgProduct', 'avgAmount', 'totalPaidAmount'));
 	}
 
@@ -150,6 +163,18 @@ class ReportController extends Controller
 			->select(DB::raw('products.id, product_translations.name, sum(shopping_cart_details.quantity) as total_quantity, sum(shopping_cart_details.product_price) as total_amount'))
 			->get();
 
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke doanh so theo san pham', function($excel) use($results) {
+				// Set the title
+				$excel->setTitle('Thong ke doanh so theo san pham');
+				$excel->sheet('Thong ke doanh so theo san pham', function($sheet) use($results) {
+					$sheet->loadView('backend.reports.salesbyproductexport', compact('results'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return view('backend.reports.salesbyproduct', compact('results'));
 	}
 
@@ -164,6 +189,18 @@ class ReportController extends Controller
 		foreach ($paymentMethods as $method) {
 			$totalOrder += $method->shoppingCarts->count();
 			$totalAmount += $method->shoppingCarts->sum('total_payment_amount');
+		}
+
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke theo phuong thuc thanh toan', function($excel) use ($paymentMethods, $totalOrder, $totalAmount) {
+				// Set the title
+				$excel->setTitle('Thong ke theo phuong thuc thanh toan');
+				$excel->sheet('Phuong thuc thanh toan', function($sheet) use ($paymentMethods, $totalOrder, $totalAmount) {
+					$sheet->loadView('backend.reports.paymentmethodsexport', compact('paymentMethods', 'totalOrder', 'totalAmount'));
+
+				});
+			})->download('xlsx');
 		}
 
 		return view('backend.reports.paymentmethods', compact('paymentMethods', 'totalOrder', 'totalAmount'));
@@ -182,12 +219,37 @@ class ReportController extends Controller
 			$totalAmount += $province->shoppingCarts->sum('total_payment_amount');
 		}
 
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke don hang theo tinh thanh', function($excel) use ($provinces, $totalOrder, $totalAmount) {
+				// Set the title
+				$excel->setTitle('Thong ke don hang theo tinh thanh');
+				$excel->sheet('Don hang theo tinh thanh', function($sheet) use ($provinces, $totalOrder, $totalAmount) {
+					$sheet->loadView('backend.reports.salesbyprovinceexport', compact('provinces', 'totalOrder', 'totalAmount'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return view('backend.reports.salesbyprovince', compact('provinces', 'totalOrder', 'totalAmount'));
 	}
 
 	public function inventory(ReportRequest $request)
 	{
 		$products = Product::all();
+
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke ton kho', function($excel) use ($products) {
+				// Set the title
+				$excel->setTitle('Thong ke ton kho');
+				$excel->sheet('Thong ke ton kho', function($sheet) use ($products) {
+					$sheet->loadView('backend.reports.inventoryexport', compact('products'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return view('backend.reports.inventory', compact('products'));
 	}
 }

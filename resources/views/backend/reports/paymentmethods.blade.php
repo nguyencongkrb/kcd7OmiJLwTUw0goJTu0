@@ -35,10 +35,14 @@
 						<label for="filter_created_at_to">Đến ngày</label>
 						<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime(), 'd/m/Y') }}" id="filter_shoppingcarts_created_at_to" name="todate" placeholder="dd/mm/yyyy">
 					</div>
-					<input type="hidden" name="type" value="filter">
-					<div class="form-group col-xs-1">
+					<input type="hidden" id="txtExport" name="export" value="0">
+					<div class="form-group col-xs-2">
 						<label style="display:block;">&nbsp;</label>
-						<button type="submit" id="btn_filter_shoppingcarts" class="btn btn-success btn-sm btn-flat btn-block">Lọc </button>
+						<button type="submit" class="btn btn-success btn-sm btn-flat btn-block btn-submit"><i class="fa fa-filter" aria-hidden="true"></i> Lọc </button>
+					</div>
+					<div class="form-group col-xs-2">
+						<label style="display:block;">&nbsp;</label>
+						<button type="submit" class="btn btn-success btn-sm btn-flat btn-block btn-submit export"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất Excel </button>
 					</div>
 				</form>
 				<div class="box-body">

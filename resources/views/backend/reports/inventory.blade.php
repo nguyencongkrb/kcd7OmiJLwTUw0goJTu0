@@ -11,6 +11,7 @@
 	<h1>
 		<span>Thống kê tồn kho</span>&nbsp;
 		<!-- <small>Optional description</small> -->
+		<a href="{{ route('reports.inventory').'?export=1' }}" target="_blank" class="btn btn-success btn-sm btn-flat"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất Excel </a>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Màn hình chính</a></li>
@@ -29,12 +30,12 @@
 				<div class="box-body">
 					<table class="table table-condensed table-bordered table-striped table-hover">
 						<tr>
-							<td class="text-right">#</td>
-							<td>Tên sản phẩm</td>
-							<td>Mã sản phẩm</td>
-							<td class="text-right">Số lượng tồn</td>
-							<td class="text-right">Trị giá chưa giảm</td>
-							<td class="text-right">Trị giá đã giảm</td>
+							<td class="text-right"><strong>#</strong></td>
+							<td><strong>Tên sản phẩm</strong></td>
+							<td><strong>Mã sản phẩm</strong></td>
+							<td class="text-right"><strong>Số lượng tồn</strong></td>
+							<td class="text-right"><strong>Trị giá chưa giảm</strong></td>
+							<td class="text-right"><strong>Trị giá đã giảm</strong></td>
 						</tr>
 						@foreach($products as $product)
 						<tr>

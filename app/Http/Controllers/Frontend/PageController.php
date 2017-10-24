@@ -667,7 +667,7 @@ class PageController extends Controller
 			$user->active = 1;	// auto active user
 			$user->save();
 
-			//Role::findByKey('Normal')->first()->users()->attach($user);
+			Role::findByKey('Agency')->first()->users()->attach($user);
 		});
 
 		Notification::send($user, new VerifyUser($user));

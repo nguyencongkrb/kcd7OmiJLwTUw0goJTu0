@@ -44,6 +44,10 @@ ketnoimoi.users.index = {
 				className: 'text-right',
 			},
 			{ 
+				data: 'username',
+				className: 'text-right',
+			},
+			{ 
 				data: 'email',
 				className: 'text-right',
 			},

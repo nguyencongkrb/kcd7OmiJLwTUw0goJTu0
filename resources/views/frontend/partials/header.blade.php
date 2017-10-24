@@ -35,7 +35,7 @@
 							<a href="tel:{{ $config->getValueByKey('hot_line') }}">Chăm sóc Khách hàng<br><strong>{{ $config->getValueByKey('hot_line') }}</strong></a>
 						</div>
 						<div class="support chat_online">
-							<a href="#">Tư vấn<br>Trực tuyến</a>
+							<a href="javascript:vgc_sh_chat_contact();">Tư vấn<br>Trực tuyến</a>
 						</div>
 						<div class="support question_answer">
 							<a href="{{ route('article', ['categorykey' => 've-chung-toi', 'key' => 'cac-cau-hoi-thuong-gap']) }}">Hỏi đáp</a>

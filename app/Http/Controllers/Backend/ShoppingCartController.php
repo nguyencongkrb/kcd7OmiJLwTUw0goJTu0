@@ -89,8 +89,15 @@ class ShoppingCartController extends Controller
 				$cart->payment_status = $request->input('ShoppingCart.payment_status', 0);
 			if(!is_null($request->input('ShoppingCart.invoice_exported')))
 				$cart->invoice_exported = $request->input('ShoppingCart.invoice_exported', 0);
-			if(!is_null($request->input('ShoppingCart.shopping_cart_status_id')))
+			if(!is_null($request->input('ShoppingCart.shopping_cart_status_id'))){
 				$cart->shopping_cart_status_id = $request->input('ShoppingCart.shopping_cart_status_id', 0);
+			}
+
+			// update note
+			if(!is_null($request->input('ShoppingCart.delivery_note')))
+				$cart->delivery_note = $request->input('ShoppingCart.delivery_note');
+			if(!is_null($request->input('ShoppingCart.customer_service_note')))
+				$cart->customer_service_note = $request->input('ShoppingCart.customer_service_note');
 
 			// tăng invetory_quantity products khi huỷ đơn hàng
 			if((int)$cart->shopping_cart_status_id == 1){
@@ -109,7 +116,13 @@ class ShoppingCartController extends Controller
 		// elseif ((int)$request->input('ShoppingCart.shopping_cart_status_id') == 5) {	// đã giao hàng
 		// 	$this->sentOrderDelivered($cart->id);
 		// }
-		$cart->sentNotify();
+		if(!is_null($request->input('ShoppingCart.shopping_cart_status_id'))){
+			$cart->sentNotify();
+		}
+
+		if (!$request->ajax()) {
+			return redirect()->route('shoppingcarts.show', ['id' => $id]);
+		}
 	}
 
 	/**
@@ -121,6 +134,12 @@ class ShoppingCartController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function invoice($id)
+	{
+		$cart = ShoppingCart::findOrFail($id);
+		return view('backend.shoppingcarts.invoice', compact('cart'));
 	}
 
 	public function filter(ShoppingCartRequest $request)

@@ -7,6 +7,7 @@ use App\Mail\OrderPurchase;
 use App\Mail\OrderCancel;
 use App\Mail\OrderDelivered;
 use App\Config;
+use Log;
 
 class ShoppingCart extends BaseModel
 {
@@ -127,14 +128,18 @@ class ShoppingCart extends BaseModel
 
 	public function sentNotify()
 	{
-		if ($this->shopping_cart_status_id == 1) {	// HUY
-			$this->sentOrderCancel();
-		}
-		elseif ($this->shopping_cart_status_id == 2) {	// MOI DAT HANG
-			$this->sentOrderPurchase();
-		}
-		elseif ($this->shopping_cart_status_id == 5) {	// DA GIAO HANG
-			$this->sentOrderDelivered();
+		try {
+			if ($this->shopping_cart_status_id == 1) {	// HUY
+				$this->sentOrderCancel();
+			}
+			elseif ($this->shopping_cart_status_id == 2) {	// MOI DAT HANG
+				$this->sentOrderPurchase();
+			}
+			elseif ($this->shopping_cart_status_id == 5) {	// DA GIAO HANG
+				$this->sentOrderDelivered();
+			}	
+		} catch (Exception $e) {
+			Log::error('Khong gui email hoac sms duoc');
 		}
 	}
 

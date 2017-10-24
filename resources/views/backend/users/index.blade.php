@@ -35,6 +35,7 @@
 							<th>Hình ảnh</th>
 							<th>Tên người dùng</th>
 							<th>Mobile</th>
+							<th>Username</th>
 							<th>Email</th>
 							<th>Hoạt động</th>
 							<th>Quyền hạn</th>

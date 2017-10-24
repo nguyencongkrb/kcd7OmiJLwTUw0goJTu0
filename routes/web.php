@@ -100,6 +100,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::resource('promotioncodes', 'PromotionCodeController');
 
 	Route::post('shoppingcarts/filter', 'ShoppingCartController@filter')->name('shoppingcarts.filter');
+	Route::get('shoppingcarts/invoice/{id}', 'ShoppingCartController@invoice')->name('shoppingcarts.invoice');
 	Route::resource('shoppingcarts', 'ShoppingCartController');
 
 	Route::post('shoppingcartstatuses/filter', 'ShoppingCartStatusController@filter')->name('shoppingcartstatuses.filter');

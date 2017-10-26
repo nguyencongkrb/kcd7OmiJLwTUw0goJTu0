@@ -50,6 +50,12 @@ ketnoimoi.users.index = {
 			{ 
 				data: 'email',
 				className: 'text-right',
+				render: function (data, type, row) {
+					if(type === 'display' && data){
+						return $.format('{0} <a href="javascript:;" data-action="sendverifyemail" data-id="{1}" data-toggle="tooltip" data-placement="top" title="Gửi email thông tin tài khoản"><i class="fa fa-paper-plane text-green" aria-hidden="true"></i></a>', data, row.id);
+					}
+					return data;	
+				}
 			},
 			{ 
 				data: 'active',
@@ -118,6 +124,9 @@ events: function () {
 			case 'toggleactive':
 				thisObj.toggleActive(dataId);
 			break;
+			case 'sendverifyemail':
+			thisObj.sendVerifyEmail(dataId);
+			break
 			default:
 			break;
 		};
@@ -154,6 +163,21 @@ toggleActive: function (id) {
 		},
 		error: function (argument) {
 			toastr['error']("Thay đổi không thành công.", "Thông báo");
+		}
+	});
+},
+sendVerifyEmail: function(id) {
+	var thisObj = ketnoimoi.users.index;
+
+	$.ketnoimoiAjax({
+		url: '/backend/users/sendverifyemail',
+		type: 'POST',
+		data: { id : id },
+		success: function (data, textStatus, jqXHR) {
+			toastr['success']("Gửi email thông tin tài khoản thành công.", "Thông báo");
+		},
+		error: function (argument) {
+			toastr['error']("Gửi email thông tin tài khoản không thành công.", "Thông báo");
 		}
 	});
 }

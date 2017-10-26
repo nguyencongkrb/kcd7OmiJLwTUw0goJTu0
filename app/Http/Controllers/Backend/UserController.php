@@ -270,7 +270,8 @@ class UserController extends Controller
 						$user = new User;
 						$user->first_name = $row['ho_ten'];
 						$user->username = $row['username'];
-						$user->password = Hash::make($row['password']);
+						$user->email = $row['email'];
+						$user->password = Hash::make(rand(100000, 999999));
 
 						$user->last_name = '';
 						$user->job_title = '';
@@ -303,5 +304,27 @@ class UserController extends Controller
 		if($errorcodes != '')
 			$message =  'Những user sau đã gặp lỗi trong quá trình import: ' . $errorcodes;
 		return redirect(route('users.importsform'))->with('status', $message);
+	}
+
+	public function sendVerifyEmail(UserRequest $request)
+	{
+		$user = User::findOrFail($request->input('id'));
+		$this->authorize('sendVerifyEmail', $user);
+		$message = '';
+
+		if (!empty($user->email)) {
+			$newPassword = rand(100000, 999999);
+			$user->password = Hash::make($newPassword);
+			$user->save();
+			Notification::send($user, new VerifyUser($user, $newPassword));
+			$message = 'Thao tác thành công.';
+		}
+		else{
+			$message = 'Thao tác không hợp lệ.';	
+		}
+
+		if($request->ajax()){
+			return response()->json(['message' => $message]);
+		}
 	}
 }

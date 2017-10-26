@@ -47,7 +47,7 @@
 					<div class="form-group">
 						<label for="import_file">File imports</label>
 						<input type="file" id="import_file" name="User[import_file]">
-						<p class="help-block">Bạn có thể tải file import mẫu <a href="{{ Storage::url('user_list.xls') }}">tại đây.</a></p>
+						<p class="help-block">Bạn có thể tải file import mẫu <a href="{{ Storage::url('user_list.xlsx') }}">tại đây.</a></p>
 					</div>
 				</div>
 				<div class="box-footer">

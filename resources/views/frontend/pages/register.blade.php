@@ -199,7 +199,7 @@
 				},
 				'User[first_name]': {
 					required: 'Vui lòng nhập họ tên của bạn.',
-					regex: 'Họ tên chỉ được phép chức các ký tự a-z, A-Z và khoảng trắng.'
+					regex: 'Họ tên chỉ được phép chứa các ký tự a-z, A-Z và khoảng trắng.'
 				},
 				'User[email]': {
 					required: 'Vui lòng nhập email đăng ký tài khoản.',

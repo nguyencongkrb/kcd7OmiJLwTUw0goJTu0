@@ -11,6 +11,7 @@ use Auth;
 use Datetime;
 use App\Config;
 use App\ShoppingCart;
+use Excel;
 use App\Http\Requests\ShoppingCartRequest;
 
 class ShoppingCartController extends Controller
@@ -55,6 +56,20 @@ class ShoppingCartController extends Controller
 	public function show($id)
 	{
 		$cart = ShoppingCart::findOrFail($id);
+
+		$request = request();
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Don hang '. $cart->code, function($excel) use ($cart) {
+				// Set the title
+				$excel->setTitle('Don hang '. $cart->code);
+				$excel->sheet('Don hang '. $cart->code, function($sheet) use ($cart) {
+					$sheet->loadView('backend.shoppingcarts.invoiceexport', compact('cart'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return view('backend.shoppingcarts.show', compact('cart'));
 	}
 

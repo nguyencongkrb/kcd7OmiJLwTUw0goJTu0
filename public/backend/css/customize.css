@@ -12,7 +12,11 @@
 	margin-bottom: 0;
 }
 @media print {
-  a[href]:after {
-    content: none !important;
-  }
+	body { font-size: 9px }
+	h2.page-header{
+		font-size: 14px;
+	}
+	a[href]:after {
+		content: none !important;
+	}
 }

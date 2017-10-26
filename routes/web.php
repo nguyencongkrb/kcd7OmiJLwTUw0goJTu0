@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::post('users/toggleactive', 'UserController@toggleActive')->name('users.toggleactive');
 	Route::get('users/imports', 'UserController@imports')->name('users.importsform');
 	Route::post('users/imports', 'UserController@importUsers')->name('users.imports');
+	Route::post('users/sendverifyemail', 'UserController@sendVerifyEmail')->name('users.sendverifyemail');
 	Route::resource('users', 'UserController');
 
 	Route::resource('languages', 'LanguageController');

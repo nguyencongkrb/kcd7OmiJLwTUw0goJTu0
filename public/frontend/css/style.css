@@ -316,6 +316,9 @@ h1.article-title{
 	padding: 35px;
 	border-bottom: solid 1px #eaab00;
 }
+.product-description .tab-pane table{
+	max-width: 600px !important;
+}
 .product-review{
 	padding: 23px 55px;
 }

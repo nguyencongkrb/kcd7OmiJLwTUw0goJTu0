@@ -190,7 +190,7 @@
 	</div>
 	<div class="box-footer text-right">
 		<a href="{{ route('shoppingcarts.invoice', ['id' => $cart->id]) }}" target="_blank" class="btn btn-success btn-sm btn-flat"><i class="fa fa-print" aria-hidden="true"></i> In vận đơn</a>
-		<button type="button" class="btn btn-success btn-sm btn-flat"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất excel</button>
+		<a href="{{ route('shoppingcarts.show', ['id' => $cart->id, 'export' => 1]) }}" target="_blank" class="btn btn-success btn-sm btn-flat"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất excel</a>
 	</div>
 </div>
 </div>

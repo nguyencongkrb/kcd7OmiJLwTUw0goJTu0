@@ -307,8 +307,6 @@ class PageController extends Controller
 
 		$products = [];
 		$limit = Config::getValueByKey('rows_per_page_product');
-
-		$request = request();
 		$keyword = strip_tags($request->input('keyword', ''));
 
 		// fillter

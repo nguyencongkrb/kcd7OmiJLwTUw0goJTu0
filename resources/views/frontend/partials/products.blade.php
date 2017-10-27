@@ -10,7 +10,7 @@
 			@if(count($product->productTypes()->where('id', 1)->get()) > 0)
 			<span class="stick"><span>NEW</span></span>
 			@endif
-			<div class="content-details fadeIn-bottom">
+			<div class="content-details fadeIn-bottom {{ $product->inventory_quantity == 0 ? 'outofstock' : null }}">
 				@if($product->inventory_quantity > 0)
 				<div class="col-xs-6 col-sm-6">
 					<a href="javascript:void(0);" class="btn btn-default btn-block add-to-cart quick-add-to-cart go-payment" data-product_id="{{ $product->id }}" data-product_price="{{ $product->getLatestPrice() }}">Mua ngay</a>
@@ -20,6 +20,8 @@
 						Thêm vào giỏ hàng
 					</a>
 				</div>
+				@else
+				<small class="outofstock-notify">Dự kiến có hàng {{ is_null($product->instock_date) ? '' : DateTime::createFromFormat('Y-m-d', $product->instock_date)->format('d/m/Y') }}</small>
 				@endif
 			</div>
 		</a>
@@ -33,7 +35,7 @@
 		@endif
 		{{ number_format($product->getLatestPrice(), 0, ',', '.') }} <small>VNĐ</small>
 		@if($product->inventory_quantity == 0)
-		<small class="label label-danger">Đã hết hàng</small>
+		<small class="label label-info background-color-2">Sắp có hàng</small>
 		@endif
 	</div>
 </div>

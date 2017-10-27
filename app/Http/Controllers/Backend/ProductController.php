@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use DB;
+use DateTime;
 use App\Common;
 use App\Language;
 use App\Attachment;
@@ -69,6 +70,14 @@ class ProductController extends Controller
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');
 			$product->inventory_quantity = $request->input('Product.inventory_quantity', 0);
+			$product->instock_date = $request->input('Product.instock_date');
+			if ($product->instock_date == null) {
+				$product->instock_date = null;
+			}
+			else{
+				$product->instock_date = DateTime::createFromFormat('Y-m-d', $product->instock_date);
+			}
+
 			$product->price = $request->input('Product.price', 0);
 			$product->sale_price = $request->input('Product.sale_price', 0);
 			$product->sale_ratio = $request->input('Product.sale_ratio', 0);
@@ -210,6 +219,13 @@ class ProductController extends Controller
 			$product->origin = $request->input('Product.origin');
 			$product->unit = $request->input('Product.unit');
 			$product->inventory_quantity = $request->input('Product.inventory_quantity', 0);
+			$product->instock_date = $request->input('Product.instock_date');
+			if ($product->instock_date == null) {
+				$product->instock_date = null;
+			}
+			else{
+				$product->instock_date = DateTime::createFromFormat('Y-m-d', $product->instock_date);
+			}
 			$product->price = $request->input('Product.price', 0);
 			$product->sale_price = $request->input('Product.sale_price', 0);
 			$product->sale_ratio = $request->input('Product.sale_ratio', 0);

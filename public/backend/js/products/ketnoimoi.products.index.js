@@ -262,6 +262,22 @@ ketnoimoi.products.index = {
 			'dbfieldname': 'inventory_quantity'
 		},
 		{
+			'label': 'Ngày có hàng',
+			'id': 'instock_date',
+			'name': 'Product[instock_date]',
+			'type': 'text',
+			'required': false,
+			'placeholder': 'yyyy-mm-dd',
+			'cssclass': '',
+			'value': '',
+			'disabled': false,
+			'readonly': false,
+			'datas': [],
+			'help_block': '',
+			'input_icon': '',
+			'dbfieldname': 'instock_date'
+		},
+		{
 			'label': 'Giá sản phẩm',
 			'id': 'price',
 			'name': 'Product[price]',

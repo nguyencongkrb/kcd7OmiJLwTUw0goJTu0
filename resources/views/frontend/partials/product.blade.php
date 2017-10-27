@@ -23,7 +23,7 @@
 		@endif
 	</div>
 	@if($product->inventory_quantity == 0)
-	<small class="label label-danger">Đã hết hàng</small>
+	<small class="label label-danger background-color-2">Dự kiến có hàng {{ is_null($product->instock_date) ? '' : DateTime::createFromFormat('Y-m-d', $product->instock_date)->format('d/m/Y') }}</small>
 	@endif
 	<div class="product-promotion">
 		<a href="#">Chương trình khuyến mãi</a><br>

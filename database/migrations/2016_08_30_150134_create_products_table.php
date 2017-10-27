@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
 			$table->string('origin', 100);
 			$table->string('unit', 100);
 			$table->integer('inventory_quantity')->default(0);
+			$table->dateTime('instock_date')->nullable();
 			$table->double('price')->default(0);
 			$table->double('sale_price')->default(0);
 			$table->integer('sale_ratio')->default(0);

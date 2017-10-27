@@ -35,6 +35,7 @@ class ProductRequest extends FormRequest
 			'Product.warranty'  => 'max:100',
 			'Product.priority'  => 'integer|min:0',
 			'Product.inventory_quantity'  => 'integer|min:0',
+			'Product.instock_date' => 'date_format:"Y-m-d"',
 			'Product.published' => 'boolean',
 			'Product.availability' => 'in:instock,outofstock,preorder,availablefororder',
 			'Product.ProductTranslation.*.name' => 'required|max:250',

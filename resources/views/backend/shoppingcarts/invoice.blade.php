@@ -25,7 +25,7 @@
 @section('content')
 <div class="row">
 	<div class="col-xs-4">
-		<img src="/frontend/images/logo_asgroup.png" alt="{{ $sitename = $config::getValueByKey('site_name') }}" style="height: 40px;">
+		<img src="/frontend/images/logo_asgroup.png" alt="{{ $config::getValueByKey('site_name') }}" style="height: 40px;">
 	</div>
 	<div class="col-xs-4">
 		<h2 class="page-header text-center">
@@ -34,7 +34,7 @@
 	</div>
 	<div class="col-xs-4 text-right">
 		<small>
-			<strong>{{ $sitename }}</strong><br>
+			<strong>{{ preg_replace('/^https?:\/\//', '', url('/')) }}</strong><br>
 			Hotline: {{ $config::getValueByKey('hot_line') }}
 		</small>
 	</div>
@@ -62,7 +62,6 @@
 	</div>
 </div>
 <div class="row">
-	<br>
 	<div class="col-xs-12 table-responsive">
 		<table class="table table-condensed table-hover table-bordered table-striped">
 			<tr>
@@ -117,7 +116,6 @@
 </div>
 
 <div class="row text-center">
-	<br>
 	<div class="col-xs-2">
 		<div class="row">
 			Người lập phiếu

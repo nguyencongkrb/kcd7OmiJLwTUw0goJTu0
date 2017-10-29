@@ -468,7 +468,10 @@ class PageController extends Controller
 		$cart = new ShoppingCart;
 		DB::transaction(function () use ($cart, $request) {
 			//$cart->code = uniqid();
-			$cart->code = 'SM-' . Carbon::now()->format('my') . '-' . mt_rand(100000,999999);
+			$latestCode = ShoppingCart::where('created_at', '>=', Carbon::now()->startOfMonth())->count();
+			$latestCode = str_pad($latestCode + 1, 6, 0, STR_PAD_LEFT);
+			$cart->code = 'SM-' . Carbon::now()->format('my') . '-' . $latestCode;
+
 			$cart->customer_name = $request->input('ShoppingCart.customer_name', '');
 			$cart->customer_phone = $request->input('ShoppingCart.customer_phone', '');
 			$cart->customer_email = $request->input('ShoppingCart.customer_email', '');

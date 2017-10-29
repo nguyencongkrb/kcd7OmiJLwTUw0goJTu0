@@ -12,11 +12,18 @@
 	margin-bottom: 0;
 }
 @media print {
-	body { font-size: 9px }
+	body { font-size: 14px }
 	h2.page-header{
-		font-size: 14px;
+		font-size: 20px;
+		font-weight: bold;
 	}
 	a[href]:after {
 		content: none !important;
 	}
+	.table-responsive > .table tr th,
+	.table-responsive > .table tr td {
+		white-space: normal !important;
+		padding: 1px !important;
+	}
+
 }

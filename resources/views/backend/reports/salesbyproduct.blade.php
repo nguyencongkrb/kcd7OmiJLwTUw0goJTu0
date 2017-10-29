@@ -50,6 +50,7 @@
 						<tr>
 							<td class="text-right"><strong>#</strong></td>
 							<td><strong>Tên sản phẩm</strong></td>
+							<td><strong>Mã sản phẩm</strong></td>
 							<td class="text-right"><strong>Số đơn vị sản phẩm</strong></td>
 							<td class="text-right"><strong>Giá trị</strong></td>
 						</tr>
@@ -57,6 +58,7 @@
 						<tr>
 							<td class="text-right">{{ $loop->iteration }}</td>
 							<td>{{ $item->name }}</td>
+							<td>{{ $item->code }}</td>
 							<td class="text-right">{{ number_format($item->total_quantity, 0, ',', '.') }}</td>
 							<td class="text-right">{{ number_format($item->total_amount, 0, ',', '.') }} <small>VNĐ</small></td>
 						</tr>

@@ -158,7 +158,7 @@ class ReportController extends Controller
 
 		$results = Product::leftJoin('product_translations', 'products.id', '=', 'product_translations.product_id')
 			->leftJoin('shopping_cart_details', 'products.id', '=', 'shopping_cart_details.product_id')
-			->groupBy(['products.id', 'product_translations.name'])
+			->groupBy(['products.id', 'products.code', 'product_translations.name'])
 			->whereIn('shopping_cart_id', $orderIds)
 			->select(DB::raw('products.id, product_translations.name, products.code, sum(shopping_cart_details.quantity) as total_quantity, sum(shopping_cart_details.product_price) as total_amount'))
 			->get();

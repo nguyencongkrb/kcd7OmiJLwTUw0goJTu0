@@ -20,6 +20,8 @@
 <p class="text-center" style="font-size: 18px;">Đơn hàng của bạn có mã số là: <strong class="text-nowrap">
 	@if (session('status'))
 		{{ session('status') }}
+	@else
+		{{ Request::input('vnp_TxnRef') }}
 	@endif
 </strong><br>
 Chi tiết đơn hàng của bạn sẽ được gửi về email hoặc số điện thoại của bạn.<br> Tổng đài CSKH <strong>{{ $config->getValueByKey('hot_line') }}</strong> sẽ gọi cho bạn trong vòng 24h để xác nhận trước khi giao hàng.</p>

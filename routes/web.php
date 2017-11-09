@@ -129,6 +129,7 @@ Route::get('khoi-phuc-mat-ma.html', '\App\Http\Controllers\Frontend\PageControll
 Route::get('tao-mat-mat-moi/{token}', '\App\Http\Controllers\Frontend\PageController@resetPasswordForm')->name('user.resetpasswordform');
 Route::post('tao-mat-mat-moi-qua-dien-thoai', '\App\Http\Controllers\Frontend\PageController@resetPasswordPhone')->name('user.resetpasswordphone');
 Route::get('province/{province}/districts', '\App\Http\Controllers\Frontend\PageController@getDistrict')->name('province.districts');
+Route::get('/paymentinfo', '\App\Http\Controllers\Frontend\PageController@getInfoPayment')->name('payment.process.info');
 
 Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 {
@@ -146,7 +147,7 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['auth']], function()
 	Route::post('xac-nhan-don-hang.html', 'PageController@purchaseConfirm')->name('purchase.confirm');
 	Route::post('thanh-toan.html', 'PageController@purchase')->name('purchase');
 	Route::get('/paymentprocess/{code}', 'PageController@paymentProcess')->name('payment.process');
-	Route::get('/paymentinfo', 'PageController@getInfoPayment')->name('payment.process.info');
+	//Route::get('/paymentinfo', 'PageController@getInfoPayment')->name('payment.process.info');
 	Route::get('mua-hang-thanh-cong.html', 'PageController@purchaseSuccess')->name('purchase.success');
 	
 	Route::get('thong-tin-thanh-vien.html', 'PageController@profile')->name('user.profile');

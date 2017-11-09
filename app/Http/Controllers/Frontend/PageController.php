@@ -963,7 +963,8 @@ class PageController extends Controller
 			abort(404);
 
 		$vnp_Url = env('vnp_Url', '');
-		$vnp_Returnurl = url('/') . '/paymentinfo';
+		//$vnp_Returnurl = url('/') . '/paymentinfo';
+		$vnp_Returnurl = url('/') . '/mua-hang-thanh-cong.html';
 		$vnp_TmnCode = env('vnp_TmnCode', '');//Mã website tại VNPAY 
 		$vnp_HashSecret = env('vnp_HashSecret', ''); //Chuỗi bí mật
 
@@ -1062,9 +1063,9 @@ class PageController extends Controller
 						$order->save();
 						$order->sentNotify();
 
-						return redirect()->route('purchase.success')
-						->withCookie(Cookie::forget('ShoppingCartData'))
-						->with('status', $order->code);
+						//return redirect()->route('purchase.success')
+						//->withCookie(Cookie::forget('ShoppingCartData'))
+						//->with('status', $order->code);
 
 						//
 						//Trả kết quả về cho VNPAY: Website TMĐT ghi nhận yêu cầu thành công                

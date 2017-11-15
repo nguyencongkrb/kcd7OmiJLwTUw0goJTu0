@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Thống kê phương thức thanh toán')
+@section('title', 'Doanh số theo PT thanh toán')
 
 @section('plugins.css')
 
@@ -9,13 +9,13 @@
 @section('content.head')
 <section class="content-header">
 	<h1>
-		<span>Thống kê phương thức thanh toán</span>&nbsp;
+		<span>Doanh số theo PT thanh toán</span>&nbsp;
 		<!-- <small>Optional description</small> -->
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Màn hình chính</a></li>
 		<li><a href="javascript:;">Thống kê</a></li>
-		<li class="active">Thống kê phương thức thanh toán</li>
+		<li class="active">Doanh số theo PT thanh toán</li>
 	</ol>
 </section>
 @endsection
@@ -60,17 +60,17 @@
 							<td class="text-right">{{ $loop->iteration }}</td>
 							<td>{{ $method->name }}</td>
 							<td class="text-right">{{ number_format($method->shoppingCarts->count(), 0, ',', '.') }}</td>
-							<td class="text-right">{{ number_format(($method->shoppingCarts->count() / $totalOrder) * 100, 1, ',', '.')  }} %</td>
+							<td class="text-right">{{ $totalOrder > 0 ? number_format(($method->shoppingCarts->count() / $totalOrder) * 100, 1, ',', '.') : 0 }} %</td>
 							<td class="text-right">{{ number_format($method->shoppingCarts->sum('total_payment_amount'), 0, ',', '.') }} <small>VNĐ</small></td>
-							<td class="text-right">{{ number_format(($method->shoppingCarts->sum('total_payment_amount') / $totalAmount) * 100, 1, ',', '.')  }} %</td>
+							<td class="text-right">{{ $totalAmount > 0 ? number_format(($method->shoppingCarts->sum('total_payment_amount') / $totalAmount) * 100, 1, ',', '.') : 0 }} %</td>
 						</tr>
 						@endforeach
 						<tr>
 							<td colspan="2"></td>
 							<td class="text-right"><strong>{{ number_format($totalOrder, 0, ',', '.') }}</strong></td>
-							<td class="text-right"><strong>100%</strong></td>
+							<td class="text-right"></td>
 							<td class="text-right"><strong>{{ number_format($totalAmount, 0, ',', '.') }} <small>VNĐ</small></strong></td>
-							<td class="text-right"><strong>100%</strong></td>
+							<td class="text-right"></td>
 						</tr>
 					</table>
 				</div>

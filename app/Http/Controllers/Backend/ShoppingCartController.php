@@ -125,12 +125,6 @@ class ShoppingCartController extends Controller
 			$cart->save();
 		});
 
-		// if((int)$request->input('ShoppingCart.shopping_cart_status_id') == 1){	// huỷ đơn hàng
-		// 	$this->sentOrderCancel($cart->id);
-		// }
-		// elseif ((int)$request->input('ShoppingCart.shopping_cart_status_id') == 5) {	// đã giao hàng
-		// 	$this->sentOrderDelivered($cart->id);
-		// }
 		if(!is_null($request->input('ShoppingCart.shopping_cart_status_id'))){
 			$cart->sentNotify();
 		}
@@ -191,6 +185,19 @@ class ShoppingCartController extends Controller
 		}
 
 		$shoppingCarts = $query->get();
+
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Danh sach don hang', function($excel) use($shoppingCarts) {
+				// Set the title
+				$excel->setTitle('Danh sach don hang');
+				$excel->sheet('Danh sach don hang', function($sheet) use($shoppingCarts) {
+					$sheet->loadView('backend.shoppingcarts.ordersexport', compact('shoppingCarts'));
+
+				});
+			})->download('xlsx');
+		}
+
 		return response()->json($shoppingCarts->toArray());
 	}
 }

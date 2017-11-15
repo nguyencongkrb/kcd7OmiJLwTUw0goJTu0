@@ -129,6 +129,16 @@ class Product extends BaseModel
 		return $this->morphMany('App\Comment', 'commentable');
 	}
 
+	public function articles()
+	{
+		return $this->belongsToMany('App\Article');
+	}
+
+	public function getVisibleArticles()
+	{
+		return $this->articles()->where('published', 1)->get();
+	}
+
 	public function getJSONLD(){
 		return '{
 		  "@context": "http://schema.org",

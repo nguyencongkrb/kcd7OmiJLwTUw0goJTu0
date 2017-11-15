@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Doanh số theo tỉnh')
+@section('title', 'Doanh số sản phẩm theo tỉnh')
 
 @section('plugins.css')
 
@@ -9,13 +9,13 @@
 @section('content.head')
 <section class="content-header">
 	<h1>
-		<span>Doanh số theo tỉnh</span>&nbsp;
+		<span>Doanh số sản phẩm theo tỉnh</span>&nbsp;
 		<!-- <small>Optional description</small> -->
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Màn hình chính</a></li>
 		<li><a href="javascript:;">Thống kê</a></li>
-		<li class="active">Doanh số theo tỉnh</li>
+		<li class="active">Doanh số sản phẩm theo tỉnh</li>
 	</ol>
 </section>
 @endsection
@@ -26,7 +26,11 @@
 	<div class="col-xs-12">
 		<div class="box box-success">
 			<div class="box-header">
-				<form action="{{ route('reports.salesbyprovince') }}" method="GET">
+				<form action="{{ route('reports.productsalesbyprovince') }}" method="GET">
+					<div class="form-group col-xs-4">
+						<label for="filter_created_at_from">Tỉnh thành</label>
+						<select class="form-control input-sm select2" multiple data-placeholder="Chọn tỉnh thành" id="filter_shoppingcarts_province_id" name="province_id[]" style="width: 100%;"></select>
+					</div>
 					<div class="form-group col-xs-2">
 						<label for="filter_created_at_from">Từ ngày</label>
 						<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime('- 1 month'), 'd/m/Y') }}" id="filter_shoppingcarts_created_at_from" name="fromdate" placeholder="dd/mm/yyyy">
@@ -49,29 +53,20 @@
 					<table class="table table-condensed table-bordered table-striped table-hover">
 						<tr>
 							<td class="text-right"><strong>#</strong></td>
-							<td><strong>Tên tỉnh thành</strong></td>
-							<td class="text-right"><strong>Số đơn hàng</strong></td>
-							<td class="text-right"><strong>Tỉ lệ % (đơn hàng)</strong></td>
+							<td><strong>Tên sản phẩm</strong></td>
+							<td><strong>Mã sản phẩm</strong></td>
+							<td class="text-right"><strong>Số đơn vị sản phẩm</strong></td>
 							<td class="text-right"><strong>Giá trị</strong></td>
-							<td class="text-right"><strong>Tỉ lệ % (giá trị)</strong></td>
 						</tr>
-						@foreach($provinces as $province)
+						@foreach($results as $item)
 						<tr>
 							<td class="text-right">{{ $loop->iteration }}</td>
-							<td>{{ $province->name }}</td>
-							<td class="text-right">{{ number_format($province->shoppingCarts->count(), 0, ',', '.') }}</td>
-							<td class="text-right">{{ $totalOrder > 0 ? number_format(($province->shoppingCarts->count() / $totalOrder) * 100, 1, ',', '.') : 0 }} %</td>
-							<td class="text-right">{{ number_format($province->shoppingCarts->sum('total_payment_amount'), 0, ',', '.') }} <small>VNĐ</small></td>
-							<td class="text-right">{{ $totalAmount > 0 ? number_format(($province->shoppingCarts->sum('total_payment_amount') / $totalAmount) * 100, 1, ',', '.') : 0 }} %</td>
+							<td>{{ $item->name }}</td>
+							<td>{{ $item->code }}</td>
+							<td class="text-right">{{ number_format($item->total_quantity, 0, ',', '.') }}</td>
+							<td class="text-right">{{ number_format($item->total_amount, 0, ',', '.') }} <small>VNĐ</small></td>
 						</tr>
 						@endforeach
-						<tr>
-							<td colspan="2"></td>
-							<td class="text-right"><strong>{{ number_format($totalOrder, 0, ',', '.') }}</strong></td>
-							<td class="text-right"></td>
-							<td class="text-right"><strong>{{ number_format($totalAmount, 0, ',', '.') }} <small>VNĐ</small></strong></td>
-							<td class="text-right"></td>
-						</tr>
 					</table>
 				</div>
 			</div>

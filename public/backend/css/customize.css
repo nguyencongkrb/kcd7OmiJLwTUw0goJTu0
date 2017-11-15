@@ -25,5 +25,8 @@
 		white-space: normal !important;
 		padding: 1px !important;
 	}
-
+	.table-responsive > .table tr th.text-nowrap,
+	.table-responsive > .table tr td.text-nowrap {
+		white-space: nowrap !important;
+	}
 }

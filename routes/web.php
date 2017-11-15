@@ -112,8 +112,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => [
 	Route::get('reports/salesbyproduct', 'ReportController@salesByProduct')->name('reports.salesbyproduct');
 	Route::get('reports/salesbypaymentmethod', 'ReportController@salesByPaymentMethod')->name('reports.salesbypaymentmethod');
 	Route::get('reports/salesbyprovince', 'ReportController@salesByProvince')->name('reports.salesbyprovince');
+	Route::get('reports/productsalesbyprovince', 'ReportController@productSalesByProvince')->name('reports.productsalesbyprovince');
 	Route::get('reports/inventory', 'ReportController@inventory')->name('reports.inventory');
 	Route::resource('reports', 'ReportController');
+
+	Route::post('provinces/filter', 'ProvinceController@filter')->name('provinces.filter');
+	Route::resource('provinces', 'ProvinceController');
 });
 
 

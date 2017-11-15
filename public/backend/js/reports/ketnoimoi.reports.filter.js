@@ -16,6 +16,18 @@ ketnoimoi.reports.filter = {
 			autoclose: true,
 			todayHighlight: true
 		});
+
+		new CSelect('#filter_shoppingcarts_province_id', {
+			url: '/backend/provinces/filter',
+			params: function (params) {
+				var query = {
+					search : params.term,
+					type : 'dropdown',
+					multiple : true
+				}
+				return query;
+			}
+		}).init();
 	},
 	events: function (argument) {
 		$('.btn-submit').click(function (e) {

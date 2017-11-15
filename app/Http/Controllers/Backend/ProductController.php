@@ -124,6 +124,12 @@ class ProductController extends Controller
 				$product->relatedProducts()->attach($relatedProducts);
 			}
 
+			// sync related articles
+			$articles =  $request->input('Product.articles', []);
+			if (count($articles) > 0) {
+				$product->articles()->attach($articles);
+			}
+
 			// save attachments
 			if ($request->input('Product.attachments') != "") {
 				$requestAttachments = explode(',', $request->input('Product.attachments'));
@@ -171,7 +177,7 @@ class ProductController extends Controller
 	{
 		$product = Product::findOrFail($id);
 		$this->authorize('view', $product);
-		$product->load('translations', 'productCategories', 'productTypes', 'productColors', 'productSizes', 'tags', 'relatedProducts', 'attachments', 'userCreated', 'userUpdated');
+		$product->load('translations', 'productCategories', 'productTypes', 'productColors', 'productSizes', 'tags', 'relatedProducts', 'attachments', 'articles', 'userCreated', 'userUpdated');
 		return response()->json($product->toArray());
 	}
 
@@ -276,6 +282,13 @@ class ProductController extends Controller
 			$relatedProducts =  $request->input('Product.relatedProducts', []);
 			if (count($relatedProducts) > 0) {
 				$product->relatedProducts()->attach($relatedProducts);
+			}
+
+			// sync related articles
+			$product->articles()->detach();
+			$articles =  $request->input('Product.articles', []);
+			if (count($articles) > 0) {
+				$product->articles()->attach($articles);
 			}
 
 			// save attachments

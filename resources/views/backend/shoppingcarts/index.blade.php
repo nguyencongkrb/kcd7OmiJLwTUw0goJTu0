@@ -27,37 +27,50 @@
 	<div class="col-xs-12">
 		<div class="box box-success">
 			<div class="box-header">
-				<div class="form-group col-xs-3">
-					<label for="filter_shoppingcarts_code">Mã đơn hàng, họ tên, sđt</label>
-					<input type="text" class="form-control input-sm" id="filter_shoppingcarts_code" name="search" placeholder="Từ khóa">
-				</div>
-				<div class="form-group col-xs-2">
-					<label for="filter_created_at_from">Từ ngày</label>
-					<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime('- 1 month'), "d/m/Y") }}" id="filter_shoppingcarts_created_at_from" name="fromdate" placeholder="dd/mm/yyyy">
-				</div>
-				<div class="form-group col-xs-2">
-					<label for="filter_created_at_to">Đến ngày</label>
-					<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime(), "d/m/Y") }}" id="filter_shoppingcarts_created_at_to" name="todate" placeholder="dd/mm/yyyy">
-				</div>
-				<div class="form-group col-xs-2">
-					<label for="filter_shoppingcarts_statuses">Trạng thái</label>
-					<select class="form-control input-sm" style="width:100%;" id="filter_shoppingcarts_statuses" name="status_id" placeholder="Danh mục">			
-						<option value="">-- Chọn trạng thái --</option>
-					</select>
-				</div>
-				<div class="form-group col-xs-2">
-					<label for="filter_shoppingcarts_payment_status">Thanh toán</label>
-					<select class="form-control input-sm" style="width:100%;" id="filter_shoppingcarts_payment_status" name="payment_status">
-						<option value="">-- Tất cả --</option>
-						<option value="1">Đã thanh toán</option>
-						<option value="0">Chưa thanh toán</option>
-					</select>
-				</div>
-				<input type="hidden" name="type" value="filter">
-				<div class="form-group col-xs-1">
-					<label style="display:block;">&nbsp;</label>
-					<button type="button" id="btn_filter_shoppingcarts" class="btn btn-success btn-sm btn-flat btn-block">Lọc </button>
-				</div>
+				<form action="{{ route('shoppingcarts.filter') }}" method="POST">
+					{{ csrf_field() }}
+					<input type="hidden" name="export" value="1">
+					<div class="form-group col-xs-2">
+						<label for="filter_shoppingcarts_code">#, họ tên, sđt</label>
+						<input type="text" class="form-control input-sm" id="filter_shoppingcarts_code" name="search" placeholder="Từ khóa">
+					</div>
+					<div class="form-group col-xs-2">
+						<label for="filter_created_at_from">Từ ngày</label>
+						<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime('- 1 month'), "d/m/Y") }}" id="filter_shoppingcarts_created_at_from" name="fromdate" placeholder="dd/mm/yyyy">
+					</div>
+					<div class="form-group col-xs-2">
+						<label for="filter_created_at_to">Đến ngày</label>
+						<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" value="{{ date_format(new DateTime(), "d/m/Y") }}" id="filter_shoppingcarts_created_at_to" name="todate" placeholder="dd/mm/yyyy">
+					</div>
+					<div class="form-group col-xs-2">
+						<label for="filter_shoppingcarts_statuses">Trạng thái</label>
+						<select class="form-control input-sm" style="width:100%;" id="filter_shoppingcarts_statuses" name="status_id" placeholder="Danh mục">			
+							<option value="">-- Chọn trạng thái --</option>
+						</select>
+					</div>
+					<div class="form-group col-xs-2">
+						<label for="filter_shoppingcarts_payment_status">Thanh toán</label>
+						<select class="form-control input-sm" style="width:100%;" id="filter_shoppingcarts_payment_status" name="payment_status">
+							<option value="">-- Tất cả --</option>
+							<option value="1">Đã thanh toán</option>
+							<option value="0">Chưa thanh toán</option>
+						</select>
+					</div>
+					<input type="hidden" name="type" value="filter">
+					<div class="form-group col-xs-2">
+						<label style="display:block;">&nbsp;</label>
+						<div class="btn-group">
+							<button type="button" id="btn_filter_shoppingcarts" class="btn btn-success btn-sm btn-flat"><i class="fa fa-filter" aria-hidden="true"></i> Lọc</button>
+							<button type="button" class="btn btn-success btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#" onclick="$(this).closest('form').submit()"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Xuất Excel</a></li>
+							</ul>
+						</div>
+					</div>
+				</form>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<table id="tblEntryList" class="table table-condensed table-bordered table-striped table-hover">

@@ -129,7 +129,7 @@
 				if($cart->shopping_cart_status_id == 1){
 				$cssClass = 'btn-danger';
 			}
-			elseif($cart->shopping_cart_status_id == 5){
+			elseif($cart->shopping_cart_status_id > 5){
 			$cssClass = 'btn-success';
 		}
 		@endphp
@@ -147,6 +147,7 @@
 						<li><a href="javascript:void(0);" data-action="updatestatus" data-id="{{ $cart->id }}" data-value="3">Đã xác nhận</a></li>
 						<li><a href="javascript:void(0);" data-action="updatestatus" data-id="{{ $cart->id }}" data-value="4">Đang giao hàng</a></li>
 						<li><a href="javascript:void(0);" data-action="updatestatus" data-id="{{ $cart->id }}" data-value="5">Đã giao hàng</a></li>
+						<li><a href="javascript:void(0);" data-action="updatestatus" data-id="{{ $cart->id }}" data-value="6">Hoàn tất</a></li>
 						<li class="divider"></li>
 						<li><a href="javascript:void(0);" data-action="updatestatus" data-id="{{ $cart->id }}" data-value="1">Huỷ đơn hàng</a></li>
 					</ul>

@@ -100,8 +100,9 @@
 				<li class="{{ Route::currentRouteName() == 'reports.sales' ? 'active' : null }}"><a href="{{ route('reports.sales') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Mua hàng</a></li>
 				<li class="{{ Route::currentRouteName() == 'reports.salesbycategory' ? 'active' : null }} hide"><a href="{{ route('reports.salesbycategory') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo danh mục</a></li>
 				<li class="{{ Route::currentRouteName() == 'reports.salesbyproduct' ? 'active' : null }}"><a href="{{ route('reports.salesbyproduct') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo sản phẩm</a></li>
-				<li class="{{ Route::currentRouteName() == 'reports.salesbypaymentmethod' ? 'active' : null }}"><a href="{{ route('reports.salesbypaymentmethod') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Phương thức thanh toán</a></li>
-				<li class="{{ Route::currentRouteName() == 'reports.salesbyprovince' ? 'active' : null }}"><a href="{{ route('reports.salesbyprovince') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Tỉnh thành</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbypaymentmethod' ? 'active' : null }}"><a href="{{ route('reports.salesbypaymentmethod') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo PT thanh toán</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.salesbyprovince' ? 'active' : null }}"><a href="{{ route('reports.salesbyprovince') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số theo tỉnh</a></li>
+				<li class="{{ Route::currentRouteName() == 'reports.productsalesbyprovince' ? 'active' : null }}"><a href="{{ route('reports.productsalesbyprovince') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Doanh số sản phẩm theo tỉnh</a></li>
 				<li class="{{ Route::currentRouteName() == 'reports.inventory' ? 'active' : null }}"><a href="{{ route('reports.inventory') }}"><i class="fa fa-circle-o" aria-hidden="true"></i> Tồn kho</a></li>
 			</ul>
 		</li>

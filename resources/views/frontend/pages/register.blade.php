@@ -171,9 +171,9 @@
 						type: "post"
 					}
 				},
-				'User[first_name]': {
-					regex: /^[a-zA-Z ]+$/
-				},
+				//'User[first_name]': {
+				//	regex: /^[a-zA-Z ]+$/
+				//},
 				'User[email]': {
 					remote: {
 						url: "/kiem-tra-nguoi-dung.html",
@@ -198,8 +198,8 @@
 					required: 'Vui lòng nhập tên đăng nhập của bạn.'
 				},
 				'User[first_name]': {
-					required: 'Vui lòng nhập họ tên của bạn.',
-					regex: 'Họ tên chỉ được phép chứa các ký tự a-z, A-Z và khoảng trắng.'
+					required: 'Vui lòng nhập họ tên của bạn.'
+					//regex: 'Họ tên chỉ được phép chứa các ký tự a-z, A-Z và khoảng trắng.'
 				},
 				'User[email]': {
 					required: 'Vui lòng nhập email đăng ký tài khoản.',

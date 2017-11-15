@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Thống kê doanh sản phẩm')
+@section('title', 'Doanh số theo sản phẩm')
 
 @section('plugins.css')
 
@@ -9,13 +9,13 @@
 @section('content.head')
 <section class="content-header">
 	<h1>
-		<span>Thống kê doanh sản phẩm</span>&nbsp;
+		<span>Doanh số theo sản phẩm</span>&nbsp;
 		<!-- <small>Optional description</small> -->
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Màn hình chính</a></li>
 		<li><a href="javascript:;">Thống kê</a></li>
-		<li class="active">Thống kê doanh sản phẩm</li>
+		<li class="active">Doanh số theo sản phẩm</li>
 	</ol>
 </section>
 @endsection

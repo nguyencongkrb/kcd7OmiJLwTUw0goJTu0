@@ -121,7 +121,7 @@ ketnoimoi.shoppingcarts.index = {
 				className: 'text-right',
 				render: function (data, type, row) {
 					if (type === 'display' && data) {
-						var cssClass = $.parseJSON(data.id) == 1 ? 'danger' : ($.parseJSON(data.id) == 5 ? 'success' : 'info');
+						var cssClass = $.parseJSON(data.id) == 1 ? 'danger' : ($.parseJSON(data.id) > 5 ? 'success' : 'info');
 						var template = '<div class="btn-group">\
 						<button type="button" class="btn btn-{0} btn-flat btn-xs">{1}</button>\
 						<button type="button" class="btn btn-{0} btn-flat btn-xs dropdown-toggle" data-toggle="dropdown">\
@@ -132,6 +132,7 @@ ketnoimoi.shoppingcarts.index = {
 						<li><a href="#" data-action="updatestatus" data-id="{2}" data-value="3">Đã xác nhận</a></li>\
 						<li><a href="#" data-action="updatestatus" data-id="{2}" data-value="4">Đang giao hàng</a></li>\
 						<li><a href="#" data-action="updatestatus" data-id="{2}" data-value="5">Đã giao hàng</a></li>\
+						<li><a href="#" data-action="updatestatus" data-id="{2}" data-value="6">Hoàn tất</a></li>\
 						<li class="divider"></li>\
 						<li><a href="#" data-action="updatestatus" data-id="{2}" data-value="1">Huỷ đơn hàng</a></li>\
 						</ul>\

@@ -65,12 +65,12 @@
 	<div class="col-xs-12 table-responsive">
 		<table class="table table-condensed table-hover table-bordered table-striped">
 			<tr>
-				<th class="text-right">STT</th>
-				<th>Tên nhãn hiệu hàng hóa</th>
-				<th>Mã hàng</th>
-				<th class="text-right">Số lượng</th>
-				<th class="text-right">Đơn giá</th>
-				<th class="text-right">Thành tiền</th>
+				<th class="text-right text-nowrap">STT</th>
+				<th class="text-nowrap">Tên nhãn hiệu hàng hóa</th>
+				<th class="text-nowrap">Mã hàng</th>
+				<th class="text-right text-nowrap">Số lượng</th>
+				<th class="text-right text-nowrap">Đơn giá</th>
+				<th class="text-right text-nowrap">Thành tiền</th>
 			</tr>
 			@foreach($cart->cartDetails as $item)
 			<tr>
@@ -86,7 +86,9 @@
 				<td colspan="4" rowspan="4">
 					<p><strong>Chú ý:</strong></p>
 					@if(!empty($cart->delivery_note))
+					<small>
 					{{ $cart->delivery_note }}
+					</small>
 					@endif
 				</td>
 				<td class="text-right">Chiết khấu</td>
@@ -97,7 +99,7 @@
 				<td class="text-right">- {{ number_format($cart->getTotalPromotionAmount(), 0, ',', '.') }}</td>
 			</tr>
 			<tr>
-				<td class="text-right">Phí vận chuyển</td>
+				<td class="text-right text-nowrap">Phí vận chuyển</td>
 				<td class="text-right">{{ number_format($cart->shipping_fee, 0, ',', '.') }}</td>
 			</tr>
 			<tr>

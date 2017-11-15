@@ -160,15 +160,15 @@ class ReportController extends Controller
 			->leftJoin('shopping_cart_details', 'products.id', '=', 'shopping_cart_details.product_id')
 			->groupBy(['products.id', 'products.code', 'product_translations.name'])
 			->whereIn('shopping_cart_id', $orderIds)
-			->select(DB::raw('products.id, product_translations.name, products.code, sum(shopping_cart_details.quantity) as total_quantity, sum(shopping_cart_details.product_price) as total_amount'))
+			->select(DB::raw('products.id, product_translations.name, products.code, sum(shopping_cart_details.quantity) as total_quantity, sum(shopping_cart_details.product_price * shopping_cart_details.quantity) as total_amount'))
 			->get();
 
 		if((bool)$request->input('export', 0)) {
 			// work on the export
-			Excel::create('Thong ke doanh so theo san pham', function($excel) use($results) {
+			Excel::create('Doanh so theo san pham', function($excel) use($results) {
 				// Set the title
-				$excel->setTitle('Thong ke doanh so theo san pham');
-				$excel->sheet('Thong ke doanh so theo san pham', function($sheet) use($results) {
+				$excel->setTitle('Doanh so theo san pham');
+				$excel->sheet('Doanh so theo san pham', function($sheet) use($results) {
 					$sheet->loadView('backend.reports.salesbyproductexport', compact('results'));
 
 				});
@@ -193,10 +193,10 @@ class ReportController extends Controller
 
 		if((bool)$request->input('export', 0)) {
 			// work on the export
-			Excel::create('Thong ke theo phuong thuc thanh toan', function($excel) use ($paymentMethods, $totalOrder, $totalAmount) {
+			Excel::create('Doanh so theo PT thanh toan', function($excel) use ($paymentMethods, $totalOrder, $totalAmount) {
 				// Set the title
-				$excel->setTitle('Thong ke theo phuong thuc thanh toan');
-				$excel->sheet('Phuong thuc thanh toan', function($sheet) use ($paymentMethods, $totalOrder, $totalAmount) {
+				$excel->setTitle('Doanh so theo PT thanh toan');
+				$excel->sheet('Doanh so theo PT thanh toan', function($sheet) use ($paymentMethods, $totalOrder, $totalAmount) {
 					$sheet->loadView('backend.reports.paymentmethodsexport', compact('paymentMethods', 'totalOrder', 'totalAmount'));
 
 				});
@@ -221,10 +221,10 @@ class ReportController extends Controller
 
 		if((bool)$request->input('export', 0)) {
 			// work on the export
-			Excel::create('Thong ke don hang theo tinh thanh', function($excel) use ($provinces, $totalOrder, $totalAmount) {
+			Excel::create('Doanh so theo tinh', function($excel) use ($provinces, $totalOrder, $totalAmount) {
 				// Set the title
-				$excel->setTitle('Thong ke don hang theo tinh thanh');
-				$excel->sheet('Don hang theo tinh thanh', function($sheet) use ($provinces, $totalOrder, $totalAmount) {
+				$excel->setTitle('Doanh so theo tinh');
+				$excel->sheet('Doanh so theo tinh', function($sheet) use ($provinces, $totalOrder, $totalAmount) {
 					$sheet->loadView('backend.reports.salesbyprovinceexport', compact('provinces', 'totalOrder', 'totalAmount'));
 
 				});
@@ -232,6 +232,34 @@ class ReportController extends Controller
 		}
 
 		return view('backend.reports.salesbyprovince', compact('provinces', 'totalOrder', 'totalAmount'));
+	}
+
+	public function productSalesByProvince(ReportRequest $request)
+	{
+		$province_ids = $request->input('province_id', []);
+		$query = $this->buildQuery($request, null, false);
+		$orderIds = $query->whereIn('province_id', $province_ids)->pluck('id')->toArray();
+
+		$results = Product::leftJoin('product_translations', 'products.id', '=', 'product_translations.product_id')
+			->leftJoin('shopping_cart_details', 'products.id', '=', 'shopping_cart_details.product_id')
+			->groupBy(['products.id', 'products.code', 'product_translations.name'])
+			->whereIn('shopping_cart_id', $orderIds)
+			->select(DB::raw('products.id, product_translations.name, products.code, sum(shopping_cart_details.quantity) as total_quantity, sum(shopping_cart_details.product_price * shopping_cart_details.quantity) as total_amount'))
+			->get();
+
+		if((bool)$request->input('export', 0)) {
+			// work on the export
+			Excel::create('Thong ke doanh so theo tinh thanh va san pham', function($excel) use($results) {
+				// Set the title
+				$excel->setTitle('Thong ke doanh so theo tinh thanh va san pham');
+				$excel->sheet('Tinh thanh va san pham', function($sheet) use($results) {
+					$sheet->loadView('backend.reports.productsalesbyprovinceexport', compact('results'));
+
+				});
+			})->download('xlsx');
+		}
+
+		return view('backend.reports.productsalesbyprovince', compact('results'));
 	}
 
 	public function inventory(ReportRequest $request)

@@ -27,5 +27,8 @@ class ShoppingCartStatusesTableSeeder extends Seeder
 		ShoppingCartStatus::create([
 			'name' => 'Đã giao hàng'
 		]);
+		ShoppingCartStatus::create([
+			'name' => 'Hoàn tất'
+		]);
 	}
 }

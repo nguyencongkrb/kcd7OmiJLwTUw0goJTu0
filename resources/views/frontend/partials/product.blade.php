@@ -26,8 +26,12 @@
 	<small class="label label-danger background-color-2">Dự kiến có hàng {{ is_null($product->instock_date) ? '' : DateTime::createFromFormat('Y-m-d', $product->instock_date)->format('d/m/Y') }}</small>
 	@endif
 	<div class="product-promotion">
-		<a href="#">Chương trình khuyến mãi</a><br>
+		@foreach($product->getVisibleArticles() as $item)
+		<a href="{{ $item->getLink() }}"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> {{ $item->name }}</a><br>
+		@if($loop->last)
 		<span>(Click để xem chi tiết)</span>
+		@endif
+		@endforeach
 	</div>
 	<div class="product-action">
 		<div class="row">

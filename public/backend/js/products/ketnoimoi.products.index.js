@@ -376,7 +376,24 @@ ketnoimoi.products.index = {
 			'dbfieldname': 'related_products',
 			'multiple': true
 		},
-
+		{
+			'label': 'Bài viết liên quan',
+			'id': 'articles',
+			'name': 'Product[articles][]',
+			'type': 'select',
+			'required': false,
+			'placeholder': '',
+			'cssclass': '',
+			'value': '',
+			'disabled': false,
+			'readonly': false,
+			'datas': [],
+			'url': '/backend/articles/filter',
+			'help_block': '',
+			'input_icon': '',
+			'dbfieldname': 'articles',
+			'multiple': true
+		},
 		{
 			'label': 'Trạng thái hàng hóa',
 			'id': 'availability',

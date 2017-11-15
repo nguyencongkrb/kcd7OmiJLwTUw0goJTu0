@@ -53,6 +53,11 @@ class Article extends BaseModel
 		return '';
 	}
 
+	public function proudcts()
+	{
+		return $this->belongsToMany('App\Product');
+	}
+
 	public function getJSONLD(){
 		return '{
 			"@context": "http://schema.org",

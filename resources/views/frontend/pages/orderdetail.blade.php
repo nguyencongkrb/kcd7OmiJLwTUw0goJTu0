@@ -20,7 +20,7 @@
 	<li class="{{ $cart->shopping_cart_status_id == 2 ? 'active' : null }}"><span>1</span>Mới đặt hàng</li>
 	<li class="{{ $cart->shopping_cart_status_id == 3 ? 'active' : null }}"><span>2</span>Đã xác nhận</li>
 	<li class="{{ $cart->shopping_cart_status_id == 4 ? 'active' : null }}"><span>3</span>Đang giao hàng</li>
-	<li class="{{ $cart->shopping_cart_status_id == 5 ? 'active' : null }}"><span>4</span>Đã giao hàng</li>
+	<li class="{{ $cart->shopping_cart_status_id > 5 ? 'active' : null }}"><span>4</span>Đã giao hàng</li>
 </ul>
 <div class="col-sm-12 col-md-12">
 	<h1 class="article-title">Chi tiết đơn hàng: {{ $cart->code }} <small>Mua ngày: {{ $cart->created_at->format('d/m/Y') }}</small></h1>

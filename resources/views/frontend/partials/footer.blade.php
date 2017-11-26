@@ -88,7 +88,7 @@
 				</div>
 				<div class="col-xs-6 col-sm-3 col-md-2">
 					<a href="https://sealsplash.geotrust.com/splash?&dn=sunmart-online.com" target="_blank"><img src="https://sealsplash.geotrust.com/images/ssl-valid-en-M.gif" alt="geotrust" style="width: 45%" class="img-reponsive"></a>
-					<a href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=38603" target="_blank"><img src="http://online.gov.vn/Images/dathongbao.png" alt="geotrust" style="width: 52%" class="img-reponsive"></a>
+					<a href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=38603" target="_blank"><img src="/frontend/images/dathongbao.png" alt="geotrust" style="width: 52%" class="img-reponsive"></a>
 				</div>
 			</div>
 		</div>

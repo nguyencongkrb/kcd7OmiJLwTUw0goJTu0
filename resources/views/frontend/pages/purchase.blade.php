@@ -79,7 +79,7 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
-					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Tổng mã thuưởng</div>
+					<div class="col-xs-8 col-sm-6 col-md-9 text-right pt-10">Tổng mã thưởng</div>
 					<div class="col-xs-4 col-sm-6 col-md-3 text-right pt-10">
 						<div class="row">
 							- {{ number_format(Request::input('ShoppingCart.promotionCodeTotalAmount', 0), 0, ',', '.') }} VNĐ
